@@ -1,29 +1,34 @@
 import React from "react";
 import useStateStorage from "./Hooks/useStateStorage";
+
 import SyncIcon from "@mui/icons-material/Sync";
 import RailwayAlertIcon from "@mui/icons-material/RailwayAlert";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 
 import useTrainInfo from "./Hooks/useTrainInfo";
 
 import Button from "./Components/Button";
 import Autocomplete from "./Components/Autocomplete";
 
-import { TFromToType, Label } from "./Types/types";
+import { Label } from "./Types/types";
 import Error from "./Components/Common/Error";
 
-function App() {
-  const [fromTo, setFromTo] = useStateStorage<TFromToType>();
+const App = () => {
+  const [fromTo, setFromTo, swapStations] = useStateStorage();
   const { response, error, loading, refetch } = useTrainInfo(fromTo);
   return (
-    <div className="max-w-xs mx-auto">
+    <div className="max-w-xs mx-auto ">
       <Error error={error} />
-      <div className="bg-slate-100 p-3">
+      <div className="flex flex-col bg-slate-100 p-3">
         <Autocomplete
           label={Label.from}
           changeHandler={setFromTo}
           value={fromTo}
         />
+        <Button clickHandler={swapStations}>
+          <SwapVertIcon />
+        </Button>
         <Autocomplete
           label={Label.to}
           changeHandler={setFromTo}
@@ -126,6 +131,6 @@ function App() {
       </Button>
     </div>
   );
-}
+};
 
 export default App;

@@ -22,7 +22,7 @@ const Autocomplete = ({ label, changeHandler, value }: TAutocompleteProps) => {
           stationList.filter((station) => station.crsCode === value[label])[0]
         }
         onChange={(_, newStation) => {
-          changeHandler({ ...value, [label]: newStation?.crsCode });
+          changeHandler({ ...value, [label]: newStation?.crsCode || "" });
         }}
         renderInput={(params) => (
           <TextField
