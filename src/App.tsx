@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import useStateStorage from "./Hooks/useStateStorage";
 import SyncIcon from "@mui/icons-material/Sync";
 import RailwayAlertIcon from "@mui/icons-material/RailwayAlert";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -8,24 +9,26 @@ import useTrainInfo from "./Hooks/useTrainInfo";
 import Button from "./Components/Button";
 import Autocomplete from "./Components/Autocomplete";
 
-import { TFromToType } from "./Types/types";
+import { TFromToType, Label } from "./Types/types";
 import Error from "./Components/Common/Error";
 
-const initialStations = {
-  from: "",
-  to: "",
-};
-
 function App() {
-  const [fromTo, setFromTo] = useState<TFromToType>(initialStations);
+  const [fromTo, setFromTo] = useStateStorage<TFromToType>();
   const { response, error, loading, refetch } = useTrainInfo(fromTo);
-
   return (
     <div className="max-w-xs mx-auto">
       <Error error={error} />
-      <div>
-        <Autocomplete label="from" changeHandler={setFromTo} value={fromTo} />
-        <Autocomplete label="to" changeHandler={setFromTo} value={fromTo} />
+      <div className="bg-slate-100 p-3">
+        <Autocomplete
+          label={Label.from}
+          changeHandler={setFromTo}
+          value={fromTo}
+        />
+        <Autocomplete
+          label={Label.to}
+          changeHandler={setFromTo}
+          value={fromTo}
+        />
       </div>
       <div className="flex flex-col">
         {loading
@@ -91,6 +94,7 @@ function App() {
                       : train.subsequentCallingPoints[0].callingPoint.map(
                           (station, index) => (
                             <li
+                              key={station.crs}
                               className={`inline-block mr-1 ${
                                 station.crs === fromTo.to ? "font-bold" : ""
                               }`}

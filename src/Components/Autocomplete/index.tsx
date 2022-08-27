@@ -18,6 +18,9 @@ const Autocomplete = ({ label, changeHandler, value }: TAutocompleteProps) => {
         getOptionLabel={(station) =>
           `${station.stationName} (${station.crsCode})`
         }
+        value={
+          stationList.filter((station) => station.crsCode === value[label])[0]
+        }
         onChange={(_, newStation) => {
           changeHandler({ ...value, [label]: newStation?.crsCode });
         }}

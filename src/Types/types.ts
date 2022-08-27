@@ -5,8 +5,13 @@ export type TFromToType = {
   to: string | null;
 };
 
+export enum Label {
+  from = "from",
+  to = "to",
+}
+
 export type TAutocompleteProps = {
-  label: string;
+  label: Label;
   changeHandler: React.Dispatch<React.SetStateAction<TFromToType>>;
   value: TFromToType;
 };
