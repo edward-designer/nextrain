@@ -1,31 +1,37 @@
-import React from "react";
-import AutocompleteBase from "@mui/material/Autocomplete";
+import React, { useState } from "react";
+import AutocompleteField from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-import getTrainStation from "../Hooks/getTrainStation";
+import useTrainStationsList from "../../Hooks/useTrainStationsList";
 
-type AutocompleteProps = {
-  label: string;
-};
+import { TAutocompleteProps } from "../../Types/types";
 
-const Autocomplete = ({ label }: AutocompleteProps) => {
-  const StationList = getTrainStation();
+const Autocomplete = ({ label, changeHandler, value }: TAutocompleteProps) => {
+  const [stationList] = useTrainStationsList();
+
   return (
-    <AutocompleteBase
-      id={label}
-      options={StationList}
-      autoHighlight
-      getOptionLabel={(station) => `${station.stationName}(${station.crsCode})`}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          inputProps={{
-            ...params.inputProps,
-          }}
-        />
-      )}
-    />
+    <div className="my-4">
+      <AutocompleteField
+        id={label}
+        options={stationList}
+        autoHighlight
+        getOptionLabel={(station) =>
+          `${station.stationName} (${station.crsCode})`
+        }
+        onChange={(_, newStation) => {
+          changeHandler({ ...value, [label]: newStation?.crsCode });
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            inputProps={{
+              ...params.inputProps,
+            }}
+          />
+        )}
+      />
+    </div>
   );
 };
 
