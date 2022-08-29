@@ -1,6 +1,6 @@
 import React from "react";
 
-export type TFromToType = {
+export type TFromTo = {
   from: string | null;
   to: string | null;
 };
@@ -12,8 +12,8 @@ export enum Label {
 
 export type TAutocompleteProps = {
   label: Label;
-  changeHandler: React.Dispatch<React.SetStateAction<TFromToType>>;
-  value: TFromToType;
+  changeHandler: React.Dispatch<React.SetStateAction<TFromTo>>;
+  value: TFromTo;
 };
 
 export type TTrainInfo = {

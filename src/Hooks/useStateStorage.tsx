@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
 
-import { TFromToType } from "../Types/types";
+import { TFromTo } from "../Types/types";
 
-export default function useStateStorage(): [
-  TFromToType,
-  React.Dispatch<React.SetStateAction<TFromToType>>,
-  () => void
-] {
+type TUseStorageState = {
+  fromTo: TFromTo;
+  setFromTo: React.Dispatch<React.SetStateAction<TFromTo>>;
+  canSwap: boolean;
+  swapStations: () => void;
+};
+export default function useStateStorage(): TUseStorageState {
   const storedJourney = localStorage.getItem("journeyInfo");
   const value = storedJourney
     ? JSON.parse(storedJourney)
     : { from: "", to: "" };
-  const [fromTo, setFromTo] = useState<TFromToType>(value);
+  const [fromTo, setFromTo] = useState<TFromTo>(value);
   useEffect(() => {
     localStorage.setItem("journeyInfo", JSON.stringify(fromTo));
   }, [fromTo]);
 
+  const canSwap = Boolean(fromTo.to && fromTo.from);
   const swapStations = () => {
-    const swapped = { from: fromTo.to, to: fromTo.from };
-    setFromTo(swapped);
+    if (fromTo.to && fromTo.from) {
+      const swapped = { from: fromTo.to, to: fromTo.from };
+      setFromTo(swapped);
+    }
   };
-  return [fromTo, setFromTo, swapStations];
+  return { fromTo, setFromTo, canSwap, swapStations };
 }

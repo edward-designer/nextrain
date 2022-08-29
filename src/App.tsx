@@ -1,134 +1,16 @@
 import React from "react";
 import useStateStorage from "./Hooks/useStateStorage";
 
-import SyncIcon from "@mui/icons-material/Sync";
-import RailwayAlertIcon from "@mui/icons-material/RailwayAlert";
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
-
-import useTrainInfo from "./Hooks/useTrainInfo";
-
-import Button from "./Components/Button";
-import Autocomplete from "./Components/Autocomplete";
-
-import { Label } from "./Types/types";
-import Error from "./Components/Common/Error";
+import InputForm from "./Components/InputForm";
+import TrainList from "./Components/TrainList";
 
 const App = () => {
-  const [fromTo, setFromTo, swapStations] = useStateStorage();
-  const { response, error, loading, refetch } = useTrainInfo(fromTo);
+  const { fromTo, ...others } = useStateStorage();
+
   return (
     <div className="max-w-xs mx-auto ">
-      <Error error={error} />
-      <div className="flex flex-col bg-slate-100 p-3">
-        <Autocomplete
-          label={Label.from}
-          changeHandler={setFromTo}
-          value={fromTo}
-        />
-        <Button clickHandler={swapStations}>
-          <SwapVertIcon />
-        </Button>
-        <Autocomplete
-          label={Label.to}
-          changeHandler={setFromTo}
-          value={fromTo}
-        />
-      </div>
-      <div className="flex flex-col">
-        {loading
-          ? "loading"
-          : response?.map((train) => (
-              <div
-                key={train.serviceIdUrlSafe}
-                className={`flex flex-row gap-3 items-center border-b py-2 ${
-                  train.etd !== "On time" ? "bg-amber-50" : ""
-                } ${train.isCancelled ? "bg-amber-150" : ""} `}
-              >
-                <div
-                  className={`basis-1/6 flex flex-col font-medium ${
-                    train.etd !== "On time" ? "text-red-900" : ""
-                  }`}
-                >
-                  <span
-                    className={
-                      train.etd !== "On time"
-                        ? "line-through text-xs leading-3"
-                        : ""
-                    }
-                  >
-                    {train.std}
-                  </span>
-                  <span
-                    className={`${
-                      train.etd === "Delayed" || train.etd === "Cancelled"
-                        ? "text-[8px] font-bold"
-                        : ""
-                    }`}
-                  >
-                    {train.etd !== "On time" ? train.etd : ""}
-                  </span>
-                </div>
-                <div
-                  className={`basis-1/6 flex flex-col items-center p-2 bg-slate-600 text-white ${
-                    !!train.platform ? "" : "bg-transparent text-slate-600"
-                  }`}
-                >
-                  {!!train.platform ? (
-                    <>
-                      <span className="text-[10px] text-center leading-3">
-                        Platform
-                      </span>
-                      <span className="text-2xl font-bold text-center leading-6">
-                        {train.platform}
-                      </span>
-                    </>
-                  ) : train.etd === "Cancelled" ? (
-                    <RailwayAlertIcon />
-                  ) : (
-                    <HourglassEmptyIcon />
-                  )}
-                </div>
-                <div className="basis-4/6 flex flex-col text-sm">
-                  <span>to {train.destination[0].locationName}</span>
-
-                  <span className="text-[8px] leading-3">
-                    stops:{" "}
-                    {train.subsequentCallingPoints[0].callingPoint.length === 0
-                      ? "-"
-                      : train.subsequentCallingPoints[0].callingPoint.map(
-                          (station, index) => (
-                            <li
-                              key={station.crs}
-                              className={`inline-block mr-1 ${
-                                station.crs === fromTo.to ? "font-bold" : ""
-                              }`}
-                            >
-                              {`${station.locationName} 
-                              ${
-                                station.crs === fromTo.to
-                                  ? `(${station.st})`
-                                  : ""
-                              } 
-                              ${
-                                index ===
-                                train.subsequentCallingPoints[0].callingPoint
-                                  .length -
-                                  1
-                                  ? ""
-                                  : ">"
-                              }`}
-                            </li>
-                          )
-                        )}
-                  </span>
-                </div>
-              </div>
-            ))}
-      </div>
-      <Button clickHandler={refetch}>
-        <SyncIcon />
-      </Button>
+      <InputForm fromTo={fromTo} {...others} />
+      <TrainList fromTo={fromTo} />
     </div>
   );
 };

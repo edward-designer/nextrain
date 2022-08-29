@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { TFromToType, TTrainInfo } from "../Types/types";
+import { TFromTo, TTrainInfo } from "../Types/types";
 
-const useTrainInfo = ({ from, to }: TFromToType) => {
+const useTrainInfo = ({ from, to }: TFromTo) => {
   const [response, setResponse] = useState<TTrainInfo[] | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,7 +12,7 @@ const useTrainInfo = ({ from, to }: TFromToType) => {
     if (from !== "") {
       setLoading(true);
       const apiTo = to ? `/to/${to}` : "";
-      const trainApi = `https://huxley.apphb.com/departures/${from}${apiTo}/?accessToken=${process.env.REACT_APP_accessToken}&expand=true`;
+      const trainApi = `https://huxley2.azurewebsites.net/departures/${from}${apiTo}/20?accessToken=${process.env.REACT_APP_accessToken}&expand=true&timeWindow=120`;
       axios
         .get(trainApi)
         .then((response) => {
