@@ -6,12 +6,17 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 type TCellPlatform = {
   platform: string | null;
   isCancelled: boolean;
+  isDeparted: boolean;
 };
-const CellPlatform = ({ platform, isCancelled }: TCellPlatform) => {
+const CellPlatform = ({ platform, isCancelled, isDeparted }: TCellPlatform) => {
   return (
     <div
-      className={`basis-1/6 flex flex-col items-center p-2 ${
-        !platform ? "bg-transparent text-slate-600" : "bg-blue-900 text-white"
+      className={`basis-2/12 flex flex-col items-center p-2 ${
+        !platform
+          ? "bg-transparent text-slate-600"
+          : isDeparted
+          ? "bg-slate-300 text-slate-400"
+          : "bg-blue-900 text-white"
       }`}
     >
       {platform ? (

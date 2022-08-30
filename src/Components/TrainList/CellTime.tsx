@@ -7,6 +7,7 @@ type TCellTime = {
   isCancelled: boolean;
   isDelayed: boolean;
 };
+
 const CellTime = ({
   std,
   etd,
@@ -14,28 +15,42 @@ const CellTime = ({
   isCancelled,
   isDelayed,
 }: TCellTime) => {
+  /* minor delay is not shown as official delay but has a later etd */
+  const isMinorDelayed = etd !== "On time" && etd !== "Delayed";
+
+  const updatedDepartureTime = isMinorDelayed ? etd : std;
+
   return (
     <div
-      className={`basis-1/6 flex flex-col font-medium leading-4 pl-1 ${
-        isDelayed || isCancelled ? "text-red-900" : ""
+      className={`basis-2/12 flex flex-row items-center font-medium leading-4 pl-1 gap-2 ${
+        isDelayed || isCancelled || isMinorDelayed ? "text-red-900" : ""
       }`}
     >
-      <span className={isDelayed ? "line-through text-[10px]" : ""}>
-        <span>{std}</span>
-      </span>
+      <div className="flex flex-col flex-1">
+        {(isMinorDelayed || isDelayed) && (
+          <span className="line-through text-[10px]">
+            <span>{std}</span>
+          </span>
+        )}
 
-      {/*etd may show the new departure time*/}
-      {isDelayed && etd !== "Delayed" && <span>{etd}</span>}
-      {/*or just the word "Delayed"*/}
-      {(etd === "Delayed" || isCancelled) && (
-        <span className={"text-[8px] font-bold"}>{etd}</span>
-      )}
+        {!isDelayed && !isCancelled ? (
+          /*in case of minor delay, shows the new etd*/
+          <span>
+            <span>{updatedDepartureTime}</span>
+          </span>
+        ) : (
+          /*or just the word "Delayed" or in case of cancel "Cancelled"*/
+          (isDelayed || isCancelled) && (
+            <span className={"text-[8px] font-bold"}>{etd}</span>
+          )
+        )}
 
-      {timeArrivalDestination && (
-        <span className="text-[10px] block text-right leading-3 text-slate-500">
-          {`→ ${timeArrivalDestination}`}
-        </span>
-      )}
+        {timeArrivalDestination && (
+          <span className="text-[10px] block text-right leading-3 text-slate-500">
+            {`→ ${timeArrivalDestination}`}
+          </span>
+        )}
+      </div>
     </div>
   );
 };

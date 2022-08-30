@@ -22,7 +22,7 @@ const CellDestination = ({
   fromTo,
 }: TCellDestination) => {
   return (
-    <div className="basis-4/6 flex flex-col text-sm">
+    <div className="basis-7/12 flex flex-col text-sm">
       <span className="text-slate-600">
         → {destination.locationName}
       </span>

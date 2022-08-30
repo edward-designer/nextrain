@@ -5,6 +5,7 @@ import TrainIcon from "@mui/icons-material/Train";
 import useTrainInfo from "../../Hooks/useTrainInfo";
 
 import TrainListContainer from "./TrainListContainer";
+import Notice from "../Notice";
 import Loading from "../Common/Loading";
 import Error from "../Common/Error";
 import Button from "../Button";
@@ -32,12 +33,10 @@ const TrainList = ({ fromTo }: TTrainList) => {
         </div>
       )}
       <Error error={error} />
-      <div className="flex flex-col">
-        {loading ? (
-          <Loading />
-        ) : (
-          <TrainListContainer fromTo={fromTo} response={response} />
-        )}
+      <Notice fromStation={fromTo.from} />
+      <div className="flex flex-col relative divide-y divide-slate-200">
+        {loading && <Loading />}
+        <TrainListContainer fromTo={fromTo} response={response} />
       </div>
     </div>
   );
