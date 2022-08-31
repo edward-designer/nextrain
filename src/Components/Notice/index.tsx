@@ -27,19 +27,16 @@ const Notice = ({ fromStation }: { fromStation: string | null }) => {
   const isPeakHour = checkPeakHours({ dateOfWeek, time, fromStation });
 
   return (
-    <div
-      className="bg-blue-100 border-t border-white text-slate-800"
-      role="alert"
-    >
+    <div className="bg-background-notice text-text-notice" role="alert">
       {isPeakHour ? (
         <p className="text-[10px]  px-4 py-3">
-          <ErrorOutlineIcon className="text-slate-400" /> Off-peak tickets may
-          not be eligible to travel [
+          <ErrorOutlineIcon className="text-text-notice-icon" /> Off-peak
+          tickets may not be eligible to travel [
           <a
             href="https://www.nationalrail.co.uk/times_fares/ticket_types/off-peak-tickets.aspx"
             target="_blank"
             rel="noreferrer"
-            className="font-bold underline hover:text-blue-900"
+            className="font-bold underline hover:text-hover-color"
           >
             check
           </a>

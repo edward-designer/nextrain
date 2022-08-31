@@ -9,7 +9,7 @@ type TButton = {
 const Button = ({ clickHandler, children, customStyle }: TButton) => {
   return (
     <button
-      className={`bg-blue-900 w-8 h-8 rounded-full text-white m-1 ${customStyle}`}
+      className={`bg-button-color w-8 h-8 rounded-full text-reverse-color m-1 ${customStyle}`}
       onClick={clickHandler}
     >
       {children}

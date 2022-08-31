@@ -22,19 +22,19 @@ const TrainList = ({ fromTo }: TTrainList) => {
   return (
     <div className="shadow-md">
       {fromTo.from && (
-        <div className="flex items-center bg-slate-300 text-slate-500">
+        <div className="flex items-center text-text-secondary bg-background-title">
           <h2 className="flex-1 text-lg pl-2">
             <TrainIcon />
             {` ${fromTo.from} → ${fromTo.to}`}
           </h2>
-          <Button clickHandler={refetch} customStyle="bg-slate-300">
+          <Button clickHandler={refetch} customStyle="bg-background-title">
             <SyncIcon />
           </Button>
         </div>
       )}
       <Error error={error} />
       <Notice fromStation={fromTo.from} />
-      <div className="flex flex-col relative divide-y divide-slate-200">
+      <div className="flex flex-col relative divide-y divide-text-inactive">
         {loading && <Loading />}
         <TrainListContainer fromTo={fromTo} response={response} />
       </div>

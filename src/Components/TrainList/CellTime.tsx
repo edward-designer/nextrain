@@ -3,17 +3,17 @@ import React from "react";
 type TCellTime = {
   std: string;
   etd: string;
-  timeArrivalDestination: string;
-  isCancelled: boolean;
-  isDelayed: boolean;
+  timeArrivalDestination?: string | null;
+  isCancelled?: boolean;
+  isDelayed?: boolean;
 };
 
 const CellTime = ({
   std,
   etd,
-  timeArrivalDestination,
-  isCancelled,
-  isDelayed,
+  timeArrivalDestination = null,
+  isCancelled = false,
+  isDelayed = false,
 }: TCellTime) => {
   /* minor delay is not shown as official delay but has a later etd */
   const isMinorDelayed = etd !== "On time" && etd !== "Delayed";
@@ -23,7 +23,7 @@ const CellTime = ({
   return (
     <div
       className={`basis-2/12 flex flex-row items-center font-medium leading-4 pl-1 gap-2 ${
-        isDelayed || isCancelled || isMinorDelayed ? "text-red-900" : ""
+        isDelayed || isCancelled || isMinorDelayed ? "text-text-highlight" : ""
       }`}
     >
       <div className="flex flex-col flex-1">
@@ -46,7 +46,7 @@ const CellTime = ({
         )}
 
         {timeArrivalDestination && (
-          <span className="text-[10px] block text-right leading-3 text-slate-500">
+          <span className="text-[10px] block text-right leading-3 text-text-tertiary">
             {`→ ${timeArrivalDestination}`}
           </span>
         )}

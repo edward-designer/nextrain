@@ -16,7 +16,7 @@ type TProps = {
 
 const InputForm = ({ fromTo, setFromTo, canSwap, swapStations }: TProps) => {
   return (
-    <div className="flex flex-col bg-slate-100 p-3 shadow-lg">
+    <div className="flex flex-col bg-background-form p-3 shadow-md shadow-text-notice">
       <Autocomplete
         label={Label.from}
         changeHandler={setFromTo}
@@ -25,7 +25,7 @@ const InputForm = ({ fromTo, setFromTo, canSwap, swapStations }: TProps) => {
       <div className="flex flex-row items-center justify-center my-[-30px] z-50">
         <Button
           customStyle={`place-self-center ${
-            !canSwap && "bg-slate-300 cursor-default"
+            !canSwap ? "bg-text-inactive cursor-default" : ""
           }`}
           clickHandler={swapStations}
         >

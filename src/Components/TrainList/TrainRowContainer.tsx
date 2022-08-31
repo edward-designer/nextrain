@@ -15,39 +15,88 @@ type TTrainRowContainer = {
 };
 
 const TrainRowContainer = ({ trainDetails, fromTo }: TTrainRowContainer) => {
-  const timeArrivalDestination =
-    trainDetails.subsequentCallingPoints[0].callingPoint.filter(
-      (station) => station.crs === fromTo.to
-    )[0]?.st || "";
+  const nowTime = currentTime();
+
+  /* in case of delay, not etd time is issued */
   const isDelayed = trainDetails.etd === "Delayed";
   const isCancelled = trainDetails.etd === "Cancelled";
-
+  const isOnTime = !isDelayed && !isCancelled;
   /* minor delay is not shown as official delay but has a later etd */
-  const isMinorDelayed =
-    trainDetails.etd !== "On time" && trainDetails.etd !== "Delayed";
+  const isMinorDelayed = isOnTime && trainDetails.etd !== "On time";
 
-  const updatedDepartureTime = isMinorDelayed
-    ? trainDetails.etd
-    : trainDetails.std;
-  const [hour, minute] = updatedDepartureTime.split(":");
-  const departureDateObj = new Date();
-  departureDateObj.setHours(parseInt(hour));
-  departureDateObj.setMinutes(parseInt(minute));
-  departureDateObj.setSeconds(0);
+  if (isOnTime) {
+    const timeArrivalDestination = trainDetails.subsequentCallingPoints
+      ? trainDetails.subsequentCallingPoints[0].callingPoint.filter(
+          (station) => station.crs === fromTo.to
+        )[0]?.st
+      : "";
 
-  const nowTime = currentTime();
-  const isDeparted = updatedDepartureTime <= nowTime;
+    /* if std/etd time is available */
+    const updatedDepartureTime = isMinorDelayed
+      ? trainDetails.etd
+      : trainDetails.std;
+
+    const [hour, minute] = updatedDepartureTime.split(":");
+    const isNextDay = Number(new Date().getHours()) - parseInt(hour) > 12;
+
+    const departureDateObj = new Date();
+    if (departureDateObj) {
+      departureDateObj.setHours(parseInt(hour));
+      departureDateObj.setMinutes(parseInt(minute));
+      departureDateObj.setSeconds(0);
+      if (isNextDay) {
+        departureDateObj.setDate(departureDateObj.getDate() + 1);
+      }
+    }
+    const adjustedDepartureTime = isNextDay
+      ? `${parseInt(hour) + 24}:${minute}`
+      : updatedDepartureTime;
+    const hasDeparted = adjustedDepartureTime <= nowTime;
+
+    return (
+      <div
+        className={`flex flex-row gap-2 items-center py-3
+        ${hasDeparted ? `bg-background-departed` : ""} 
+      `}
+      >
+        <CellTime
+          timeArrivalDestination={timeArrivalDestination}
+          std={trainDetails.std}
+          etd={trainDetails.etd}
+        />
+        <CellPlatform
+          platform={trainDetails.platform}
+          hasDeparted={hasDeparted}
+        />
+        <CellCountDown
+          departureDateObj={departureDateObj}
+          hasDeparted={hasDeparted}
+        />
+        <CellDestination
+          destination={trainDetails.destination[0]}
+          subsequentCallingPoints={
+            trainDetails.subsequentCallingPoints &&
+            trainDetails.subsequentCallingPoints[0]
+          }
+          fromTo={fromTo}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
       className={`flex flex-row gap-2 items-center py-3
-        ${isDelayed ? `bg-amber-100` : ""} 
-        ${isCancelled ? `bg-amber-200` : ""} 
-        ${isDeparted ? `bg-slate-100` : ""} 
+        ${
+          isDelayed
+            ? `bg-background-delayed`
+            : isCancelled
+            ? `bg-background-cancelled`
+            : ""
+        } 
       `}
     >
       <CellTime
-        timeArrivalDestination={timeArrivalDestination}
         isDelayed={isDelayed}
         isCancelled={isCancelled}
         std={trainDetails.std}
@@ -55,16 +104,15 @@ const TrainRowContainer = ({ trainDetails, fromTo }: TTrainRowContainer) => {
       />
       <CellPlatform
         platform={trainDetails.platform}
-        isDeparted={isDeparted}
         isCancelled={isCancelled}
       />
-      <CellCountDown
-        departureDateObj={departureDateObj}
-        isDeparted={isDeparted}
-      />
+      <CellCountDown isCancelledOrDelayed={!isOnTime} />
       <CellDestination
         destination={trainDetails.destination[0]}
-        subsequentCallingPoints={trainDetails.subsequentCallingPoints[0]}
+        subsequentCallingPoints={
+          trainDetails.subsequentCallingPoints &&
+          trainDetails.subsequentCallingPoints[0]
+        }
         fromTo={fromTo}
       />
     </div>

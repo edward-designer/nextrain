@@ -34,3 +34,5 @@ export type TTrainInfo = {
   }[];
   serviceIdUrlSafe: string;
 };
+
+export type Theme = "light" | "dark";

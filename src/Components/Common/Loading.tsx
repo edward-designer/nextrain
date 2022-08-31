@@ -2,10 +2,10 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="absolute h-full w-full flex items-center justify-center bg-slate-100/50 text-white">
+    <div className="absolute z-50 h-full w-full flex items-center justify-center bg-background-loading text-reverse-color">
       <svg
         aria-hidden="true"
-        className="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+        className="mr-2 w-8 h-8 text-text-tertiary animate-spin dark:text-text-secondary fill-accent-color"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
