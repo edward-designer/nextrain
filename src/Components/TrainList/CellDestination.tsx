@@ -12,6 +12,7 @@ type TCellDestination = {
           locationName: string;
           crs: string;
           st: string;
+          et: string;
         }[]
       | null;
   };
@@ -40,7 +41,13 @@ const CellDestination = ({
                   }`}
                 >
                   {`${station.locationName} 
-                    ${station.crs === fromTo.to ? `(${station.st})` : ""} 
+                    ${
+                      station.crs === fromTo.to
+                        ? station?.et !== "On time"
+                          ? `(${station.et})`
+                          : `(${station.st})`
+                        : ""
+                    } 
                     ${index === callingPoints.length - 1 ? "" : ">"}
                 `}
                 </li>

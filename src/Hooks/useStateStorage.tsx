@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from "react";
 
-import { TFromTo } from "../Types/types";
+import { TFromToArr } from "../Types/types";
 
 type TUseStorageState = {
-  fromTo: TFromTo;
-  setFromTo: React.Dispatch<React.SetStateAction<TFromTo>>;
+  fromToArr: TFromToArr;
+  setFromToArr: React.Dispatch<React.SetStateAction<TFromToArr>>;
   canSwap: boolean;
   swapStations: () => void;
+  canAdd: boolean;
 };
+
 export default function useStateStorage(): TUseStorageState {
   const storedJourney = localStorage.getItem("journeyInfo");
-  const value = storedJourney
-    ? JSON.parse(storedJourney)
-    : { from: "", to: "" };
-  const [fromTo, setFromTo] = useState<TFromTo>(value);
-  useEffect(() => {
-    localStorage.setItem("journeyInfo", JSON.stringify(fromTo));
-  }, [fromTo]);
+  const value = storedJourney ? JSON.parse(storedJourney) : ["", "", ""];
 
-  const canSwap = Boolean(fromTo.to && fromTo.from);
+  const [fromToArr, setFromToArr] = useState<TFromToArr>(value);
+
+  useEffect(() => {
+    localStorage.setItem("journeyInfo", JSON.stringify(fromToArr));
+  }, [fromToArr]);
+
+  const canSwap = fromToArr.filter(Boolean).length >= 2;
+  const canAdd = fromToArr.filter(Boolean).length >= 2;
+
   const swapStations = () => {
-    if (fromTo.to && fromTo.from) {
-      const swapped = { from: fromTo.to, to: fromTo.from };
-      setFromTo(swapped);
+    if (canSwap) {
+      const swapped = [...fromToArr].reverse();
+      setFromToArr(swapped);
     }
   };
-  return { fromTo, setFromTo, canSwap, swapStations };
+  return { fromToArr, setFromToArr, canSwap, swapStations, canAdd };
 }

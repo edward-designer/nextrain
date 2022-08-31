@@ -1,5 +1,7 @@
 import React from "react";
 
+export type TFromToArr = string[];
+
 export type TFromTo = {
   from: string | null;
   to: string | null;
@@ -8,21 +10,16 @@ export type TFromTo = {
 export enum Label {
   from = "from",
   to = "to",
+  interchange = "interchange",
 }
-
-export type TAutocompleteProps = {
-  label: Label;
-  changeHandler: React.Dispatch<React.SetStateAction<TFromTo>>;
-  value: TFromTo;
-};
 
 export type TTrainInfo = {
   isCancelled: boolean;
   etd: string;
-  delayReason: string;
   std: string;
   destination: {
     locationName: string;
+    crs: string;
   }[];
   platform: string;
   subsequentCallingPoints: {
@@ -30,9 +27,13 @@ export type TTrainInfo = {
       locationName: string;
       crs: string;
       st: string;
+      et: string;
     }[];
   }[];
   serviceIdUrlSafe: string;
+  operator: string;
+  delayReason: string;
+  cancelReason: string;
 };
 
 export type Theme = "light" | "dark";

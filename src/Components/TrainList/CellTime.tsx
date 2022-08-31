@@ -33,7 +33,7 @@ const CellTime = ({
           </span>
         )}
 
-        {!isDelayed && !isCancelled ? (
+        {!isCancelled && etd !== "Delayed" ? (
           /*in case of minor delay, shows the new etd*/
           <span>
             <span>{updatedDepartureTime}</span>
@@ -41,12 +41,16 @@ const CellTime = ({
         ) : (
           /*or just the word "Delayed" or in case of cancel "Cancelled"*/
           (isDelayed || isCancelled) && (
-            <span className={"text-[8px] font-bold"}>{etd}</span>
+            <span className={"text-[9px] font-bold"}>{etd}</span>
           )
         )}
 
         {timeArrivalDestination && (
-          <span className="text-[10px] block text-right leading-3 text-text-tertiary">
+          <span
+            className={`text-[10px] block text-right leading-3 text-text-tertiary ${
+              etd === "Delayed" ? "line-through" : ""
+            }`}
+          >
             {`→ ${timeArrivalDestination}`}
           </span>
         )}

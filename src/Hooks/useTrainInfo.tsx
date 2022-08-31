@@ -17,7 +17,9 @@ const useTrainInfo = ({ from, to }: TFromTo) => {
         .get(trainApi)
         .then((response) => {
           console.log(response.data.trainServices);
-          setResponse(response.data.trainServices);
+          let trainServices = response.data.trainServices;
+
+          setResponse(trainServices);
         })
         .catch((e) => {
           setError(e.message);

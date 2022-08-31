@@ -5,14 +5,19 @@ import ThemeWrapper from "./Components/ThemeWrapper/ThemeWrapper";
 import InputForm from "./Components/InputForm";
 import TrainList from "./Components/TrainList";
 
+import { convertArrToFromToObject } from "./Utils/helpers";
+
 const App = () => {
-  const { fromTo, ...others } = useStateStorage();
+  const { fromToArr, ...others } = useStateStorage();
+  const fromToWithInterchange = convertArrToFromToObject(fromToArr);
 
   return (
     <div className="max-w-xs mx-auto relative">
       <ThemeWrapper>
-        <InputForm fromTo={fromTo} {...others} />
-        <TrainList fromTo={fromTo} />
+        <InputForm fromToArr={fromToArr} {...others} />
+        {fromToWithInterchange.map((item) => (
+          <TrainList key={`${item.from}-${item.to}`} fromTo={item} />
+        ))}
       </ThemeWrapper>
     </div>
   );

@@ -28,6 +28,7 @@ module.exports = {
         "background-delayed": "var(--background-delayed)",
         "background-cancelled": "var(--background-cancelled)",
         "background-departed": "var(--background-departed)",
+        "border-notice": "var(--border-notice)",
       },
     },
   },

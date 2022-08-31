@@ -34,7 +34,7 @@ const TrainList = ({ fromTo }: TTrainList) => {
       )}
       <Error error={error} />
       <Notice fromStation={fromTo.from} />
-      <div className="flex flex-col relative divide-y divide-text-inactive">
+      <div className="flex flex-col relative">
         {loading && <Loading />}
         <TrainListContainer fromTo={fromTo} response={response} />
       </div>

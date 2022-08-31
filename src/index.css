@@ -13,7 +13,7 @@
   --reverse-color: rgb(255, 255, 255);
   --background-main: rgb(255, 255, 255);
   --background-form: rgb(241, 245, 249);
-  --background-title: rgb(117, 136, 161);
+  --background-title: rgb(137, 167, 207);
   --background-countdown: rgba(147, 197, 253, 0.8);
   --background-notice: rgba(219, 234, 254);
   --text-inactive: rgb(148, 163, 184);
@@ -22,16 +22,17 @@
   --background-delayed: rgb(253, 249, 233);
   --background-cancelled: rgb(253, 216, 216);
   --background-departed: rgb(241 245 249);
+  --border-notice: rgb(179, 173, 163);
 }
 
 [data-theme="dark"] {
   --text-primary: rgb(148, 163, 184);
   --text-secondary: rgb(19, 23, 29);
   --text-tertiary: rgb(57, 94, 146);
-  --text-countdown: rgb(59, 111, 255);
+  --text-countdown: rgb(92, 136, 255);
   --text-notice: rgb(255, 255, 255);
   --text-notice-icon: rgb(148, 163, 184);
-  --text-highlight: rgb(142, 46, 46);
+  --text-highlight: rgb(187, 51, 51);
   --button-color: rgb(0, 153, 153);
   --hover-color: rgb(0, 153, 153);
   --accent-color: rgb(28, 37, 61);
@@ -48,6 +49,7 @@
   --background-delayed: rgb(33, 33, 32);
   --background-cancelled: rgb(37, 26, 26);
   --background-departed: rgb(27, 35, 53);
+  --border-notice: rgb(54, 52, 48);
 }
 
 @tailwind base;
