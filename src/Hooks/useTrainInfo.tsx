@@ -53,7 +53,6 @@ const parseTrainInfo = (
   const runningStatus = [
     TrainStatus.ontime,
     TrainStatus.delayedWithNewArrivalTime,
-    TrainStatus.departed,
   ];
   const isRunning = runningStatus.includes(status);
   const callingPoint = subsequentCallingPoints[0].callingPoint;
@@ -98,13 +97,10 @@ const useTrainInfo = ({ from, to }: TFromTo) => {
         .then((response) => {
           let trainServices = response.data.trainServices;
           console.log(trainServices);
-          // add train status and other info
           trainServices = trainServices?.map((train: TTrainInfo) => {
             const formattedTrainInfo = parseTrainInfo(train, to);
             return { ...formattedTrainInfo };
           });
-
-          console.log(trainServices);
           setResponse(trainServices);
         })
         .catch((e) => {

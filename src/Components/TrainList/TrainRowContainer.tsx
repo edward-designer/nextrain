@@ -77,16 +77,16 @@ const TrainRowContainer = ({
   }
   const toggleTrainSelect = (time: string | null) => {
     setRowSelected(!isSelected);
-    setIsSelected((isSelected) => {
-      if (fromTo.to === toStation || !toStation) {
-        if (isSelected) {
-          setToTime("");
-          setToStation("");
-        } else {
-          setToTime(time);
-          setToStation(fromTo.to);
-        }
+    if (fromTo.to === toStation || !toStation) {
+      if (isSelected) {
+        setToTime("");
+        setToStation("");
+      } else {
+        setToTime(time);
+        setToStation(fromTo.to);
       }
+    }
+    setIsSelected((isSelected) => {
       return !isSelected;
     });
   };
@@ -114,8 +114,7 @@ const TrainRowContainer = ({
     >
       <div className="flex flex-row gap-1 items-center py-3">
         <div className="w-3 flex items-center justify-center text-xs text-button-color">
-          {status === TrainStatus.delayed ||
-          status === TrainStatus.cancelled ? (
+          {!isRunning ? (
             ""
           ) : isSelected ? (
             <CheckCircleOutlinedIcon sx={{ fontSize: "14px" }} />
@@ -137,9 +136,7 @@ const TrainRowContainer = ({
         ) : (
           <CellCountDown
             departureDateObj={departureDateObj}
-            isCancelledOrDelayed={
-              status === TrainStatus.cancelled || status === TrainStatus.delayed
-            }
+            isRunning={isRunning}
           />
         )}
         <CellDestination
