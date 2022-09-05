@@ -17,7 +17,6 @@ const CellTime = ({
 }: TCellTime) => {
   /* minor delay is not shown as official delay but has a later etd */
   const isMinorDelayed = etd !== "On time" && etd !== "Delayed";
-
   const updatedDepartureTime = isMinorDelayed ? etd : std;
 
   return (
@@ -38,11 +37,11 @@ const CellTime = ({
           <span>
             <span>{updatedDepartureTime}</span>
           </span>
+        ) : /*or just the word "Delayed" or in case of cancel "Cancelled"*/
+        isDelayed ? (
+          <span className={"text-[9px] font-bold"}>{etd}</span>
         ) : (
-          /*or just the word "Delayed" or in case of cancel "Cancelled"*/
-          (isDelayed || isCancelled) && (
-            <span className={"text-[9px] font-bold"}>{etd}</span>
-          )
+          <span className={"text-[9px] font-bold"}>Cancelled</span>
         )}
 
         {timeArrivalDestination && (

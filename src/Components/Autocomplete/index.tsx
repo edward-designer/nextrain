@@ -17,7 +17,7 @@ const Autocomplete = ({ label, changeHandler, value }: TAutocompleteProps) => {
   const [stationList] = useTrainStationsList();
 
   return (
-    <div className="my-4">
+    <div className="my-2">
       <AutocompleteField
         id={label}
         options={stationList}
@@ -36,14 +36,23 @@ const Autocomplete = ({ label, changeHandler, value }: TAutocompleteProps) => {
         renderInput={(params) => (
           <TextField
             sx={{
-              "& .MuiInputBase-input": { color: "var(--text-primary)" },
-              "& .MuiFormLabel-root": { color: "var(--text-tertiary)" },
+              "& .MuiInputBase-input": {
+                color: "var(--text-primary)",
+                padding: "3px 6px !important",
+              },
+              "& .MuiFormLabel-root": {
+                color: "var(--text-tertiary)",
+                marginTop: "-2px",
+              },
               "& .MuiInputBase-root": {
                 borderColor: "var(--reverse-color)",
                 backgroundColor: "var(--background-main)",
               },
               "& .MuiSvgIcon-root": {
                 color: "var(--text-tertiary)",
+              },
+              "&:focus .MuiOutlinedInput-notchedOutline": {
+                outlineColor: "var(--focus-color)",
               },
             }}
             {...params}

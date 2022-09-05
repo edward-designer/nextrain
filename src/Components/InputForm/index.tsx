@@ -57,16 +57,16 @@ const InputFormWrapper = ({
         value={start}
       />
       <div
-        className={`transition-all z-50 -mt-3 ${addStation ? "h-20" : "h-0"} `}
+        className={`transition-all z-50 mt-2 ${addStation ? "h-20" : "h-0"} `}
       >
         {addStation ? (
           <div className="flex flex-row">
-            <div className="flex-1">
+            <div className="flex-1 mt-1">
               <Autocomplete
-                label={Label.interchange}
+                label={Label.change}
                 changeHandler={updateFromToArr}
                 value={interchange}
-              />{" "}
+              />
             </div>
             <Button
               customStyle={`place-self-center ${
@@ -76,9 +76,17 @@ const InputFormWrapper = ({
             >
               <CloseOutlinedIcon />
             </Button>
+            <Button
+              customStyle={`place-self-center ${
+                !canSwap ? "bg-text-inactive cursor-default" : ""
+              }`}
+              clickHandler={swapStations}
+            >
+              <SwapVertIcon />
+            </Button>
           </div>
         ) : (
-          <div className="flex flex-row items-center justify-center -mt-4">
+          <div className="flex flex-row items-center justify-center -mt-6">
             <Button
               customStyle={`place-self-center ${
                 !canAdd ? "bg-text-inactive cursor-default" : ""
@@ -86,6 +94,14 @@ const InputFormWrapper = ({
               clickHandler={addAStation}
             >
               <AddOutlinedIcon />
+            </Button>
+            <Button
+              customStyle={`place-self-center ${
+                !canSwap ? "bg-text-inactive cursor-default" : ""
+              }`}
+              clickHandler={swapStations}
+            >
+              <SwapVertIcon />
             </Button>
           </div>
         )}
@@ -95,16 +111,6 @@ const InputFormWrapper = ({
         changeHandler={updateFromToArr}
         value={destination}
       />
-      <div className="flex flex-row items-center justify-end ">
-        <Button
-          customStyle={`place-self-center ${
-            !canSwap ? "bg-text-inactive cursor-default" : ""
-          }`}
-          clickHandler={swapStations}
-        >
-          <SwapVertIcon />
-        </Button>
-      </div>
     </div>
   );
 };

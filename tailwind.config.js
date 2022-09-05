@@ -29,6 +29,8 @@ module.exports = {
         "background-cancelled": "var(--background-cancelled)",
         "background-departed": "var(--background-departed)",
         "border-notice": "var(--border-notice)",
+        "background-selected": "var(--background-selected)",
+        "focus-color": "var(--focus-color)",
       },
     },
   },

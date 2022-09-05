@@ -6,7 +6,7 @@ type PropsType = {
 
 const Error = ({ error }: PropsType) => {
   if (!error) return null;
-  return <div>{error}</div>;
+  return <div role="alert">{error}</div>;
 };
 
 export default Error;

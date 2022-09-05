@@ -10,11 +10,12 @@ export type TFromTo = {
 export enum Label {
   from = "from",
   to = "to",
-  interchange = "interchange",
+  change = "change",
 }
 
 export type TTrainInfo = {
   isCancelled: boolean;
+  isDelayed: boolean;
   etd: string;
   std: string;
   destination: {
