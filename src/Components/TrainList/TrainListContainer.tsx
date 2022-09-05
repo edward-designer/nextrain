@@ -1,28 +1,30 @@
 import React, { useState, useContext } from "react";
 
-import { TrainScheduleContext } from "../../Context/TrainContext";
+import { SelectedTrainContext } from "../../Context/TrainContext";
 import TrainRowContainer from "./TrainRowContainer";
 
-import { TTrainInfo, TFromTo } from "../../Types/types";
+import { TParsedTrainInfo, TFromTo } from "../../Types/types";
 
 import { isTime1LaterThanTime2 } from "../../Utils/helpers";
 
 type TTrainListContainer = {
-  response: TTrainInfo[] | null;
+  response: TParsedTrainInfo[] | null;
   fromTo: TFromTo;
 };
 
 const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
-  const [arrivalTime, setArrivalTime] = useState("");
   const [rowSelected, setRowSelected] = useState(false);
-  const { time, toStation } = useContext(TrainScheduleContext);
-  console.log(fromTo, toStation);
+  const { toTime, toStation } = useContext(SelectedTrainContext);
+
+  // NO from station is entered
   if (!fromTo.from)
     return (
       <div className="p-4 text-text-inactive text-xs">
         Please begin by selecting the departure station.
       </div>
     );
+
+  // NO trains found
   if (!response)
     return (
       <div className="p-4 text-text-inactive text-xs">
@@ -33,19 +35,17 @@ const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
   const trainList =
     toStation === fromTo.from
       ? response.filter((trainDetails) =>
-          isTime1LaterThanTime2(trainDetails.std, time)
+          isTime1LaterThanTime2(trainDetails.arrivalTime, toTime)
         )
       : response;
 
   return (
     <>
-      {trainList.map((trainDetails) => (
+      {trainList && trainList.map((trainDetails) => (
         <TrainRowContainer
           key={trainDetails.serviceIdUrlSafe}
           fromTo={fromTo}
           trainDetails={trainDetails}
-          arrivalTime={arrivalTime}
-          setArrivalTime={setArrivalTime}
           rowSelected={rowSelected}
           setRowSelected={setRowSelected}
         />

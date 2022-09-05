@@ -9,6 +9,11 @@ export const currentTime = () => {
 
 export const currentDayofWeek = () => new Date().getDay() + 1;
 
+export const isNextDay = (time: string) => {
+  const [hour] = time.split(":");
+  return Number(new Date().getHours()) - parseInt(hour) > 12;
+};
+
 export const convertArrToFromToObject = (
   arr: string[]
 ): { returnArr: TFromTo[]; direct: boolean } => {
@@ -32,9 +37,10 @@ export const convertArrToFromToObject = (
 };
 
 export const isTime1LaterThanTime2 = (
-  time1: string,
-  time2: string
+  time1: string | null,
+  time2: string | null
 ): boolean => {
+  if (time1 === null || time2 === null) return false;
   if (!(isTimeFormat(time1) && isTimeFormat(time2))) return false;
   const [hour1] = time1.split(":");
   const [hour2] = time2.split(":");
@@ -46,7 +52,8 @@ export const isTime1LaterThanTime2 = (
   return time1 > time2;
 };
 
-export const isTimeFormat = (time: string): boolean => {
+export const isTimeFormat = (time: string | null): boolean => {
+  if (time === null) return false;
   return /^\d{2}:\d{2}$/.test(time);
 };
 
@@ -62,12 +69,16 @@ export const minutesDifference = (
   date1.setSeconds(0);
   const date2 = new Date();
   const [hour2, minute2] = timeDeparture.split(":");
-  date2.setHours(parseInt(hour2));
+  if (isNextDay(timeDeparture)) {
+    date2.setHours(parseInt(hour2) + 12);
+  } else {
+    date2.setHours(parseInt(hour2));
+  }
   date2.setMinutes(parseInt(minute2));
   date2.setSeconds(0);
   const changeTime = Math.floor(
     (date2.valueOf() - date1.valueOf()) / (1000 * 60)
   );
-  //need to consider overnight!!!!
+
   return changeTime > 60 ? ">1h" : `${changeTime}m`;
 };

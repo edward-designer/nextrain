@@ -37,4 +37,31 @@ export type TTrainInfo = {
   cancelReason: string;
 };
 
+export type TParsedTrainInfo = {
+  serviceIdUrlSafe: string;
+  isRunning: boolean;
+  status: TrainStatus;
+  arrivalTime: string | null;
+  std: string;
+  platform: string;
+  endStation: string;
+  endStationCRS: string;
+  callingPoint: {
+    locationName: string;
+    crs: string;
+    st: string;
+    et: string;
+  }[];
+  arrivalTimeDestination: string | null;
+  reason: string | null;
+};
+
 export type Theme = "light" | "dark";
+
+export enum TrainStatus {
+  "ontime" = "On Time",
+  "departed" = "On Time and Departed",
+  "delayedWithNewArrivalTime" = "Delayed with a new Arrival Time Set",
+  "delayed" = "Delayed",
+  "cancelled" = "Cancelled",
+}

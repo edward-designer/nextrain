@@ -1,39 +1,34 @@
 import React from "react";
 
-import { TFromTo } from "../../Types/types";
+import { TFromTo, TrainStatus } from "../../Types/types";
 
 type TCellDestination = {
-  destination: {
-    locationName: string;
-  };
+  destination: string;
   subsequentCallingPoints: {
-    callingPoint:
-      | {
-          locationName: string;
-          crs: string;
-          st: string;
-          et: string;
-        }[]
-      | null;
-  };
+    locationName: string;
+    crs: string;
+    st: string;
+    et: string;
+  }[];
   fromTo: TFromTo;
+  status: TrainStatus;
 };
 
 const CellDestination = ({
   destination,
   subsequentCallingPoints,
   fromTo,
+  status,
 }: TCellDestination) => {
-  const callingPoints = subsequentCallingPoints?.callingPoint;
   return (
     <div className="basis-7/12 flex flex-col text-sm">
-      <span className="text-slate-600">→ {destination.locationName}</span>
-      {callingPoints !== null && (
+      <span className="text-slate-600">→ {destination}</span>
+      {subsequentCallingPoints !== null && (
         <span className="text-[8px] leading-3">
-          {"> "}
-          {callingPoints.length === 0
-            ? "-"
-            : callingPoints.map((station, index) => (
+          {subsequentCallingPoints.length === 0 ||
+          status === TrainStatus.cancelled
+            ? ""
+            : subsequentCallingPoints.map((station, index) => (
                 <li
                   key={station.crs}
                   className={`inline-block mr-1 ${
@@ -48,7 +43,7 @@ const CellDestination = ({
                           : `(${station.st})`
                         : ""
                     } 
-                    ${index === callingPoints.length - 1 ? "" : ">"}
+                    ${index === subsequentCallingPoints.length - 1 ? "" : ">"}
                 `}
                 </li>
               ))}

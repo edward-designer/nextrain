@@ -1,58 +1,57 @@
 import React from "react";
+import { TrainStatus } from "../../Types/types";
 
 type TCellTime = {
   std: string;
-  etd: string;
-  timeArrivalDestination?: string | null;
-  isCancelled?: boolean;
-  isDelayed?: boolean;
+  arrivalTime: string | null;
+  arrivalTimeDestination: string | null;
+  status: TrainStatus;
 };
 
 const CellTime = ({
   std,
-  etd,
-  timeArrivalDestination = null,
-  isCancelled = false,
-  isDelayed = false,
+  arrivalTime,
+  arrivalTimeDestination,
+  status,
 }: TCellTime) => {
-  /* minor delay is not shown as official delay but has a later etd */
-  const isMinorDelayed = etd !== "On time" && etd !== "Delayed";
-  const updatedDepartureTime = isMinorDelayed ? etd : std;
-
+  if (status === TrainStatus.cancelled) arrivalTime = "Cancelled";
+  if (status === TrainStatus.delayed) arrivalTime = "Delayed";
   return (
     <div
-      className={`basis-2/12 flex flex-row items-center font-medium leading-4 pl-1 gap-2 ${
-        isDelayed || isCancelled || isMinorDelayed ? "text-text-highlight" : ""
-      }`}
+      className={`basis-2/12 flex flex-row items-center font-medium leading-4 pl-1 gap-2 
+      ${
+        status !== TrainStatus.ontime && status !== TrainStatus.departed
+          ? "text-text-highlight"
+          : ""
+      }
+     ${
+       status === TrainStatus.cancelled || status === TrainStatus.delayed
+         ? "basis-4/12"
+         : ""
+     }
+        `}
     >
       <div className="flex flex-col flex-1">
-        {(isMinorDelayed || isDelayed) && (
+        {arrivalTime !== std && (
           <span className="line-through text-[10px]">
             <span>{std}</span>
           </span>
         )}
 
-        {!isCancelled && etd !== "Delayed" ? (
-          /*in case of minor delay, shows the new etd*/
-          <span>
-            <span>{updatedDepartureTime}</span>
-          </span>
-        ) : /*or just the word "Delayed" or in case of cancel "Cancelled"*/
-        isDelayed ? (
-          <span className={"text-[9px] font-bold"}>{etd}</span>
-        ) : (
-          <span className={"text-[9px] font-bold"}>Cancelled</span>
-        )}
+        <span>
+          <span>{arrivalTime}</span>
+        </span>
 
-        {timeArrivalDestination && (
-          <span
-            className={`text-[10px] block text-right leading-3 text-text-tertiary ${
-              etd === "Delayed" ? "line-through" : ""
-            }`}
-          >
-            {`→ ${timeArrivalDestination}`}
-          </span>
-        )}
+        {arrivalTimeDestination &&
+          !(
+            status === TrainStatus.delayed || status === TrainStatus.cancelled
+          ) && (
+            <span
+              className={`text-[10px] block text-right leading-3 text-text-tertiary`}
+            >
+              {`→ ${arrivalTimeDestination}`}
+            </span>
+          )}
       </div>
     </div>
   );

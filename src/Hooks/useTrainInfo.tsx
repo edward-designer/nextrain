@@ -1,10 +1,90 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { TFromTo, TTrainInfo } from "../Types/types";
+import {
+  TFromTo,
+  TTrainInfo,
+  TrainStatus,
+  TParsedTrainInfo,
+} from "../Types/types";
+import {
+  isTimeFormat,
+  isTime1LaterThanTime2,
+  currentTime,
+} from "../Utils/helpers";
+
+const getTrainStatus = (
+  train: TTrainInfo,
+  arrivalTime: string | null
+): TrainStatus => {
+  let status = TrainStatus.ontime;
+  if (train.delayReason !== null)
+    status = isTimeFormat(train.etd)
+      ? TrainStatus.delayedWithNewArrivalTime
+      : TrainStatus.delayed;
+  if (train.isCancelled || train.cancelReason) status = TrainStatus.cancelled;
+  arrivalTime &&
+    isTime1LaterThanTime2(currentTime(), arrivalTime) &&
+    (status = TrainStatus.departed);
+  return status;
+};
+
+const parseTrainInfo = (
+  train: TTrainInfo,
+  to: string | null
+): TParsedTrainInfo => {
+  const {
+    subsequentCallingPoints,
+    etd,
+    std,
+    destination,
+    platform,
+    serviceIdUrlSafe,
+    delayReason,
+    cancelReason,
+  } = train;
+  const arrivalTime =
+    etd === "Cancelled" || etd === "Delayed"
+      ? null
+      : isTimeFormat(etd)
+      ? etd
+      : std;
+  const status = getTrainStatus(train, arrivalTime);
+  const runningStatus = [
+    TrainStatus.ontime,
+    TrainStatus.delayedWithNewArrivalTime,
+    TrainStatus.departed,
+  ];
+  const isRunning = runningStatus.includes(status);
+  const callingPoint = subsequentCallingPoints[0].callingPoint;
+  const destinationStationInfo = callingPoint.filter(
+    (station) => station.crs === to
+  )[0];
+  const arrivalTimeDestination = isTimeFormat(destinationStationInfo?.et)
+    ? destinationStationInfo?.et
+    : destinationStationInfo?.st || null;
+  const endStation = destination[0].locationName;
+  const endStationCRS = destination[0].crs;
+  const reason = cancelReason || delayReason || null;
+
+  const formattedTrainInfo = {
+    serviceIdUrlSafe,
+    endStation,
+    endStationCRS,
+    isRunning,
+    status,
+    std,
+    platform,
+    callingPoint,
+    arrivalTime,
+    arrivalTimeDestination,
+    reason,
+  };
+  return formattedTrainInfo;
+};
 
 const useTrainInfo = ({ from, to }: TFromTo) => {
-  const [response, setResponse] = useState<TTrainInfo[] | null>(null);
+  const [response, setResponse] = useState<TParsedTrainInfo[] | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -16,9 +96,15 @@ const useTrainInfo = ({ from, to }: TFromTo) => {
       axios
         .get(trainApi)
         .then((response) => {
-          console.log(response.data.trainServices);
           let trainServices = response.data.trainServices;
+          console.log(trainServices);
+          // add train status and other info
+          trainServices = trainServices?.map((train: TTrainInfo) => {
+            const formattedTrainInfo = parseTrainInfo(train, to);
+            return { ...formattedTrainInfo };
+          });
 
+          console.log(trainServices);
           setResponse(trainServices);
         })
         .catch((e) => {
