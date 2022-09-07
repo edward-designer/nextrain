@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import RailwayAlertIcon from "@mui/icons-material/RailwayAlert";
-import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
@@ -50,7 +50,7 @@ const TrainRowContainer = ({
       setRowSelected(false);
       setIsSelected(false);
     }
-  }, [toTime]);
+  }, [toTime, setRowSelected, setIsSelected]);
 
   if (rowSelected && !isSelected) return null;
 
@@ -76,6 +76,8 @@ const TrainRowContainer = ({
     }
   }
   const toggleTrainSelect = (time: string | null) => {
+    if (!isRunning) return null;
+    if (time === null) time = "";
     setRowSelected(!isSelected);
     if (fromTo.to === toStation || !toStation) {
       if (isSelected) {
@@ -98,6 +100,7 @@ const TrainRowContainer = ({
         if (e.key === "Enter") toggleTrainSelect(arrivalTimeDestination);
       }}
       className={`flex flex-col border-b-background-form border-b-4 border-dotted
+      ${isRunning ? "" : `cursor-default`} 
         ${status === TrainStatus.departed ? `bg-background-departed` : ""} 
         ${
           status === TrainStatus.delayed ||
@@ -117,7 +120,7 @@ const TrainRowContainer = ({
           {!isRunning ? (
             ""
           ) : isSelected ? (
-            <CheckCircleOutlinedIcon sx={{ fontSize: "14px" }} />
+            <RadioButtonCheckedIcon sx={{ fontSize: "14px" }} />
           ) : (
             <RadioButtonUncheckedOutlinedIcon
               sx={{ color: "var(--border-notice)", fontSize: "14px" }}

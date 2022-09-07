@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from "react";
 
-import { TFromToArr } from "../Types/types";
+import { TFromToArr, Theme } from "../Types/types";
 
 type TUseStorageState = {
   fromToArr: TFromToArr;
   setFromToArr: React.Dispatch<React.SetStateAction<TFromToArr>>;
+  theme: Theme;
+  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
   canSwap: boolean;
   swapStations: () => void;
   canAdd: boolean;
 };
 
 export default function useStateStorage(): TUseStorageState {
-  const storedJourney = localStorage.getItem("journeyInfo");
+  const storedJourney = localStorage.getItem("NextTrainJourneyInfo");
+  const storedTheme = localStorage.getItem("NextTrainTheme");
   const value = storedJourney ? JSON.parse(storedJourney) : ["", "", ""];
+  const themeValue = storedTheme === "dark" ? "dark" : "light";
 
   const [fromToArr, setFromToArr] = useState<TFromToArr>(value);
+  const [theme, setTheme] = useState<Theme>(themeValue);
 
   useEffect(() => {
-    localStorage.setItem("journeyInfo", JSON.stringify(fromToArr));
+    localStorage.setItem("NextTrainJourneyInfo", JSON.stringify(fromToArr));
   }, [fromToArr]);
+
+  useEffect(() => {
+    localStorage.setItem("NextTrainTheme", theme);
+  }, [theme]);
 
   const canSwap = fromToArr.filter(Boolean).length >= 2;
   const canAdd = fromToArr.filter(Boolean).length >= 2;
@@ -29,5 +38,13 @@ export default function useStateStorage(): TUseStorageState {
       setFromToArr(swapped);
     }
   };
-  return { fromToArr, setFromToArr, canSwap, swapStations, canAdd };
+  return {
+    fromToArr,
+    setFromToArr,
+    canSwap,
+    swapStations,
+    canAdd,
+    theme,
+    setTheme,
+  };
 }

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+
+import { SelectedTrainContext } from "../../Context/TrainContext";
 
 import Autocomplete from "../Autocomplete";
 import Button from "../Button";
@@ -31,6 +33,8 @@ const InputFormWrapper = ({
       : [2, ""];
   const interchange: [number, string] = [1, fromToArr[1] || ""];
 
+  const { setToTime, setToStation } = useContext(SelectedTrainContext);
+
   const [addStation, setAddStation] = useState(interchange[1] !== "");
 
   const addAStation = () => {
@@ -39,6 +43,11 @@ const InputFormWrapper = ({
   const closeAddStationField = () => {
     setAddStation(false);
     updateFromToArr(1, "");
+  };
+  const swapHandler = () => {
+    swapStations();
+    setToTime("");
+    setToStation("");
   };
 
   const updateFromToArr = (order: number, value: string) => {
@@ -73,6 +82,7 @@ const InputFormWrapper = ({
                 !canAdd ? "bg-text-inactive cursor-default" : ""
               }`}
               clickHandler={closeAddStationField}
+              ariaLabel="Add a Change Station"
             >
               <CloseOutlinedIcon />
             </Button>
@@ -80,7 +90,8 @@ const InputFormWrapper = ({
               customStyle={`place-self-center ${
                 !canSwap ? "bg-text-inactive cursor-default" : ""
               }`}
-              clickHandler={swapStations}
+              clickHandler={swapHandler}
+              ariaLabel="Swap Stations"
             >
               <SwapVertIcon />
             </Button>
@@ -92,6 +103,7 @@ const InputFormWrapper = ({
                 !canAdd ? "bg-text-inactive cursor-default" : ""
               }`}
               clickHandler={addAStation}
+              ariaLabel="Add a Change Station"
             >
               <AddOutlinedIcon />
             </Button>
@@ -99,7 +111,8 @@ const InputFormWrapper = ({
               customStyle={`place-self-center ${
                 !canSwap ? "bg-text-inactive cursor-default" : ""
               }`}
-              clickHandler={swapStations}
+              clickHandler={swapHandler}
+              ariaLabel="Swap Stations"
             >
               <SwapVertIcon />
             </Button>

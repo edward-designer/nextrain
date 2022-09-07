@@ -1,10 +1,10 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import { Theme } from "../../Types/types";
+import useStateStorage from "../../Hooks/useStateStorage";
 
 const ThemeWrapper = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>("light");
+  const { theme, setTheme } = useStateStorage();
   const changeTheme = () => {
     theme === "dark" ? setTheme("light") : setTheme("dark");
   };
@@ -23,6 +23,7 @@ const ThemeWrapper = ({ children }: { children: ReactNode }) => {
     <div
       data-theme={theme}
       className="min-h-screen pt-10 bg-background-main text-text-primary"
+      data-testid="wrapper"
     >
       <ThemeProvider theme={MUItheme}>
         <div
@@ -35,6 +36,7 @@ const ThemeWrapper = ({ children }: { children: ReactNode }) => {
               className="peer translate-x-[100%] focus:z-50 focus:outline-none"
               type="checkbox"
               id="checkbox"
+              checked={theme==='dark'}
               aria-label="toggle light and dark theme"
             />
             <div
@@ -52,4 +54,4 @@ const ThemeWrapper = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default ThemeWrapper;
+export default React.memo(ThemeWrapper);

@@ -18,7 +18,7 @@ const getTrainStatus = (
   arrivalTime: string | null
 ): TrainStatus => {
   let status = TrainStatus.ontime;
-  if (train.delayReason !== null)
+  if (train.delayReason !== null || train.etd === "Delayed")
     status = isTimeFormat(train.etd)
       ? TrainStatus.delayedWithNewArrivalTime
       : TrainStatus.delayed;
@@ -82,16 +82,18 @@ const parseTrainInfo = (
   return formattedTrainInfo;
 };
 
-const useTrainInfo = ({ from, to }: TFromTo) => {
+const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
   const [response, setResponse] = useState<TParsedTrainInfo[] | null>(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchTrainInfo = () => {
+  const fetchTrainInfo = (time: number = 0) => {
     if (from !== "") {
       setLoading(true);
       const apiTo = to ? `/to/${to}` : "";
-      const trainApi = `https://huxley2.azurewebsites.net/departures/${from}${apiTo}/20?accessToken=${process.env.REACT_APP_accessToken}&expand=true&timeWindow=120`;
+      const timeOffset = time;
+
+      const trainApi = `https://huxley2.azurewebsites.net/departures/${from}${apiTo}/20?accessToken=${process.env.REACT_APP_accessToken}&expand=true&timeOffset=${timeOffset}&timeWindow=120`;
       axios
         .get(trainApi)
         .then((response) => {
@@ -101,7 +103,9 @@ const useTrainInfo = ({ from, to }: TFromTo) => {
             const formattedTrainInfo = parseTrainInfo(train, to);
             return { ...formattedTrainInfo };
           });
+          console.log(trainServices);
           setResponse(trainServices);
+          // important notice: response.data.nrccMessages
         })
         .catch((e) => {
           setError(e.message);
@@ -112,8 +116,8 @@ const useTrainInfo = ({ from, to }: TFromTo) => {
     }
   };
 
-  const refetch = () => {
-    fetchTrainInfo();
+  const refetch = (time: number = 0) => {
+    fetchTrainInfo(time);
   };
 
   useEffect(() => {
