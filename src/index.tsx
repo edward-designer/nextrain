@@ -8,7 +8,6 @@ import "./index.css";
 import App from "./App";
 
 TimeAgo.addDefaultLocale(en);
-
 const customLabels = {
   year: "{0}yr",
   month: "{0}mo",

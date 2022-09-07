@@ -39,9 +39,9 @@ export const convertArrToFromToObject = (
 export const isTime1LaterThanTime2 = (
   time1: string | null,
   time2: string | null
-): boolean => {
-  if (time1 === null || time2 === null) return false;
-  if (!(isTimeFormat(time1) && isTimeFormat(time2))) return false;
+): boolean | undefined => {
+  if (time1 === null || time2 === null) return;
+  if (!(isTimeFormat(time1) && isTimeFormat(time2))) return;
   const [hour1] = time1.split(":");
   const [hour2] = time2.split(":");
   if (parseInt(hour1) - parseInt(hour2) > 12) {
@@ -61,6 +61,18 @@ export const minutesDifference = (
   timeArrival: string,
   timeDeparture: string
 ): string | null => {
+  const changeTime = minutesDifferenceNumber(timeArrival, timeDeparture);
+  return changeTime === null
+    ? null
+    : changeTime > 60
+    ? ">1h"
+    : `${changeTime}m`;
+};
+
+export const minutesDifferenceNumber = (
+  timeArrival: string,
+  timeDeparture: string
+): number | null => {
   if (!(isTimeFormat(timeArrival) && isTimeFormat(timeDeparture))) return null;
   const date1 = new Date();
   const [hour1, minute1] = timeArrival.split(":");
@@ -70,15 +82,20 @@ export const minutesDifference = (
   const date2 = new Date();
   const [hour2, minute2] = timeDeparture.split(":");
   if (isNextDay(timeDeparture)) {
-    date2.setHours(parseInt(hour2) + 12);
+    date2.setHours(parseInt(hour2));
+    date2.setDate(date2.getDate() + 1);
   } else {
     date2.setHours(parseInt(hour2));
   }
   date2.setMinutes(parseInt(minute2));
   date2.setSeconds(0);
   const changeTime = Math.floor(
-    (date2.valueOf() - date1.valueOf()) / (1000 * 60)
+    Math.abs(date2.valueOf() - date1.valueOf()) / (1000 * 60)
   );
+  return changeTime;
+};
 
-  return changeTime > 60 ? ">1h" : `${changeTime}m`;
+export const minutesFromNow = (time: string): number => {
+  const result = minutesDifferenceNumber(currentTime(), time);
+  return result ? (result >= 120 ? 119 : result) : 0;
 };

@@ -3,8 +3,8 @@ import React from "react";
 export type TFromToArr = string[];
 
 export type TFromTo = {
-  from: string | null;
-  to: string | null;
+  from: string;
+  to: string;
 };
 
 export enum Label {

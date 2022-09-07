@@ -41,15 +41,16 @@ const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
 
   return (
     <>
-      {trainList && trainList.map((trainDetails) => (
-        <TrainRowContainer
-          key={trainDetails.serviceIdUrlSafe}
-          fromTo={fromTo}
-          trainDetails={trainDetails}
-          rowSelected={rowSelected}
-          setRowSelected={setRowSelected}
-        />
-      ))}
+      {trainList &&
+        trainList.map((trainDetails) => (
+          <TrainRowContainer
+            key={trainDetails.serviceIdUrlSafe}
+            fromTo={fromTo}
+            trainDetails={trainDetails}
+            rowSelected={rowSelected}
+            setRowSelected={setRowSelected}
+          />
+        ))}
       {trainList.length === 0 && (
         <div className="p-4 text-text-inactive text-xs">
           Sorry, no trains are found currently. Check back later to look for

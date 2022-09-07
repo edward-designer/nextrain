@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import SyncIcon from "@mui/icons-material/Sync";
 import TrainIcon from "@mui/icons-material/Train";
 import CloseFullscreenOutlinedIcon from "@mui/icons-material/CloseFullscreenOutlined";
 import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
+
+import { SelectedTrainContext } from "../../Context/TrainContext";
 
 import useTrainInfo from "../../Hooks/useTrainInfo";
 
@@ -14,18 +16,25 @@ import Button from "../Button";
 
 import { TFromTo } from "../../Types/types";
 
+import { minutesFromNow } from "../../Utils/helpers";
+
 type TTrainList = {
   fromTo: TFromTo;
   direct: boolean;
 };
 
 const TrainList = ({ fromTo, direct }: TTrainList) => {
-  const { response, error, loading, refetch } = useTrainInfo(fromTo);
+  const { toTime, toStation } = useContext(SelectedTrainContext);
+  const timeFrom =
+    toTime && fromTo.from === toStation ? minutesFromNow(toTime) : 0;
+  const { response, error, loading, refetch } = useTrainInfo(fromTo, timeFrom);
   const [isTabOpen, setIsTabOpen] = useState(true);
 
   const toggleTab = () => {
     setIsTabOpen((isTabOpen) => !isTabOpen);
   };
+
+  useEffect(() => refetch(timeFrom), [timeFrom]);
 
   return (
     <div className="shadow-md">
@@ -36,14 +45,22 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
             {` ${fromTo.from} → ${fromTo.to}`}
             {direct && <span className="text-[10px]"> (Direct)</span>}
           </h2>
-          <Button clickHandler={toggleTab} customStyle="bg-background-title">
+          <Button
+            clickHandler={toggleTab}
+            customStyle="bg-background-title"
+            ariaLabel={isTabOpen ? `minimize the tab` : `maximize the tab`}
+          >
             {isTabOpen ? (
               <CloseFullscreenOutlinedIcon />
             ) : (
               <ZoomOutMapOutlinedIcon />
             )}
           </Button>
-          <Button clickHandler={refetch} customStyle="bg-background-title">
+          <Button
+            clickHandler={() => refetch()}
+            customStyle="bg-background-title"
+            ariaLabel="update train data"
+          >
             <SyncIcon />
           </Button>
         </div>
