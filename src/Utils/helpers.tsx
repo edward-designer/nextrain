@@ -73,6 +73,18 @@ export const minutesDifferenceNumber = (
   timeArrival: string,
   timeDeparture: string
 ): number | null => {
+  const changeTime = minutesDifferenceNumber(timeArrival, timeDeparture);
+  return changeTime === null
+    ? null
+    : changeTime > 60
+    ? ">1h"
+    : `${changeTime}m`;
+};
+
+export const minutesDifferenceNumber = (
+  timeArrival: string,
+  timeDeparture: string
+): number | null => {
   if (!(isTimeFormat(timeArrival) && isTimeFormat(timeDeparture))) return null;
   const date1 = new Date();
   const [hour1, minute1] = timeArrival.split(":");
