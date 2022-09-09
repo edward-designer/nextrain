@@ -12,10 +12,6 @@ app.use(express.json());
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
-
 const settings = { method: "Get" };
 
 app.get("/api/:from/to/:to/:timeOffset", (request, response) => {

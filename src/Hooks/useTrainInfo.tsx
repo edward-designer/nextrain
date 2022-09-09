@@ -110,7 +110,7 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
         const http =
           process.env.NODE_ENV === "development"
             ? "http://localhost:3001"
-            : "https://heroku.com";
+            : "https://nextrains.herokuapp.com";
         const trainApi = `${http}/api/${from}/to/${apiTo}/${timeOffset}`;
         axios
           .get(trainApi)
