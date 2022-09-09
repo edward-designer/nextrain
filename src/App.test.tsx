@@ -52,4 +52,39 @@ describe("App", () => {
       expect(heading).toBeInTheDocument();
     });
   });
+
+  test("can search for journey with from and to stations", async () => {
+    render(<App />);
+    const fromField = screen.getByLabelText("from");
+    await fireEvent.mouseDown(fromField);
+    await userEvent.type(fromField, "THATCHAM");
+    fireEvent.click(screen.getByText("Thatcham (THA)"));
+    const toField = screen.getByLabelText("to");
+    await fireEvent.mouseDown(toField);
+    await userEvent.type(toField, "READING");
+    fireEvent.click(screen.getByText("Reading (RDG)"));
+    await waitFor(() => {
+      const heading2 = screen.getByText("THA → RDG");
+      expect(heading2).toBeInTheDocument();
+    });
+  });
+
+  test("can reverse stations", async () => {
+    render(<App />);
+    const fromField = screen.getByLabelText("from");
+    await fireEvent.mouseDown(fromField);
+    await userEvent.type(fromField, "THATCHAM");
+    fireEvent.click(screen.getByText("Thatcham (THA)"));
+    const toField = screen.getByLabelText("to");
+    await fireEvent.mouseDown(toField);
+    await userEvent.type(toField, "READING");
+    fireEvent.click(screen.getByText("Reading (RDG)"));
+
+    const button = screen.getByLabelText("Swap Stations");
+    await userEvent.click(button);
+    await waitFor(() => {
+      const heading3 = screen.getByText("RDG → THA");
+      expect(heading3).toBeInTheDocument();
+    });
+  });
 });

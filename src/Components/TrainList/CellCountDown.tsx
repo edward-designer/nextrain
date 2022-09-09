@@ -1,21 +1,18 @@
 import React from "react";
 import ReactTimeAgo from "react-time-ago";
+
 const { round } = require("javascript-time-ago/steps");
 
-console.log(round);
 type TCellCountDown = {
   departureDateObj: Date | undefined;
   isRunning: boolean;
 };
 
-const CellCountDown = ({
-  departureDateObj,
-  isRunning,
-}: TCellCountDown) => {
+const CellCountDown = ({ departureDateObj, isRunning }: TCellCountDown) => {
   return (
     <div className="basis-1/12 flex relative items-center justify-center -translate-x-2">
       {isRunning && (
-        <span className="animate-ping absolute w-6 h-6 rounded-full bg-background-countdown opacity-50"></span>
+        <span data-testid="ping" className="animate-ping absolute w-6 h-6 rounded-full bg-background-countdown opacity-50"></span>
       )}
       {departureDateObj && (
         <ReactTimeAgo

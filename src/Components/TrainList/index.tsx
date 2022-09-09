@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import SyncIcon from "@mui/icons-material/Sync";
 import TrainIcon from "@mui/icons-material/Train";
-import CloseFullscreenOutlinedIcon from "@mui/icons-material/CloseFullscreenOutlined";
-import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 
@@ -11,7 +10,7 @@ import useTrainInfo from "../../Hooks/useTrainInfo";
 import TrainListContainer from "./TrainListContainer";
 import Notice from "../Notice";
 import Loading from "../Common/Loading";
-import Error from "../Common/Error";
+import Alert from "../Common/Alert";
 import Button from "../Button";
 
 import { TFromTo } from "../../Types/types";
@@ -27,14 +26,17 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
   const { toTime, toStation } = useContext(SelectedTrainContext);
   const timeFrom =
     toTime && fromTo.from === toStation ? minutesFromNow(toTime) : 0;
-  const { response, error, loading, refetch } = useTrainInfo(fromTo, timeFrom);
-  const [isTabOpen, setIsTabOpen] = useState(true);
+  const { response, error, notice, loading, refetch } = useTrainInfo(
+    fromTo,
+    timeFrom
+  );
+  const [showAlert, setShowAlert] = useState(error !== "");
 
-  const toggleTab = () => {
-    setIsTabOpen((isTabOpen) => !isTabOpen);
+  const toggleAlert = () => {
+    setShowAlert((showAlert) => !showAlert);
   };
 
-  useEffect(() => refetch(timeFrom), [timeFrom]);
+  useEffect(() => refetch(timeFrom), [timeFrom, refetch]);
 
   return (
     <div className="shadow-md">
@@ -45,17 +47,15 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
             {` ${fromTo.from} → ${fromTo.to}`}
             {direct && <span className="text-[10px]"> (Direct)</span>}
           </h2>
-          <Button
-            clickHandler={toggleTab}
-            customStyle="bg-background-title"
-            ariaLabel={isTabOpen ? `minimize the tab` : `maximize the tab`}
-          >
-            {isTabOpen ? (
-              <CloseFullscreenOutlinedIcon />
-            ) : (
-              <ZoomOutMapOutlinedIcon />
-            )}
-          </Button>
+          {notice && (
+            <Button
+              clickHandler={toggleAlert}
+              customStyle="bg-background-title"
+              ariaLabel="show ntoices"
+            >
+              <ReportProblemIcon />
+            </Button>
+          )}
           <Button
             clickHandler={() => refetch()}
             customStyle="bg-background-title"
@@ -65,16 +65,18 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
           </Button>
         </div>
       )}
-      {isTabOpen && (
-        <>
-          <Error error={error} />
-          <Notice fromStation={fromTo.from} />
-          <div className="flex flex-col relative">
-            {loading && <Loading />}
-            <TrainListContainer fromTo={fromTo} response={response} />
-          </div>
-        </>
+
+      {error !== "" && showAlert && (
+        <Alert message={error} setShowAlert={setShowAlert} type="Error" />
       )}
+      {notice !== "" && showAlert && (
+        <Alert message={notice} setShowAlert={setShowAlert} type="Notice" />
+      )}
+      <Notice fromStation={fromTo.from} />
+      <div className="flex flex-col relative">
+        {loading && <Loading />}
+        <TrainListContainer fromTo={fromTo} response={response} />
+      </div>
     </div>
   );
 };

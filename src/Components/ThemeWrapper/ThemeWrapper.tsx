@@ -36,7 +36,7 @@ const ThemeWrapper = ({ children }: { children: ReactNode }) => {
               className="peer translate-x-[100%] focus:z-50 focus:outline-none"
               type="checkbox"
               id="checkbox"
-              checked={theme==='dark'}
+              defaultChecked={theme === "dark"}
               aria-label="toggle light and dark theme"
             />
             <div

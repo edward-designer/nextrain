@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import RailwayAlertIcon from "@mui/icons-material/RailwayAlert";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
+import WcIcon from "@mui/icons-material/Wc";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 
@@ -42,6 +43,7 @@ const TrainRowContainer = ({
     arrivalTimeDestination,
     callingPoint,
     reason,
+    hasToilet,
   } = trainDetails;
 
   /* if the first leg train is not selected, the second leg will show all trains */
@@ -55,7 +57,7 @@ const TrainRowContainer = ({
   if (rowSelected && !isSelected) return null;
 
   /* if a train is selected, the connecting trains will show the time for changing platforms */
-  const showChangeTimer = toStation === fromTo.from;
+  const showChangeTimer = toStation === fromTo.from && isRunning;
   let changeTime = null;
   if (arrivalTime && showChangeTimer) {
     changeTime = minutesDifference(toTime, arrivalTime);
@@ -148,6 +150,13 @@ const TrainRowContainer = ({
           fromTo={fromTo}
           status={status}
         />
+        {hasToilet && (
+          <div className="self-start">
+            <WcIcon
+              sx={{ fontSize: "medium", color: "var(--text-tertiary)" }}
+            />
+          </div>
+        )}
       </div>
       {reason && (
         <div className="flex items-center text-[7pt] -mt-3 leading-3 p-1 italic text-text-highlight">

@@ -3,6 +3,7 @@ import {
   convertArrToFromToObject,
   isNextDay,
   minutesDifference,
+  checkPeakHours,
 } from "./helpers";
 
 describe("helpers - isTime1LaterThanTime2", () => {
@@ -85,5 +86,37 @@ describe("helpers - minutesDifference", () => {
 
     const diff5 = minutesDifference("23:59", "23:58");
     expect(diff5).toBe("1m");
+  });
+});
+
+describe("helpers - checkPeakHours", () => {
+  it("check whether it is peak hour", () => {
+    jest.useFakeTimers();
+    const fakeTime = new Date(
+      "Fri Sep 09 2022 08:00:47 GMT+0100 (British Summer Time)"
+    );
+    jest.setSystemTime(fakeTime);
+
+    const isPeakHour = checkPeakHours("PAD");
+    expect(isPeakHour).toBe(true);
+
+    const fakeTime2 = new Date(
+      "Fri Sep 09 2022 17:00:47 GMT+0100 (British Summer Time)"
+    );
+    jest.setSystemTime(fakeTime2);
+
+    const isPeakHour2 = checkPeakHours("PAD");
+    expect(isPeakHour2).toBe(true);
+
+    const isPeakHour3 = checkPeakHours("RDG");
+    expect(isPeakHour3).toBe(false);
+
+    const fakeTime4 = new Date(
+      "Fri Sep 09 2022 22:00:47 GMT+0100 (British Summer Time)"
+    );
+    jest.setSystemTime(fakeTime4);
+
+    const isPeakHour4 = checkPeakHours("PAD");
+    expect(isPeakHour4).toBe(false);
   });
 });

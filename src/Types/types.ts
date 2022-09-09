@@ -1,5 +1,3 @@
-import React from "react";
-
 export type TFromToArr = string[];
 
 export type TFromTo = {
@@ -35,6 +33,9 @@ export type TTrainInfo = {
   operator: string;
   delayReason: string;
   cancelReason: string;
+  formation: {
+    coaches: { toilet: { status: number; value: string } }[];
+  } | null;
 };
 
 export type TParsedTrainInfo = {
@@ -54,6 +55,7 @@ export type TParsedTrainInfo = {
   }[];
   arrivalTimeDestination: string | null;
   reason: string | null;
+  hasToilet: boolean;
 };
 
 export type Theme = "light" | "dark";

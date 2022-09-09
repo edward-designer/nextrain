@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import {
@@ -29,6 +29,16 @@ const getTrainStatus = (
   return status;
 };
 
+const findToilets = (formation: TTrainInfo["formation"]): boolean => {
+  if (formation && Array.isArray(formation?.coaches)) {
+    return formation.coaches.reduce(
+      (acc, cur) => cur.toilet?.status === 1 || acc,
+      false
+    );
+  }
+  return false;
+};
+
 const parseTrainInfo = (
   train: TTrainInfo,
   to: string | null
@@ -42,6 +52,7 @@ const parseTrainInfo = (
     serviceIdUrlSafe,
     delayReason,
     cancelReason,
+    formation,
   } = train;
   const arrivalTime =
     etd === "Cancelled" || etd === "Delayed"
@@ -65,6 +76,7 @@ const parseTrainInfo = (
   const endStation = destination[0].locationName;
   const endStationCRS = destination[0].crs;
   const reason = cancelReason || delayReason || null;
+  const hasToilet = findToilets(formation);
 
   const formattedTrainInfo = {
     serviceIdUrlSafe,
@@ -78,6 +90,7 @@ const parseTrainInfo = (
     arrivalTime,
     arrivalTimeDestination,
     reason,
+    hasToilet,
   };
   return formattedTrainInfo;
 };
@@ -85,46 +98,58 @@ const parseTrainInfo = (
 const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
   const [response, setResponse] = useState<TParsedTrainInfo[] | null>(null);
   const [error, setError] = useState<string>("");
+  const [notice, setNotice] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchTrainInfo = (time: number = 0) => {
-    if (from !== "") {
-      setLoading(true);
-      const apiTo = to ? `/to/${to}` : "";
-      const timeOffset = time;
+  const fetchTrainInfo = useCallback(
+    (time: number = 0) => {
+      if (from !== "") {
+        setLoading(true);
+        const apiTo = to ? `${to}` : "NIL";
+        const timeOffset = time;
+        const http =
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3001"
+            : "https://heroku.com";
+        const trainApi = `${http}/api/${from}/to/${apiTo}/${timeOffset}`;
+        axios
+          .get(trainApi)
+          .then((response) => {
+            const notice = response.data.nrccMessages;
+            if (notice) setNotice(notice);
 
-      const trainApi = `https://huxley2.azurewebsites.net/departures/${from}${apiTo}/20?accessToken=${process.env.REACT_APP_accessToken}&expand=true&timeOffset=${timeOffset}&timeWindow=120`;
-      axios
-        .get(trainApi)
-        .then((response) => {
-          let trainServices = response.data.trainServices;
-          console.log(trainServices);
-          trainServices = trainServices?.map((train: TTrainInfo) => {
-            const formattedTrainInfo = parseTrainInfo(train, to);
-            return { ...formattedTrainInfo };
+            let trainServices = response.data.trainServices;
+            console.log("1", trainServices);
+            trainServices = trainServices?.map((train: TTrainInfo) => {
+              const formattedTrainInfo = parseTrainInfo(train, to);
+              return { ...formattedTrainInfo };
+            });
+            console.log("2", trainServices);
+            setResponse(trainServices);
+          })
+          .catch((e) => {
+            setError(e.message);
+          })
+          .finally(() => {
+            setLoading(false);
           });
-          console.log(trainServices);
-          setResponse(trainServices);
-          // important notice: response.data.nrccMessages
-        })
-        .catch((e) => {
-          setError(e.message);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  };
+      }
+    },
+    [from, to]
+  );
 
-  const refetch = (time: number = 0) => {
-    fetchTrainInfo(time);
-  };
+  const refetch = useCallback(
+    (time: number = 0) => {
+      fetchTrainInfo(time);
+    },
+    [fetchTrainInfo]
+  );
 
   useEffect(() => {
     fetchTrainInfo();
-  }, [from, to]);
+  }, [fetchTrainInfo, from, to]);
 
-  return { response, error, loading, refetch };
+  return { response, error, notice, loading, refetch };
 };
 
 export default useTrainInfo;

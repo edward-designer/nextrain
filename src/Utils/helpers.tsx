@@ -7,11 +7,11 @@ export const currentTime = () => {
   });
 };
 
-export const currentDayofWeek = () => new Date().getDay() + 1;
+export const currentDayofWeek = () => new Date().getDay();
 
 export const isNextDay = (time: string) => {
   const [hour] = time.split(":");
-  return Number(new Date().getHours()) - parseInt(hour) > 12;
+  return Number(new Date().getHours()) > parseInt(hour);
 };
 
 export const convertArrToFromToObject = (
@@ -81,7 +81,7 @@ export const minutesDifferenceNumber = (
   date1.setSeconds(0);
   const date2 = new Date();
   const [hour2, minute2] = timeDeparture.split(":");
-  if (isNextDay(timeDeparture)) {
+  if (isNextDay(timeArrival) !== isNextDay(timeDeparture)) {
     date2.setHours(parseInt(hour2));
     date2.setDate(date2.getDate() + 1);
   } else {
@@ -98,4 +98,17 @@ export const minutesDifferenceNumber = (
 export const minutesFromNow = (time: string): number => {
   const result = minutesDifferenceNumber(currentTime(), time);
   return result ? (result >= 120 ? 119 : result) : 0;
+};
+
+export const checkPeakHours = (fromStation: string | null): boolean => {
+  const londonStations = ["PAD", "KGX", "WAT", "VIC"];
+  const time = currentTime();
+  const dateOfWeek = currentDayofWeek();
+  if (!fromStation) return false;
+  return dateOfWeek <= 5
+    ? (time <= "09:30" && time >= "06:30") ||
+        (time >= "16:00" &&
+          time <= "19:00" &&
+          londonStations.includes(fromStation))
+    : false;
 };
