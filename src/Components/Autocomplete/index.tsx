@@ -22,6 +22,7 @@ const Autocomplete = ({ label, changeHandler, value }: TAutocompleteProps) => {
         id={label}
         options={stationList}
         autoHighlight
+        blurOnSelect
         getOptionLabel={(station) =>
           station && `${station.stationName} (${station.crsCode})`
         }

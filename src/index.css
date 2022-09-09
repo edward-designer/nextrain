@@ -37,14 +37,14 @@
   --text-highlight: rgb(187, 51, 51);
   --button-color: rgb(21, 92, 92);
   --hover-color: rgb(1, 108, 108);
-  --accent-color: rgb(28, 37, 61);
+  --accent-color: rgb(0, 0, 0);
   --accent-reverse: rgb(255, 255, 255);
   --reverse-color: rgb(216, 225, 229);
   --background-main: rgb(19, 23, 29);
   --background-form: rgb(40, 49, 61);
   --background-title: rgb(70, 83, 100);
   --background-countdown: rgba(12, 54, 103, 0.8);
-  --background-notice: rgb(26, 49, 78);
+  --background-notice: rgb(50, 76, 108);
   --text-inactive: rgb(67, 71, 91);
   --background-inactive: rgb(49, 53, 63);
   --background-loading: rgba(255, 255, 255, 0.3);

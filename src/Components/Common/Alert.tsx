@@ -12,8 +12,10 @@ type PropsType = {
 const Alert = ({ message, setShowAlert, type = "Error" }: PropsType) => {
   useEffect(() => {
     let timeOutId: ReturnType<typeof setTimeout>;
-    timeOutId = setTimeout(() => setShowAlert(false), 10000);
-    return () => clearTimeout(timeOutId);
+    if (type === "Error") {
+      timeOutId = setTimeout(() => setShowAlert(false), 10000);
+      return () => clearTimeout(timeOutId);
+    }
   }, []);
 
   return (

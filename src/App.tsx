@@ -14,9 +14,9 @@ const App = () => {
   const { returnArr, direct } = convertArrToFromToObject(fromToArr);
 
   return (
-    <div className="max-w-xs mx-auto relative">
-      <TrainContext>
-        <ThemeWrapper>
+    <ThemeWrapper>
+      <div className="max-w-7xl mx-auto relative">
+        <TrainContext>
           <InputForm fromToArr={fromToArr} {...others} />
           {returnArr.map((item, inx) => (
             <TrainList
@@ -25,9 +25,9 @@ const App = () => {
               direct={direct && inx === 0}
             />
           ))}
-        </ThemeWrapper>
-      </TrainContext>
-    </div>
+        </TrainContext>
+      </div>
+    </ThemeWrapper>
   );
 };
 
