@@ -69,9 +69,15 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
       {error !== "" && showAlert && (
         <Alert message={error} setShowAlert={setShowAlert} type="Error" />
       )}
-      {notice !== "" && showAlert && (
-        <Alert message={notice} setShowAlert={setShowAlert} type="Notice" />
-      )}
+      {notice &&
+        showAlert &&
+        notice.map((noticeItem) => (
+          <Alert
+            message={noticeItem.value}
+            setShowAlert={setShowAlert}
+            type="Notice"
+          />
+        ))}
       <Notice fromStation={fromTo.from} />
       <div className="flex flex-col relative">
         {loading && <Loading />}

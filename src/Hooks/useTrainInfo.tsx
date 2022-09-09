@@ -98,7 +98,7 @@ const parseTrainInfo = (
 const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
   const [response, setResponse] = useState<TParsedTrainInfo[] | null>(null);
   const [error, setError] = useState<string>("");
-  const [notice, setNotice] = useState<string>("");
+  const [notice, setNotice] = useState<{ value: string }[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchTrainInfo = useCallback(
@@ -117,7 +117,7 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
           .then((response) => {
             const notice = response.data.nrccMessages;
             if (notice) setNotice(notice);
-
+            console.log(response);
             let trainServices = response.data.trainServices;
             console.log("1", trainServices);
             trainServices = trainServices?.map((train: TTrainInfo) => {

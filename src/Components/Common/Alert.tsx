@@ -4,7 +4,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Button from "../Button";
 
 type PropsType = {
-  message: string | null;
+  message: string;
   setShowAlert: React.Dispatch<React.SetStateAction<boolean>>;
   type?: "Error" | "Notice";
 };
@@ -31,7 +31,11 @@ const Alert = ({ message, setShowAlert, type = "Error" }: PropsType) => {
         }`}
       >
         <p className="font-bold">{type}</p>
-        <p>{message}</p>
+        {type === "Error" ? (
+          <p>{message}</p>
+        ) : (
+          <p dangerouslySetInnerHTML={{ __html: message }}></p>
+        )}
       </div>
       <Button
         customStyle={`${
