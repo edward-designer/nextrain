@@ -24,7 +24,6 @@ const ThemeWrapper = ({ children }: { children: ReactNode }) => {
       data-theme={theme}
       className="min-h-screen pt-10 bg-background-main text-text-primary"
       data-testid="wrapper"
-      data-testid="wrapper"
     >
       <ThemeProvider theme={MUItheme}>
         <div

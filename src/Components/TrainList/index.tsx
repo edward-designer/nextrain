@@ -5,8 +5,6 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 
-import { SelectedTrainContext } from "../../Context/TrainContext";
-
 import useTrainInfo from "../../Hooks/useTrainInfo";
 
 import TrainListContainer from "./TrainListContainer";
@@ -28,26 +26,17 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
   const { toTime, toStation } = useContext(SelectedTrainContext);
   const timeFrom =
     toTime && fromTo.from === toStation ? minutesFromNow(toTime) : 0;
-<<<<<<< HEAD
   const { response, error, notice, loading, refetch } = useTrainInfo(
     fromTo,
     timeFrom
   );
   const [showAlert, setShowAlert] = useState(error !== "");
-=======
-  const { response, error, loading, refetch } = useTrainInfo(fromTo, timeFrom);
-  const [isTabOpen, setIsTabOpen] = useState(true);
->>>>>>> 8fd22f78fecee2cf63d645ba100d4e89c4687008
 
   const toggleAlert = () => {
     setShowAlert((showAlert) => !showAlert);
   };
 
-<<<<<<< HEAD
   useEffect(() => refetch(timeFrom), [timeFrom, refetch]);
-=======
-  useEffect(() => refetch(timeFrom), [timeFrom]);
->>>>>>> 8fd22f78fecee2cf63d645ba100d4e89c4687008
 
   return (
     <div className="shadow-md">
@@ -58,7 +47,6 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
             {` ${fromTo.from} → ${fromTo.to}`}
             {direct && <span className="text-[10px]"> (Direct)</span>}
           </h2>
-<<<<<<< HEAD
           {notice && (
             <Button
               clickHandler={toggleAlert}
@@ -68,19 +56,6 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
               <ReportProblemIcon />
             </Button>
           )}
-=======
-          <Button
-            clickHandler={toggleTab}
-            customStyle="bg-background-title"
-            ariaLabel={isTabOpen ? `minimize the tab` : `maximize the tab`}
-          >
-            {isTabOpen ? (
-              <CloseFullscreenOutlinedIcon />
-            ) : (
-              <ZoomOutMapOutlinedIcon />
-            )}
-          </Button>
->>>>>>> 8fd22f78fecee2cf63d645ba100d4e89c4687008
           <Button
             clickHandler={() => refetch()}
             customStyle="bg-background-title"
