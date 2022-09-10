@@ -7,6 +7,8 @@ import ThemeWrapper from "./Components/ThemeWrapper/ThemeWrapper";
 import InputForm from "./Components/InputForm";
 import TrainList from "./Components/TrainList";
 
+import { ReactComponent as Logo } from "./nextrains.svg";
+
 import { convertArrToFromToObject } from "./Utils/helpers";
 
 const App = () => {
@@ -17,6 +19,7 @@ const App = () => {
     <ThemeWrapper>
       <div className="max-w-7xl mx-auto relative">
         <TrainContext>
+          <Logo className="-mt-6 relative ml-2 fill-text-tertiary max-w-[40%]" />
           <InputForm fromToArr={fromToArr} {...others} />
           {returnArr.map((item, inx) => (
             <TrainList

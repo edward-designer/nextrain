@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import RailwayAlertIcon from "@mui/icons-material/RailwayAlert";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import RadioButtonUncheckedOutlinedIcon from "@mui/icons-material/RadioButtonUncheckedOutlined";
-import WcIcon from "@mui/icons-material/Wc";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 
@@ -43,7 +41,6 @@ const TrainRowContainer = ({
     arrivalTimeDestination,
     callingPoint,
     reason,
-    hasToilet,
   } = trainDetails;
 
   /* if the first leg train is not selected, the second leg will show all trains */
@@ -122,11 +119,9 @@ const TrainRowContainer = ({
           {!isRunning ? (
             ""
           ) : isSelected ? (
-            <RadioButtonCheckedIcon sx={{ fontSize: "14px" }} />
+            <TaskAltIcon sx={{ fontSize: "14px" }} />
           ) : (
-            <RadioButtonUncheckedOutlinedIcon
-              sx={{ color: "var(--border-notice)", fontSize: "14px" }}
-            />
+            ""
           )}
         </div>
         <CellTime
@@ -150,13 +145,13 @@ const TrainRowContainer = ({
           fromTo={fromTo}
           status={status}
         />
-        {hasToilet && (
+        {/*hasToilet && (
           <div className="self-start">
             <WcIcon
               sx={{ fontSize: "medium", color: "var(--text-tertiary)" }}
             />
           </div>
-        )}
+        )*/}
       </div>
       {reason && (
         <div className="flex items-center text-[7pt] -mt-3 leading-3 p-1 italic text-text-highlight">

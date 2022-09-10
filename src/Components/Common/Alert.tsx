@@ -16,6 +16,7 @@ const Alert = ({ message, setShowAlert, type = "Error" }: PropsType) => {
       timeOutId = setTimeout(() => setShowAlert(false), 10000);
       return () => clearTimeout(timeOutId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

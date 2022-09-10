@@ -118,7 +118,7 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
             const notice = response.data.nrccMessages;
             if (notice) setNotice(notice);
             let trainServices = response.data.trainServices;
-            console.log("1", trainServices);
+
             trainServices = trainServices?.map((train: TTrainInfo) => {
               const formattedTrainInfo = parseTrainInfo(train, to);
               return { ...formattedTrainInfo };

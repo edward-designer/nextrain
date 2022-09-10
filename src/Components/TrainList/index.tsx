@@ -37,7 +37,6 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
   };
 
   useEffect(() => refetch(timeFrom), [timeFrom, refetch]);
-
   return (
     <div className="shadow-md">
       {fromTo.from && (
@@ -47,7 +46,7 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
             {` ${fromTo.from} → ${fromTo.to}`}
             {direct && <span className="text-[10px]"> (Direct)</span>}
           </h2>
-          {notice && (
+          {notice.length !== 0 && (
             <Button
               clickHandler={toggleAlert}
               customStyle="bg-background-title"
@@ -71,8 +70,9 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
       )}
       {notice &&
         showAlert &&
-        notice.map((noticeItem) => (
+        notice.map((noticeItem, inx) => (
           <Alert
+            key={`${fromTo.from}${fromTo.to}${inx}`}
             message={noticeItem.value}
             setShowAlert={setShowAlert}
             type="Notice"
