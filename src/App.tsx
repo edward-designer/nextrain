@@ -29,12 +29,8 @@ const App = () => {
               direct={direct && inx === 0}
             />
           ))}
-          <div className="pt-2">
-            <img
-              className="max-w-[160px] float-right"
-              src={NRE}
-              alt="powered by NRE"
-            />
+          <div className="pt-2 flex flex-row-reverse">
+            <img className="max-w-[160px]" src={NRE} alt="powered by NRE" />
           </div>
         </div>
       </TrainContext>
