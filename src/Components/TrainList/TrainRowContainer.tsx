@@ -41,6 +41,7 @@ const TrainRowContainer = ({
     arrivalTimeDestination,
     callingPoint,
     reason,
+    fastest,
   } = trainDetails;
 
   /* if the first leg train is not selected, the second leg will show all trains */
@@ -114,6 +115,20 @@ const TrainRowContainer = ({
       tabIndex={0}
       aria-pressed="false"
     >
+      {fastest && (
+        <span
+          className="-mb-4 bg-hover-color text-xs w-16 h-[20px] relative text-reverse-color leading-5 pl-2
+        after:absolute 
+        after:left-[100%]
+    after:w-0 after:h-0 
+    after:border-t-[10px] after:border-t-transparent
+    after:border-l-[10px] after:border-l-hover-color
+    after:border-b-[10px] after:border-b-transparent
+        "
+        >
+          Fastest
+        </span>
+      )}
       <div className="flex flex-row gap-1 items-center py-3">
         <div className="w-3 flex items-center justify-center text-xs text-button-color">
           {!isRunning ? (

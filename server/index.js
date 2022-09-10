@@ -15,7 +15,7 @@ const fetch = (...args) =>
 const settings = { method: "Get" };
 
 app.get("/api/:from/to/:to/:timeOffset", (request, response) => {
-  const timeOffset = request.params.timeOffset && 0;
+  const timeOffset = request.params.timeOffset || 0;
   const to = request.params.to === "NIL" ? "" : `/to/${request.params.to}`;
   const URL = `https://huxley2.azurewebsites.net/departures/${request.params.from}${to}/20?accessToken=${process.env.ACCESSTOKEN}&expand=true&timeOffset=${timeOffset}&timeWindow=120`;
   fetch(URL, settings)

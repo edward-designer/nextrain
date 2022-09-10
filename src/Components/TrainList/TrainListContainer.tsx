@@ -20,7 +20,8 @@ const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
   if (!fromTo.from)
     return (
       <div className="p-4 text-text-inactive text-xs">
-        Please begin by selecting the departure station.
+        Please begin by entering the departure station in the 'from' field
+        above.
       </div>
     );
 

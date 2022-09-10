@@ -76,6 +76,7 @@ const response = [
     reason:
       "This train has been delayed by trespassers on the railway earlier today",
     hasToilet: false,
+    fastest: false,
   },
   {
     serviceIdUrlSafe: "72stsRmf7zyY8XO0Whv1wA",
@@ -151,6 +152,7 @@ const response = [
     arrivalTimeDestination: "16:32",
     reason: null,
     hasToilet: false,
+    fastest: false,
   },
   {
     serviceIdUrlSafe: "u6zHFRqGor7ZHwEt8KyQNA",
@@ -190,6 +192,7 @@ const response = [
     arrivalTimeDestination: "16:55",
     reason: null,
     hasToilet: false,
+    fastest: false,
   },
   {
     serviceIdUrlSafe: "jYoGmVdcCE3WiszhG61Svg",
@@ -242,6 +245,7 @@ const response = [
     reason:
       "This train has been delayed by trespassers on the railway earlier today",
     hasToilet: true,
+    fastest: false,
   },
   {
     serviceIdUrlSafe: "abk_MHVSgdYNfr6usBrCvw",
@@ -317,6 +321,7 @@ const response = [
     arrivalTimeDestination: "17:34",
     reason: null,
     hasToilet: false,
+    fastest: false,
   },
 ];
 const fromTo = { from: "THA", to: "PAD" };
@@ -343,7 +348,9 @@ describe("TrainListContainer", () => {
   it("gives a message when there is no from station", () => {
     render(<TrainListContainer fromTo={{ from: "", to: "" }} response={[]} />);
     expect(
-      screen.getByText("Please begin by selecting the departure station.")
+      screen.getByText(
+        "Please begin by entering the departure station in the 'from' field above."
+      )
     ).toBeInTheDocument();
   });
 });

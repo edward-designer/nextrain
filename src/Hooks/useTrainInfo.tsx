@@ -77,6 +77,7 @@ const parseTrainInfo = (
   const endStationCRS = destination[0].crs;
   const reason = cancelReason || delayReason || null;
   const hasToilet = findToilets(formation);
+  const fastest = false;
 
   const formattedTrainInfo = {
     serviceIdUrlSafe,
@@ -91,6 +92,7 @@ const parseTrainInfo = (
     arrivalTimeDestination,
     reason,
     hasToilet,
+    fastest,
   };
   return formattedTrainInfo;
 };
@@ -118,11 +120,36 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
             const notice = response.data.nrccMessages;
             if (notice) setNotice(notice);
             let trainServices = response.data.trainServices;
-
             trainServices = trainServices?.map((train: TTrainInfo) => {
               const formattedTrainInfo = parseTrainInfo(train, to);
               return { ...formattedTrainInfo };
             });
+            const runningTrainServices = trainServices.filter(
+              (train: TParsedTrainInfo) => train.isRunning
+            );
+            if (trainServices?.length > 1) {
+              let fastestArrivalTime =
+                runningTrainServices.arrivalTimeDestination;
+              let fastestArrivalTrain = 0;
+              for (let i = 0; i < trainServices.length; i++) {
+                if (
+                  isTime1LaterThanTime2(
+                    fastestArrivalTime,
+                    trainServices[i].arrivalTimeDestination
+                  ) ||
+                  !fastestArrivalTime ||
+                  !trainServices[fastestArrivalTrain].isRunning
+                ) {
+                  fastestArrivalTime = trainServices[i].arrivalTimeDestination;
+                  fastestArrivalTrain = i;
+                }
+              }
+              if (
+                fastestArrivalTime &&
+                trainServices[fastestArrivalTrain].isRunning
+              )
+                trainServices[fastestArrivalTrain].fastest = true;
+            }
             setResponse(trainServices);
           })
           .catch((e) => {

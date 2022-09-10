@@ -30,10 +30,6 @@ export const convertArrToFromToObject = (
   } else {
     returnArr.push({ from: arr[0], to: arr.at(-1) as string });
   }
-  if (arrCount >= 3) {
-    returnArr.unshift({ from: arr[0], to: arr.at(-1) as string });
-    direct = true;
-  }
   return { returnArr, direct };
 };
 

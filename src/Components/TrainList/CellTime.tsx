@@ -12,7 +12,7 @@ const CellTime = ({
   std,
   arrivalTime,
   arrivalTimeDestination,
-  status,
+  status
 }: TCellTime) => {
   if (status === TrainStatus.cancelled) arrivalTime = "Cancelled";
   if (status === TrainStatus.delayed) arrivalTime = "Delayed";

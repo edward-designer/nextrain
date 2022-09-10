@@ -75,7 +75,8 @@ const trainDetails = {
   arrivalTime: "13:05",
   arrivalTimeDestination: "13:56",
   reason: "This is the reason",
-  hasToilet: true
+  hasToilet: true,
+  fastest: false,
 };
 const rowSelected = false;
 const setRowSelected = jest.fn();
