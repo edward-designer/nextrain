@@ -1,7 +1,8 @@
 import { TFromTo } from "../Types/types";
 
 export const currentTime = () => {
-  return new Date().toLocaleTimeString([], {
+  return new Date().toLocaleTimeString("en-GB", {
+    timeZone: "Europe/London",
     hour: "2-digit",
     minute: "2-digit",
   });
