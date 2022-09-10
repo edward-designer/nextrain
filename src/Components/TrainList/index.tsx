@@ -46,7 +46,7 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
             {` ${fromTo.from} → ${fromTo.to}`}
             {direct && <span className="text-[10px]"> (Direct)</span>}
           </h2>
-          {notice.length !== 0 && (
+          {notice?.length !== 0 && (
             <Button
               clickHandler={toggleAlert}
               customStyle="bg-background-title"
