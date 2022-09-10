@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Nextrains",
+  "name": "Get next trains info fast",
   "icons": [
     {
       "src": "favicon.ico",
