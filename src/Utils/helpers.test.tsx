@@ -26,35 +26,35 @@ describe("helpers - convertArrToFromToObject", () => {
   it("converts arr to objects", () => {
     const obj1 = convertArrToFromToObject(["PAD", "RDG", "THA"]);
     expect(obj1).toMatchObject({
-      direct: false,
       returnArr: [
         { from: "PAD", to: "RDG" },
         { from: "RDG", to: "THA" },
       ],
+      destination: "THA",
     });
 
     const obj2 = convertArrToFromToObject(["PAD", "", "THA"]);
     expect(obj2).toMatchObject({
-      direct: false,
       returnArr: [{ from: "PAD", to: "THA" }],
+      destination: "",
     });
 
     const obj3 = convertArrToFromToObject(["PAD", "", ""]);
     expect(obj3).toMatchObject({
-      direct: false,
       returnArr: [{ from: "PAD", to: "" }],
+      destination: "",
     });
 
     const obj4 = convertArrToFromToObject(["", "", ""]);
     expect(obj4).toMatchObject({
-      direct: false,
       returnArr: [{ from: "", to: "" }],
+      destination: "",
     });
 
     const obj5 = convertArrToFromToObject(["", "THA", ""]);
     expect(obj5).toMatchObject({
-      direct: false,
       returnArr: [{ from: "", to: "" }],
+      destination: "",
     });
   });
 });
