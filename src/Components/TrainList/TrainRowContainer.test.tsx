@@ -77,6 +77,7 @@ const trainDetails = {
   reason: "This is the reason",
   hasToilet: true,
   fastest: false,
+  isDirect: false,
 };
 const rowSelected = false;
 const setRowSelected = jest.fn();

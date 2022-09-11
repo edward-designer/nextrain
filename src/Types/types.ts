@@ -57,6 +57,7 @@ export type TParsedTrainInfo = {
   reason: string | null;
   hasToilet: boolean;
   fastest: boolean;
+  isDirect: boolean;
 };
 
 export type Theme = "light" | "dark";

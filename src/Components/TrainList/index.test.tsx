@@ -143,7 +143,7 @@ jest.mock("../../Hooks/useTrainInfo", () => ({
 
 describe("TrainList", () => {
   it("render the heading correctly", async () => {
-    render(<TrainList fromTo={{ from: "THA", to: "PAD" }} direct={false} />);
+    render(<TrainList fromTo={{ from: "THA", to: "PAD" }} destination="" />);
     expect(screen.getByText("THA → PAD")).toBeInTheDocument();
 
     const button = screen.getByLabelText("update train data");

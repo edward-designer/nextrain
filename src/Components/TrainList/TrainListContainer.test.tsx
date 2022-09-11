@@ -77,6 +77,7 @@ const response = [
       "This train has been delayed by trespassers on the railway earlier today",
     hasToilet: false,
     fastest: false,
+    isDirect: false,
   },
   {
     serviceIdUrlSafe: "72stsRmf7zyY8XO0Whv1wA",
@@ -153,6 +154,7 @@ const response = [
     reason: null,
     hasToilet: false,
     fastest: false,
+    isDirect: false,
   },
   {
     serviceIdUrlSafe: "u6zHFRqGor7ZHwEt8KyQNA",
@@ -193,6 +195,7 @@ const response = [
     reason: null,
     hasToilet: false,
     fastest: false,
+    isDirect: false,
   },
   {
     serviceIdUrlSafe: "jYoGmVdcCE3WiszhG61Svg",
@@ -246,6 +249,7 @@ const response = [
       "This train has been delayed by trespassers on the railway earlier today",
     hasToilet: true,
     fastest: false,
+    isDirect: false,
   },
   {
     serviceIdUrlSafe: "abk_MHVSgdYNfr6usBrCvw",
@@ -322,6 +326,7 @@ const response = [
     reason: null,
     hasToilet: false,
     fastest: false,
+    isDirect: false,
   },
 ];
 const fromTo = { from: "THA", to: "PAD" };

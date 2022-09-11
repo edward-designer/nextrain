@@ -17,9 +17,9 @@ export const isNextDay = (time: string) => {
 
 export const convertArrToFromToObject = (
   arr: string[]
-): { returnArr: TFromTo[]; direct: boolean } => {
+): { returnArr: TFromTo[]; destination: string } => {
   let returnArr: TFromTo[] = [];
-  let direct = false;
+  let destination = "";
   const filteredArr = arr.filter(Boolean);
   const arrCount = filteredArr.length;
   if (arrCount > 1) {
@@ -30,7 +30,10 @@ export const convertArrToFromToObject = (
   } else {
     returnArr.push({ from: arr[0], to: arr.at(-1) as string });
   }
-  return { returnArr, direct };
+  if (arr.length === 3) {
+    destination = arr[2];
+  }
+  return { returnArr, destination };
 };
 
 export const isTime1LaterThanTime2 = (
@@ -102,7 +105,7 @@ export const checkPeakHours = (fromStation: string | null): boolean => {
   const time = currentTime();
   const dateOfWeek = currentDayofWeek();
   if (!fromStation) return false;
-  return dateOfWeek <= 5
+  return dateOfWeek <= 5 && dateOfWeek >=1
     ? (time <= "09:30" && time >= "06:30") ||
         (time >= "16:00" &&
           time <= "19:00" &&

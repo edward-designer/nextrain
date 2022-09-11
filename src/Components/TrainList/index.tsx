@@ -19,16 +19,17 @@ import { minutesFromNow } from "../../Utils/helpers";
 
 type TTrainList = {
   fromTo: TFromTo;
-  direct: boolean;
+  destination: string;
 };
 
-const TrainList = ({ fromTo, direct }: TTrainList) => {
+const TrainList = ({ fromTo, destination }: TTrainList) => {
   const { toTime, toStation } = useContext(SelectedTrainContext);
   const timeFrom =
     toTime && fromTo.from === toStation ? minutesFromNow(toTime) : 0;
   const { response, error, notice, loading, refetch } = useTrainInfo(
     fromTo,
-    timeFrom
+    timeFrom,
+    destination
   );
   const [showAlert, setShowAlert] = useState(error !== "");
 
@@ -44,7 +45,6 @@ const TrainList = ({ fromTo, direct }: TTrainList) => {
           <h2 className="flex-1 text-lg pl-2">
             <TrainIcon />
             {` ${fromTo.from} → ${fromTo.to}`}
-            {direct && <span className="text-[10px]"> (Direct)</span>}
           </h2>
           {notice?.length !== 0 && (
             <Button

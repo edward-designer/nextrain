@@ -42,6 +42,7 @@ const TrainRowContainer = ({
     callingPoint,
     reason,
     fastest,
+    isDirect,
   } = trainDetails;
 
   /* if the first leg train is not selected, the second leg will show all trains */
@@ -93,6 +94,8 @@ const TrainRowContainer = ({
     });
   };
 
+  const showTags = isDirect || fastest;
+
   return (
     <div
       onClick={() => toggleTrainSelect(arrivalTimeDestination)}
@@ -115,19 +118,40 @@ const TrainRowContainer = ({
       tabIndex={0}
       aria-pressed="false"
     >
-      {fastest && (
-        <span
-          className="-mb-4 bg-hover-color text-xs w-16 h-[20px] relative text-reverse-color leading-5 pl-2
+      {showTags && (
+        <div className="-mt-1 -mb-4">
+          {fastest && (
+            <span
+              className="inline-block bg-hover-color text-xs w-16 h-[20px] relative text-reverse-color pl-4 py-[3px]
         after:absolute 
         after:left-[100%]
+        after:top-0
     after:w-0 after:h-0 
     after:border-t-[10px] after:border-t-transparent
     after:border-l-[10px] after:border-l-hover-color
     after:border-b-[10px] after:border-b-transparent
+    z-50
         "
-        >
-          Fastest
-        </span>
+            >
+              Fastest
+            </span>
+          )}
+          {isDirect && (
+            <span
+              className="-mt-1 inline-block bg-text-notice-icon text-xs w-16 h-[20px] relative text-reverse-color pl-4 py-[3px]
+        after:absolute 
+        after:left-[100%]
+        after:top-0
+    after:w-0 after:h-0 
+    after:border-t-[10px] after:border-t-transparent
+    after:border-l-[10px] after:border-l-text-notice-icon
+    after:border-b-[10px] after:border-b-transparent
+        "
+            >
+              Direct
+            </span>
+          )}
+        </div>
       )}
       <div className="flex flex-row gap-1 items-center py-3">
         <div className="w-3 flex items-center justify-center text-xs text-button-color">

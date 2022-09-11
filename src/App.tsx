@@ -14,7 +14,7 @@ import { convertArrToFromToObject } from "./Utils/helpers";
 
 const App = () => {
   const { fromToArr, ...others } = useStateStorage();
-  const { returnArr, direct } = convertArrToFromToObject(fromToArr);
+  const { returnArr, destination } = convertArrToFromToObject(fromToArr);
 
   return (
     <ThemeWrapper>
@@ -26,7 +26,9 @@ const App = () => {
             <TrainList
               key={`${item.from}-${item.to}`}
               fromTo={item}
-              direct={direct && inx === 0}
+              destination={
+                inx === 0 && returnArr.length === 2 ? destination : ""
+              }
             />
           ))}
           <div className="pt-2 flex flex-row-reverse">

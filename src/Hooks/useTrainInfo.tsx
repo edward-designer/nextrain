@@ -41,7 +41,8 @@ const findToilets = (formation: TTrainInfo["formation"]): boolean => {
 
 const parseTrainInfo = (
   train: TTrainInfo,
-  to: string | null
+  to: string | null,
+  destinationStation?: string
 ): TParsedTrainInfo => {
   const {
     subsequentCallingPoints,
@@ -78,6 +79,13 @@ const parseTrainInfo = (
   const reason = cancelReason || delayReason || null;
   const hasToilet = findToilets(formation);
   const fastest = false;
+  let isDirect = false;
+
+  if (destinationStation) {
+    isDirect = callingPoint.some(
+      (station) => station.crs === destinationStation
+    );
+  }
 
   const formattedTrainInfo = {
     serviceIdUrlSafe,
@@ -93,11 +101,16 @@ const parseTrainInfo = (
     reason,
     hasToilet,
     fastest,
+    isDirect,
   };
   return formattedTrainInfo;
 };
 
-const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
+const useTrainInfo = (
+  { from, to }: TFromTo,
+  timeFrom: number = 0,
+  destination?: string
+) => {
   const [response, setResponse] = useState<TParsedTrainInfo[] | null>(null);
   const [error, setError] = useState<string>("");
   const [notice, setNotice] = useState<{ value: string }[]>([]);
@@ -121,13 +134,13 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
             if (notice) setNotice(notice);
             let trainServices = response.data.trainServices;
             trainServices = trainServices?.map((train: TTrainInfo) => {
-              const formattedTrainInfo = parseTrainInfo(train, to);
+              const formattedTrainInfo = parseTrainInfo(train, to, destination);
               return { ...formattedTrainInfo };
             });
-            const runningTrainServices = trainServices.filter(
-              (train: TParsedTrainInfo) => train.isRunning
-            );
             if (trainServices?.length > 1) {
+              const runningTrainServices = trainServices.filter(
+                (train: TParsedTrainInfo) => train.isRunning
+              );
               let fastestArrivalTime =
                 runningTrainServices.arrivalTimeDestination;
               let fastestArrivalTrain = 0;
@@ -150,6 +163,7 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
               )
                 trainServices[fastestArrivalTrain].fastest = true;
             }
+            console.log(trainServices);
             setResponse(trainServices);
           })
           .catch((e) => {
@@ -160,7 +174,7 @@ const useTrainInfo = ({ from, to }: TFromTo, timeFrom: number = 0) => {
           });
       }
     },
-    [from, to]
+    [from, to, destination]
   );
 
   const refetch = useCallback(

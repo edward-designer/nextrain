@@ -29,7 +29,7 @@ const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
   if (!response)
     return (
       <div className="p-4 text-text-inactive text-xs">
-        Sorry, no trains are found.
+        Sorry, no direct trains between the two stations are found.
       </div>
     );
 
