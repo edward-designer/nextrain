@@ -19,7 +19,7 @@ const App = () => {
 
   useEffect(() => {
     const handleScroll = (event: Event) => {
-      if (window.scrollY === 0) {
+      if (window.scrollY <= 20) {
         setShowForm(true);
       } else {
         setShowForm(false);
@@ -46,7 +46,7 @@ const App = () => {
           >
             <InputForm fromToArr={fromToArr} {...others} />
           </div>
-          <div className="min-h-[100vh]">
+          <div className="min-h-[90vh]">
             {returnArr.map((item, inx) => (
               <TrainList
                 key={`${item.from}-${item.to}`}
