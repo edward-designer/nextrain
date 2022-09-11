@@ -1,6 +1,6 @@
 # Nextrains - Real-time UK Trains Enquiries App
 
-![Nextrains App](https://drive.google.com/file/d/1_UugSe95w08U0UvLFMtlEg6YtDTK4c1V/view?usp=sharing)
+![Nextrains App](https://haanga.hk/nextrains.jpg)
 
 ## Why Another UK Train App?
 
