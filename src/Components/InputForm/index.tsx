@@ -59,14 +59,18 @@ const InputFormWrapper = ({
   };
 
   return (
-    <div className="flex flex-col bg-background-form p-3 shadow-md shadow-text-notice">
-      <Autocomplete
-        label={Label.from}
-        changeHandler={updateFromToArr}
-        value={start}
-      />
+    <div className="flex flex-col bg-background-form p-3 shadow-md shadow-text-notice md:flex-row md:items-center md:gap-2">
+      <div className="flex-1">
+        <Autocomplete
+          label={Label.from}
+          changeHandler={updateFromToArr}
+          value={start}
+        />
+      </div>
       <div
-        className={`transition-all z-50 mt-2 ${addStation ? "h-20" : "h-0"} `}
+        className={` md:flex-1 transition-all z-50 mt-2 ${
+          addStation ? "h-20" : "h-0"
+        } `}
       >
         {addStation ? (
           <div className="flex flex-row">
@@ -87,7 +91,7 @@ const InputFormWrapper = ({
               <CloseOutlinedIcon />
             </Button>
             <Button
-              customStyle={`place-self-center ${
+              customStyle={`place-self-center md:rotate-90 ${
                 !canSwap ? "bg-text-inactive cursor-default" : ""
               }`}
               clickHandler={swapHandler}
@@ -108,7 +112,7 @@ const InputFormWrapper = ({
               <AddOutlinedIcon />
             </Button>
             <Button
-              customStyle={`place-self-center ${
+              customStyle={`place-self-center  md:rotate-90 ${
                 !canSwap ? "bg-text-inactive cursor-default" : ""
               }`}
               clickHandler={swapHandler}
@@ -119,11 +123,13 @@ const InputFormWrapper = ({
           </div>
         )}
       </div>
-      <Autocomplete
-        label={Label.to}
-        changeHandler={updateFromToArr}
-        value={destination}
-      />
+      <div className="flex-1">
+        <Autocomplete
+          label={Label.to}
+          changeHandler={updateFromToArr}
+          value={destination}
+        />
+      </div>
     </div>
   );
 };
