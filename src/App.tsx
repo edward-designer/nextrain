@@ -15,38 +15,14 @@ import { convertArrToFromToObject } from "./Utils/helpers";
 const App = () => {
   const { fromToArr, ...others } = useStateStorage();
   const { returnArr, destination } = convertArrToFromToObject(fromToArr);
-  const [showForm, setShowForm] = useState<boolean>(true);
-
-  useEffect(() => {
-    const handleScroll = (event: Event) => {
-      if (window.scrollY <= 20) {
-        setShowForm(true);
-      } else {
-        setShowForm(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <ThemeWrapper>
       <TrainContext>
         <div className="max-w-7xl mx-auto relative">
           <Logo className="-mt-6 relative ml-2 fill-text-tertiary max-w-[40%]" />
-          <div
-            className={`transition-[max-height] ease-out overflow-hidden duration-300 ${
-              showForm ? `max-h-[500px]` : `max-h-0`
-            }`}
-          >
-            <InputForm fromToArr={fromToArr} {...others} />
-          </div>
-          <div className="min-h-[90vh]">
+          <InputForm fromToArr={fromToArr} {...others} />
+          <div className="min-h-[100vh]">
             {returnArr.map((item, inx) => (
               <TrainList
                 key={`${item.from}-${item.to}`}

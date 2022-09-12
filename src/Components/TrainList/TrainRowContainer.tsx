@@ -130,7 +130,7 @@ const TrainRowContainer = ({
     after:border-t-[10px] after:border-t-transparent
     after:border-l-[10px] after:border-l-hover-color
     after:border-b-[10px] after:border-b-transparent
-    z-50
+    z-1
         "
             >
               Fastest

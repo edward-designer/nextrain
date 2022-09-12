@@ -163,7 +163,6 @@ const useTrainInfo = (
               )
                 trainServices[fastestArrivalTrain].fastest = true;
             }
-            console.log(trainServices);
             setResponse(trainServices);
           })
           .catch((e) => {
