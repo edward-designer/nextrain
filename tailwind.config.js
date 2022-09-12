@@ -31,6 +31,7 @@ module.exports = {
         "border-notice": "var(--border-notice)",
         "background-selected": "var(--background-selected)",
         "focus-color": "var(--focus-color)",
+        "train-direct": "var(--train-direct)",
       },
     },
   },

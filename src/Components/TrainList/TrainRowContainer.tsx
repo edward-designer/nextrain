@@ -138,13 +138,13 @@ const TrainRowContainer = ({
           )}
           {isDirect && (
             <span
-              className="-mt-1 inline-block bg-text-notice-icon text-xs w-16 h-[20px] relative text-reverse-color pl-4 py-[3px]
+              className="-mt-1 inline-block bg-train-direct text-xs w-16 h-[20px] relative text-reverse-color pl-4 py-[3px]
         after:absolute 
         after:left-[100%]
         after:top-0
     after:w-0 after:h-0 
     after:border-t-[10px] after:border-t-transparent
-    after:border-l-[10px] after:border-l-text-notice-icon
+    after:border-l-[10px] after:border-l-train-direct
     after:border-b-[10px] after:border-b-transparent
         "
             >

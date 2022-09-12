@@ -39,11 +39,11 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
 
   useEffect(() => refetch(timeFrom), [timeFrom, refetch]);
   return (
-    <div className="shadow-md">
+    <div className="shadow-md md:flex-1">
       {fromTo.from && (
         <div
           className={`${
-            toStation ? `sticky top-0 z-50` : ""
+            toStation && toStation === fromTo.to ? "" : `sticky top-0 z-50`
           } flex items-center text-text-secondary bg-background-title border-b border-background-main`}
         >
           <h2 className="flex-1 text-lg pl-2">

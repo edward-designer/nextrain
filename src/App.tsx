@@ -22,15 +22,17 @@ const App = () => {
         <div className="max-w-7xl mx-auto relative">
           <Logo className="-mt-6 relative ml-2 fill-text-tertiary max-w-[40%]" />
           <InputForm fromToArr={fromToArr} {...others} />
-          {returnArr.map((item, inx) => (
-            <TrainList
-              key={`${item.from}-${item.to}`}
-              fromTo={item}
-              destination={
-                inx === 0 && returnArr.length === 2 ? destination : ""
-              }
-            />
-          ))}
+          <div className="mt-1 md:flex md:items-start md:gap-3 ">
+            {returnArr.map((item, inx) => (
+              <TrainList
+                key={`${item.from}-${item.to}`}
+                fromTo={item}
+                destination={
+                  inx === 0 && returnArr.length === 2 ? destination : ""
+                }
+              />
+            ))}
+          </div>
           <div className="pt-2 flex flex-row-reverse">
             <img className="max-w-[160px]" src={NRE} alt="powered by NRE" />
           </div>

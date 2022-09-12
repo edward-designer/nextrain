@@ -45,3 +45,4 @@ A simple node server is created to retrieve information from the source API by s
 ## Data Source
 
 - UK trains real-time arrival and departure info is provided by [National Rail Enquiries](https://www.nationalrail.co.uk/100296.aspx)
+- JSON proxy for GB railway Live Departure Boards SOAP API [Huxley 2](https://huxley2.azurewebsites.net/)

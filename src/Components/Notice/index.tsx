@@ -8,7 +8,7 @@ const Notice = ({ fromStation }: { fromStation: string | null }) => {
   return (
     <div className="bg-background-notice text-text-notice" role="alert">
       {isPeakHour ? (
-        <p className="text-[10px]  px-4 py-3" data-testId="peakHour">
+        <p className="text-[10px]  px-4 py-3" data-testid="peakHour">
           <ErrorOutlineIcon className="text-text-notice-icon" /> Off-peak
           tickets may not be eligible to travel [
           <a
