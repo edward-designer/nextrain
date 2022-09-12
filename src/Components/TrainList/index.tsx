@@ -41,7 +41,11 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
   return (
     <div className="shadow-md">
       {fromTo.from && (
-        <div className="sticky top-0 z-50 flex items-center text-text-secondary bg-background-title border-b border-background-main">
+        <div
+          className={`${
+            toStation ? `sticky top-0 z-50` : ""
+          } flex items-center text-text-secondary bg-background-title border-b border-background-main`}
+        >
           <h2 className="flex-1 text-lg pl-2">
             <TrainIcon />
             {` ${fromTo.from} → ${fromTo.to}`}
