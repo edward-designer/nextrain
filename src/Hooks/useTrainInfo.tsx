@@ -1,110 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-import {
-  TFromTo,
-  TTrainInfo,
-  TrainStatus,
-  TParsedTrainInfo,
-} from "../Types/types";
-import {
-  isTimeFormat,
-  isTime1LaterThanTime2,
-  currentTime,
-} from "../Utils/helpers";
+import { TFromTo, TTrainInfo, TParsedTrainInfo } from "../Types/types";
 
-const getTrainStatus = (
-  train: TTrainInfo,
-  arrivalTime: string | null
-): TrainStatus => {
-  let status = TrainStatus.ontime;
-  if (train.delayReason !== null || train.etd === "Delayed")
-    status = isTimeFormat(train.etd)
-      ? TrainStatus.delayedWithNewArrivalTime
-      : TrainStatus.delayed;
-  if (train.isCancelled || train.cancelReason) status = TrainStatus.cancelled;
-  arrivalTime &&
-    isTime1LaterThanTime2(currentTime(), arrivalTime) &&
-    (status = TrainStatus.departed);
-  return status;
-};
+import { isTime1LaterThanTime2 } from "../Utils/helpers";
 
-const findToilets = (formation: TTrainInfo["formation"]): boolean => {
-  if (formation && Array.isArray(formation?.coaches)) {
-    return formation.coaches.reduce(
-      (acc, cur) => cur.toilet?.status === 1 || acc,
-      false
-    );
-  }
-  return false;
-};
-
-const parseTrainInfo = (
-  train: TTrainInfo,
-  to: string | null,
-  destinationStation?: string
-): TParsedTrainInfo => {
-  const {
-    subsequentCallingPoints,
-    etd,
-    std,
-    destination,
-    platform,
-    serviceIdUrlSafe,
-    delayReason,
-    cancelReason,
-    formation,
-  } = train;
-  const arrivalTime =
-    etd === "Cancelled" || etd === "Delayed"
-      ? null
-      : isTimeFormat(etd)
-      ? etd
-      : std;
-  const status = getTrainStatus(train, arrivalTime);
-  const runningStatus = [
-    TrainStatus.ontime,
-    TrainStatus.delayedWithNewArrivalTime,
-  ];
-  const isRunning = runningStatus.includes(status);
-  const callingPoint = subsequentCallingPoints[0].callingPoint;
-  const destinationStationInfo = callingPoint.filter(
-    (station) => station.crs === to
-  )[0];
-  const arrivalTimeDestination = isTimeFormat(destinationStationInfo?.et)
-    ? destinationStationInfo?.et
-    : destinationStationInfo?.st || null;
-  const endStation = destination[0].locationName;
-  const endStationCRS = destination[0].crs;
-  const reason = cancelReason || delayReason || null;
-  const hasToilet = findToilets(formation);
-  const fastest = false;
-  let isDirect = false;
-
-  if (destinationStation) {
-    isDirect = callingPoint.some(
-      (station) => station.crs === destinationStation
-    );
-  }
-
-  const formattedTrainInfo = {
-    serviceIdUrlSafe,
-    endStation,
-    endStationCRS,
-    isRunning,
-    status,
-    std,
-    platform,
-    callingPoint,
-    arrivalTime,
-    arrivalTimeDestination,
-    reason,
-    hasToilet,
-    fastest,
-    isDirect,
-  };
-  return formattedTrainInfo;
-};
+import parseTrainInfo from "../Utils/parseTrainInfo";
 
 const useTrainInfo = (
   { from, to }: TFromTo,

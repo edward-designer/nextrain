@@ -38,6 +38,7 @@ export default function useStateStorage(): TUseStorageState {
       setFromToArr(swapped);
     }
   };
+  
   return {
     fromToArr,
     setFromToArr,
