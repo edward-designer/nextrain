@@ -33,7 +33,7 @@ const InputFormWrapper = ({
       : [2, ""];
   const interchange: [number, string] = [1, fromToArr[1] || ""];
 
-  const { setToTime, setToStation } = useContext(SelectedTrainContext);
+  const { reset } = useContext(SelectedTrainContext);
 
   const [addStation, setAddStation] = useState(interchange[1] !== "");
 
@@ -46,8 +46,7 @@ const InputFormWrapper = ({
   };
   const swapHandler = () => {
     swapStations();
-    setToTime("");
-    setToStation("");
+    reset();
   };
 
   const updateFromToArr = (order: number, value: string) => {
@@ -59,7 +58,7 @@ const InputFormWrapper = ({
   };
 
   return (
-    <div className="flex flex-col bg-background-form p-3 shadow-md shadow-text-notice md:flex-row md:items-center md:gap-2">
+    <div className="flex flex-col bg-background-form p-3 shadow-md shadow-black md:flex-row md:items-center md:gap-2">
       <div className="flex-1">
         <Autocomplete
           label={Label.from}

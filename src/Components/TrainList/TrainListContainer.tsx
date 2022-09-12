@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 import TrainRowContainer from "./TrainRowContainer";
@@ -16,8 +16,8 @@ const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
   const [rowSelected, setRowSelected] = useState(false);
   const { toTime, toStation } = useContext(SelectedTrainContext);
 
-  // NO from station is entered
   if (!fromTo.from)
+    // NO from station is entered
     return (
       <div className="p-4 text-text-inactive text-xs">
         Please begin by entering the departure station in the 'from' field

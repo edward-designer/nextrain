@@ -15,7 +15,11 @@ import Button from "../Button";
 
 import { TFromTo } from "../../Types/types";
 
-import { minutesFromNow } from "../../Utils/helpers";
+import {
+  minutesFromNow,
+  currentTime,
+  isTime1LaterThanTime2,
+} from "../../Utils/helpers";
 
 type TTrainList = {
   fromTo: TFromTo;
@@ -23,12 +27,14 @@ type TTrainList = {
 };
 
 const TrainList = ({ fromTo, destination }: TTrainList) => {
-  const { toTime, toStation } = useContext(SelectedTrainContext);
-  const timeFrom =
+  const { fromTime, toTime, toStation, reset } =
+    useContext(SelectedTrainContext);
+
+  const getEarliestTimeForConnectingTrain =
     toTime && fromTo.from === toStation ? minutesFromNow(toTime) : 0;
   const { response, error, notice, loading, refetch } = useTrainInfo(
     fromTo,
-    timeFrom,
+    getEarliestTimeForConnectingTrain,
     destination
   );
   const [showAlert, setShowAlert] = useState(error !== "");
@@ -37,7 +43,17 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
     setShowAlert((showAlert) => !showAlert);
   };
 
-  useEffect(() => refetch(timeFrom), [timeFrom, refetch]);
+  const refetchHandler = () => {
+    if (isTime1LaterThanTime2(currentTime(), fromTime)) {
+      reset();
+    }
+    refetch();
+  };
+
+  useEffect(
+    () => refetch(getEarliestTimeForConnectingTrain),
+    [getEarliestTimeForConnectingTrain, refetch]
+  );
   return (
     <div className="shadow-md md:flex-1">
       {fromTo.from && (
@@ -60,7 +76,7 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
             </Button>
           )}
           <Button
-            clickHandler={() => refetch()}
+            clickHandler={refetchHandler}
             customStyle="bg-background-title"
             ariaLabel="update train data"
           >

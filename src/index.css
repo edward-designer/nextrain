@@ -26,6 +26,7 @@
   --background-selected: rgb(230, 250, 251);
   --focus-color: rgb(34, 112, 185);
   --train-direct: rgb(240, 155, 36);
+  --nochange: rgb(241, 203, 150);
 }
 
 [data-theme="dark"] {
@@ -56,6 +57,7 @@
   --background-selected: rgb(21, 58, 44);
   --focus-color: rgb(127, 179, 239);
   --train-direct: rgb(161, 104, 23);
+  --nochange: rgb(73, 62, 46);
 }
 
 @tailwind base;

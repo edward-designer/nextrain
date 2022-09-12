@@ -9,6 +9,7 @@ import CellTime from "./CellTime";
 import CellDestination from "./CellDestination";
 import CellCountDown from "./CellCountDown";
 import CellChangeTimer from "./CellChangeTimer";
+import RowTag from "./RowTag";
 
 import { minutesDifference, isNextDay } from "../../Utils/helpers";
 
@@ -28,10 +29,19 @@ const TrainRowContainer = ({
   setRowSelected,
 }: TTrainRowContainer) => {
   const [isSelected, setIsSelected] = useState(false);
-  const { toTime, setToTime, toStation, setToStation } =
-    useContext(SelectedTrainContext);
+  const {
+    setFromTime,
+    toTime,
+    setToTime,
+    toStation,
+    setToStation,
+    trainId,
+    setTrainId,
+    reset,
+  } = useContext(SelectedTrainContext);
 
   const {
+    serviceIdUrlSafe,
     isRunning,
     status,
     arrivalTime,
@@ -76,17 +86,23 @@ const TrainRowContainer = ({
       }
     }
   }
-  const toggleTrainSelect = (time: string | null) => {
+  const toggleTrainSelect = (
+    arrivalTime: string | null,
+    arrivalDestinationTime: string | null,
+    serviceIdUrlSafe: string
+  ) => {
     if (!isRunning) return null;
-    if (time === null) time = "";
+    if (arrivalTime === null) arrivalTime = "";
+    if (arrivalDestinationTime === null) arrivalDestinationTime = "";
     setRowSelected(!isSelected);
     if (fromTo.to === toStation || !toStation) {
       if (isSelected) {
-        setToTime("");
-        setToStation("");
+        reset();
       } else {
-        setToTime(time);
+        setFromTime(arrivalTime);
+        setToTime(arrivalDestinationTime);
         setToStation(fromTo.to);
+        setTrainId(serviceIdUrlSafe);
       }
     }
     setIsSelected((isSelected) => {
@@ -98,9 +114,16 @@ const TrainRowContainer = ({
 
   return (
     <div
-      onClick={() => toggleTrainSelect(arrivalTimeDestination)}
+      onClick={() =>
+        toggleTrainSelect(arrivalTime, arrivalTimeDestination, serviceIdUrlSafe)
+      }
       onKeyDown={(e) => {
-        if (e.key === "Enter") toggleTrainSelect(arrivalTimeDestination);
+        if (e.key === "Enter")
+          toggleTrainSelect(
+            arrivalTime,
+            arrivalTimeDestination,
+            serviceIdUrlSafe
+          );
       }}
       className={`flex flex-col border-b-background-form border-b-4 border-dotted
       ${isRunning ? "" : `cursor-default`} 
@@ -121,35 +144,19 @@ const TrainRowContainer = ({
       {showTags && (
         <div className="-mt-1 -mb-4">
           {fastest && (
-            <span
-              className="inline-block bg-hover-color text-xs w-16 h-[20px] relative text-reverse-color pl-4 py-[3px]
-        after:absolute 
-        after:left-[100%]
-        after:top-0
-    after:w-0 after:h-0 
-    after:border-t-[10px] after:border-t-transparent
-    after:border-l-[10px] after:border-l-hover-color
-    after:border-b-[10px] after:border-b-transparent
-    z-1
-        "
-            >
+            <RowTag className="z-20 bg-hover-color after:border-l-hover-color">
               Fastest
-            </span>
+            </RowTag>
           )}
           {isDirect && (
-            <span
-              className="-mt-1 inline-block bg-train-direct text-xs w-16 h-[20px] relative text-reverse-color pl-4 py-[3px]
-        after:absolute 
-        after:left-[100%]
-        after:top-0
-    after:w-0 after:h-0 
-    after:border-t-[10px] after:border-t-transparent
-    after:border-l-[10px] after:border-l-train-direct
-    after:border-b-[10px] after:border-b-transparent
-        "
-            >
+            <RowTag className="z-10 bg-train-direct after:border-l-train-direct">
               Direct
-            </span>
+            </RowTag>
+          )}
+          {isSelected && isDirect && (
+            <RowTag className="w-[180px] z-1 bg-background-nochange after:border-l-background-nochange">
+              No need to change at {fromTo.to}
+            </RowTag>
           )}
         </div>
       )}
