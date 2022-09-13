@@ -1,9 +1,10 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
+
 const app = express();
 
 app.use(cors());
-app.use(express.static("build"));
 
 require("dotenv").config({ path: "./.env" });
 
@@ -25,8 +26,22 @@ app.get("/api/:from/to/:to/:timeOffset", (request, response) => {
     })
     .catch((err) => {
       console.error(err);
+      response
+        .status(400)
+        .send(
+          "Cannot get train information at the moment. Please try again later."
+        );
     });
 });
+
+app.use(express.static("build"));
+app.get("/*", (req, res) =>
+  res.sendFile(path.join(__dirname, "./build", "index.html"), (err) => {
+    if (err) {
+      console.log(err);
+    }
+  })
+);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

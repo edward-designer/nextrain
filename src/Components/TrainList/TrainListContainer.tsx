@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 import TrainRowContainer from "./TrainRowContainer";
@@ -10,9 +10,10 @@ import { isTime1LaterThanTime2 } from "../../Utils/helpers";
 type TTrainListContainer = {
   response: TParsedTrainInfo[] | null;
   fromTo: TFromTo;
+  finalDestination: string;
 };
 
-const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
+const TrainListContainer = ({ response, fromTo, finalDestination }: TTrainListContainer) => {
   const [rowSelected, setRowSelected] = useState(false);
   const { toTime, toStation } = useContext(SelectedTrainContext);
 
@@ -50,6 +51,7 @@ const TrainListContainer = ({ response, fromTo }: TTrainListContainer) => {
             trainDetails={trainDetails}
             rowSelected={rowSelected}
             setRowSelected={setRowSelected}
+            finalDestination={finalDestination}
           />
         ))}
       {trainList.length === 0 && (

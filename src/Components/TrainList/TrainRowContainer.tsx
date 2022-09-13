@@ -20,6 +20,7 @@ type TTrainRowContainer = {
   trainDetails: TParsedTrainInfo;
   rowSelected: boolean;
   setRowSelected: React.Dispatch<React.SetStateAction<boolean>>;
+  finalDestination: string;
 };
 
 const TrainRowContainer = ({
@@ -27,6 +28,7 @@ const TrainRowContainer = ({
   fromTo,
   rowSelected,
   setRowSelected,
+  finalDestination,
 }: TTrainRowContainer) => {
   const [isSelected, setIsSelected] = useState(false);
   const {
@@ -35,7 +37,6 @@ const TrainRowContainer = ({
     setToTime,
     toStation,
     setToStation,
-    trainId,
     setTrainId,
     reset,
   } = useContext(SelectedTrainContext);
@@ -49,6 +50,7 @@ const TrainRowContainer = ({
     platform,
     endStation,
     arrivalTimeDestination,
+    arrivalTimeFinalDestination,
     callingPoint,
     reason,
     fastest,
@@ -173,7 +175,12 @@ const TrainRowContainer = ({
         <CellTime
           status={status}
           arrivalTime={arrivalTime}
-          arrivalTimeDestination={arrivalTimeDestination}
+          arrivalTimeDestination={
+            arrivalTimeDestination
+          }
+          arrivalTimeFinalDestination={
+            arrivalTimeFinalDestination
+          }
           std={std}
         />
         <CellPlatform status={status} platform={platform} />
@@ -190,14 +197,8 @@ const TrainRowContainer = ({
           subsequentCallingPoints={callingPoint}
           fromTo={fromTo}
           status={status}
+          finalDestination={finalDestination}
         />
-        {/*hasToilet && (
-          <div className="self-start">
-            <WcIcon
-              sx={{ fontSize: "medium", color: "var(--text-tertiary)" }}
-            />
-          </div>
-        )*/}
       </div>
       {reason && (
         <div className="flex items-center text-[7pt] -mt-3 leading-3 p-1 italic text-text-highlight">

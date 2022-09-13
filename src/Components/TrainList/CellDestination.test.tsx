@@ -44,6 +44,7 @@ const subsequentCallingPoints = [
   },
 ];
 const fromTo = { from: "THA", to: "PAD" };
+const finalDestination = "PAD";
 
 describe("CellDestination", () => {
   it("should display the destination as well as all stations for non-cancelled trains", () => {
@@ -54,6 +55,7 @@ describe("CellDestination", () => {
         subsequentCallingPoints={subsequentCallingPoints}
         fromTo={fromTo}
         status={status}
+        finalDestination={finalDestination}
       />
     );
     const displayDestination = screen.getByText("→ London Paddington");
@@ -73,6 +75,7 @@ describe("CellDestination", () => {
         subsequentCallingPoints={subsequentCallingPoints}
         fromTo={fromTo}
         status={status}
+        finalDestination={finalDestination}
       />
     );
     const displayDestination = screen.getByText("→ London Paddington");

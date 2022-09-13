@@ -5,6 +5,7 @@ type TCellTime = {
   std: string;
   arrivalTime: string | null;
   arrivalTimeDestination: string | null;
+  arrivalTimeFinalDestination: string;
   status: TrainStatus;
 };
 
@@ -12,7 +13,8 @@ const CellTime = ({
   std,
   arrivalTime,
   arrivalTimeDestination,
-  status
+  arrivalTimeFinalDestination,
+  status,
 }: TCellTime) => {
   if (status === TrainStatus.cancelled) arrivalTime = "Cancelled";
   if (status === TrainStatus.delayed) arrivalTime = "Delayed";
@@ -46,11 +48,20 @@ const CellTime = ({
           !(
             status === TrainStatus.delayed || status === TrainStatus.cancelled
           ) && (
-            <span
-              className={`text-[10px] block text-right leading-3 text-text-tertiary`}
-            >
-              {`→ ${arrivalTimeDestination}`}
-            </span>
+            <>
+              <span
+                className={`text-[10px] block text-right leading-3 text-text-tertiary`}
+              >
+                {`→ ${arrivalTimeDestination}`}
+              </span>
+              {arrivalTimeFinalDestination && (
+                <span
+                  className={`text-[10px] block text-right leading-3 text-text-tertiary font-bold`}
+                >
+                  → {arrivalTimeFinalDestination}
+                </span>
+              )}
+            </>
           )}
       </div>
     </div>

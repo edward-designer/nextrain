@@ -11,6 +11,7 @@ describe("CellTime", () => {
         std="19:40"
         arrivalTime="19:50"
         arrivalTimeDestination="20:00"
+        arrivalTimeFinalDestination=""
         status={TrainStatus.ontime}
       />
     );
@@ -24,6 +25,7 @@ describe("CellTime", () => {
         std="19:40"
         arrivalTime="19:50"
         arrivalTimeDestination="20:00"
+        arrivalTimeFinalDestination=""
         status={TrainStatus.delayed}
       />
     );

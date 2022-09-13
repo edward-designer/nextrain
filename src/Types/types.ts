@@ -54,6 +54,7 @@ export type TParsedTrainInfo = {
     et: string;
   }[];
   arrivalTimeDestination: string | null;
+  arrivalTimeFinalDestination: string;
   reason: string | null;
   hasToilet: boolean;
   fastest: boolean;

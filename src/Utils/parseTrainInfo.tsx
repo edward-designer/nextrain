@@ -1,10 +1,6 @@
 import { TTrainInfo, TrainStatus, TParsedTrainInfo } from "../Types/types";
 
-import {
-  isTimeFormat,
-  isTime1LaterThanTime2,
-  currentTime,
-} from "./helpers";
+import { isTimeFormat, isTime1LaterThanTime2, currentTime } from "./helpers";
 
 export const getTrainStatus = (
   train: TTrainInfo,
@@ -73,11 +69,19 @@ const parseTrainInfo = (
   const hasToilet = findToilets(formation);
   const fastest = false;
   let isDirect = false;
-
+  let arrivalTimeFinalDestination = "";
   if (destinationStation) {
     isDirect = callingPoint.some(
       (station) => station.crs === destinationStation
     );
+  }
+  if (isDirect) {
+    const arrivalFinalDestination = callingPoint.filter(
+      (station) => station.crs === destinationStation
+    )[0];
+    arrivalTimeFinalDestination = isTimeFormat(arrivalFinalDestination.et)
+      ? arrivalFinalDestination.et
+      : arrivalFinalDestination.st || "";
   }
 
   const formattedTrainInfo = {
@@ -91,6 +95,7 @@ const parseTrainInfo = (
     callingPoint,
     arrivalTime,
     arrivalTimeDestination,
+    arrivalTimeFinalDestination,
     reason,
     hasToilet,
     fastest,

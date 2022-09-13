@@ -74,6 +74,7 @@ const trainDetails = {
   ],
   arrivalTime: "13:05",
   arrivalTimeDestination: "13:56",
+  arrivalTimeFinalDestination: "",
   reason: "This is the reason",
   hasToilet: true,
   fastest: false,
@@ -81,6 +82,7 @@ const trainDetails = {
 };
 const rowSelected = false;
 const setRowSelected = jest.fn();
+const finalDestination = "PAD";
 
 describe("TrainRowContainer", () => {
   it("shows the train info correctly", async () => {
@@ -90,6 +92,7 @@ describe("TrainRowContainer", () => {
         trainDetails={trainDetails}
         rowSelected={rowSelected}
         setRowSelected={setRowSelected}
+        finalDestination={finalDestination}
       />
     );
     expect(screen.getByText("→ London Paddington")).toBeInTheDocument();

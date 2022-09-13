@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { checkParams } from "../Utils/helpers";
+
 import { TFromToArr, Theme } from "../Types/types";
 
 type TUseStorageState = {
@@ -12,16 +14,27 @@ type TUseStorageState = {
   canAdd: boolean;
 };
 
-export default function useStateStorage(): TUseStorageState {
+export default function useStateStorage(
+  from?: string | undefined,
+  change?: string | undefined,
+  to?: string | undefined
+): TUseStorageState {
   const storedJourney = localStorage.getItem("NextTrainJourneyInfo");
   const storedTheme = localStorage.getItem("NextTrainTheme");
-  const value = storedJourney ? JSON.parse(storedJourney) : ["", "", ""];
+  const value = from
+    ? [checkParams(from), checkParams(change), checkParams(to)]
+    : storedJourney
+    ? JSON.parse(storedJourney)
+    : ["", "", ""];
   const themeValue = storedTheme === "dark" ? "dark" : "light";
 
   const [fromToArr, setFromToArr] = useState<TFromToArr>(value);
   const [theme, setTheme] = useState<Theme>(themeValue);
 
   useEffect(() => {
+    const newURL = fromToArr.filter(Boolean).join("/");
+    const newTitle = fromToArr.filter(Boolean).join("→");
+    window.history.replaceState(null, newTitle, `/${newURL}`);
     localStorage.setItem("NextTrainJourneyInfo", JSON.stringify(fromToArr));
   }, [fromToArr]);
 
@@ -38,7 +51,7 @@ export default function useStateStorage(): TUseStorageState {
       setFromToArr(swapped);
     }
   };
-  
+
   return {
     fromToArr,
     setFromToArr,

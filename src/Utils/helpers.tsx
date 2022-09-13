@@ -112,3 +112,9 @@ export const checkPeakHours = (fromStation: string | null): boolean => {
           londonStations.includes(fromStation))
     : false;
 };
+
+export const checkParams = (param: string | undefined) => {
+  if (!param) return "";
+  const match = param.match(/[A-Z]{3}/);
+  return match ? match[0] : "";
+};

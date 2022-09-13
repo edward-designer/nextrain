@@ -73,6 +73,7 @@ const response = [
     ],
     arrivalTime: "16:01",
     arrivalTimeDestination: "16:22",
+    arrivalTimeFinalDestination: "",
     reason:
       "This train has been delayed by trespassers on the railway earlier today",
     hasToilet: false,
@@ -151,6 +152,7 @@ const response = [
     ],
     arrivalTime: "16:10",
     arrivalTimeDestination: "16:32",
+    arrivalTimeFinalDestination: "",
     reason: null,
     hasToilet: false,
     fastest: false,
@@ -192,6 +194,7 @@ const response = [
     ],
     arrivalTime: "16:39",
     arrivalTimeDestination: "16:55",
+    arrivalTimeFinalDestination: "",
     reason: null,
     hasToilet: false,
     fastest: false,
@@ -245,6 +248,7 @@ const response = [
     ],
     arrivalTime: "17:03",
     arrivalTimeDestination: "17:22",
+    arrivalTimeFinalDestination: "",
     reason:
       "This train has been delayed by trespassers on the railway earlier today",
     hasToilet: true,
@@ -323,6 +327,7 @@ const response = [
     ],
     arrivalTime: "17:12",
     arrivalTimeDestination: "17:34",
+    arrivalTimeFinalDestination: "",
     reason: null,
     hasToilet: false,
     fastest: false,
@@ -330,9 +335,17 @@ const response = [
   },
 ];
 const fromTo = { from: "THA", to: "PAD" };
+const finalDestination = "PAD";
+
 describe("TrainListContainer", () => {
   it("should render a list of trains", () => {
-    render(<TrainListContainer fromTo={fromTo} response={response} />);
+    render(
+      <TrainListContainer
+        fromTo={fromTo}
+        response={response}
+        finalDestination={finalDestination}
+      />
+    );
     expect(screen.getAllByText("Delayed")[0]).toBeInTheDocument();
     expect(screen.getAllByText("→ Reading")[0]).toBeInTheDocument();
     expect(screen.getByText("17:12")).toBeInTheDocument();
@@ -343,7 +356,13 @@ describe("TrainListContainer", () => {
     ).toBeInTheDocument();
   });
   it("gives a message when no trains are found", () => {
-    render(<TrainListContainer fromTo={fromTo} response={[]} />);
+    render(
+      <TrainListContainer
+        fromTo={fromTo}
+        response={[]}
+        finalDestination={finalDestination}
+      />
+    );
     expect(
       screen.getByText(
         "Sorry, no trains are found currently. Check back later to look for available trains."
@@ -351,7 +370,13 @@ describe("TrainListContainer", () => {
     ).toBeInTheDocument();
   });
   it("gives a message when there is no from station", () => {
-    render(<TrainListContainer fromTo={{ from: "", to: "" }} response={[]} />);
+    render(
+      <TrainListContainer
+        fromTo={{ from: "", to: "" }}
+        response={[]}
+        finalDestination={finalDestination}
+      />
+    );
     expect(
       screen.getByText(
         "Please begin by entering the departure station in the 'from' field above."
