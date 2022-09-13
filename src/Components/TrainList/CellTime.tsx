@@ -40,7 +40,7 @@ const CellTime = ({
           </span>
         )}
 
-        <span>
+        <span className="mt-1">
           <span>{arrivalTime}</span>
         </span>
 

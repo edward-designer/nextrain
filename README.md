@@ -1,6 +1,6 @@
 # Nextrains - Real-time UK Trains Enquiries App
 
-![Nextrains App](https://haanga.hk/nextrains.jpg)
+![Nextrains App](https://drive.google.com/file/d/1_UugSe95w08U0UvLFMtlEg6YtDTK4c1V/view?usp=sharing)
 
 ## Why Another UK Train App?
 
@@ -14,10 +14,18 @@ I find that catching and changing trains in UK is quite a daunting task as train
   - a tag to indicate the fastest train to arrival at destination
 - **Optionally add an exchange station**
   - by selecting a train in the first leg, the connecting trains will be shown with the available time for changing trains
+  - direct trains between the from station to the final destination is highlighted with a tag
+- **URL Shortcuts**
+  - by entering the URL in the format of _/[from]/[change (optional)]/[destination]_, the corresponding train info will be shown
 - Real-time notices for delay/cancellation are shown whenever available
 - Localstorage to store selected stations
 - A reverse button for fast retrieving return information
 - Light/Dark theme
+
+## Todo
+
+- Add routes to favourites for fast retrival
+- Optimize layout design for small screens
 
 ## Tech Stacks
 
@@ -27,6 +35,7 @@ I find that catching and changing trains in UK is quite a daunting task as train
 - Typescript - for type-checking to reduce bugs
 - TailwindCSS - as this app is rather simple, TailwindCSS allows fast styling without the overhead of extra css files
 - MUI
+- React Router
 - Jest/React Testing Library
 - Figma - for logo and UI design
 
@@ -45,4 +54,3 @@ A simple node server is created to retrieve information from the source API by s
 ## Data Source
 
 - UK trains real-time arrival and departure info is provided by [National Rail Enquiries](https://www.nationalrail.co.uk/100296.aspx)
-- JSON proxy for GB railway Live Departure Boards SOAP API [Huxley 2](https://huxley2.azurewebsites.net/)
