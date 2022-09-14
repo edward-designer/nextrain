@@ -43,20 +43,21 @@ const TrainContext = ({ children }: TTrainContext) => {
     setToStation("");
     setTrainId("");
   };
+
+  const contextValues = {
+    fromTime,
+    setFromTime,
+    toTime,
+    setToTime,
+    toStation,
+    setToStation,
+    trainId,
+    setTrainId,
+    reset,
+  };
+
   return (
-    <SelectedTrainContext.Provider
-      value={{
-        fromTime,
-        setFromTime,
-        toTime,
-        setToTime,
-        toStation,
-        setToStation,
-        trainId,
-        setTrainId,
-        reset,
-      }}
-    >
+    <SelectedTrainContext.Provider value={contextValues}>
       {children}
     </SelectedTrainContext.Provider>
   );

@@ -379,7 +379,7 @@ describe("TrainListContainer", () => {
     );
     expect(
       screen.getByText(
-        "Please begin by entering the departure station in the 'from' field above."
+        "Please begin by entering the departure station in the 'from' field."
       )
     ).toBeInTheDocument();
   });

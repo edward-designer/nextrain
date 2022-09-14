@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
+
 import TrainRowContainer from "./TrainRowContainer";
 
 import { TParsedTrainInfo, TFromTo } from "../../Types/types";
@@ -13,17 +14,20 @@ type TTrainListContainer = {
   finalDestination: string;
 };
 
-const TrainListContainer = ({ response, fromTo, finalDestination }: TTrainListContainer) => {
+const TrainListContainer = ({
+  response,
+  fromTo,
+  finalDestination,
+}: TTrainListContainer) => {
   const [rowSelected, setRowSelected] = useState(false);
   const { toTime, toStation } = useContext(SelectedTrainContext);
 
   if (!fromTo.from)
     // NO from station is entered
     return (
-      <div className="p-4 text-text-inactive text-xs">
-        Please begin by entering the departure station in the 'from' field
-        above.
-      </div>
+        <div className="p-4 text-text-inactive text-xs">
+          Please begin by entering the departure station in the 'from' field.
+        </div>
     );
 
   // NO trains found

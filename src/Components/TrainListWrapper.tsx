@@ -14,9 +14,8 @@ const TrainListWrapper = ({ fromToArr }: TTrainListWrapper) => {
   return (
     <div className="mt-1 md:flex md:items-start md:gap-3 ">
       {returnArr.map((item, inx) => (
-        <ErrorBoundary>
+        <ErrorBoundary key={`${item.from}-${item.to}`}>
           <TrainList
-            key={`${item.from}-${item.to}`}
             fromTo={item}
             destination={inx === 0 && returnArr.length === 2 ? destination : ""}
           />

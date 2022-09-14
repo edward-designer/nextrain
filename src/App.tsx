@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-
 import useStateStorage from "./Hooks/useStateStorage";
 import TrainContext from "./Context/TrainContext";
 
@@ -14,6 +13,7 @@ import { ReactComponent as Logo } from "./nextrains.svg";
 const App = () => {
   let { from, change, to } = useParams();
   const { fromToArr, ...others } = useStateStorage(from, change, to);
+
   return (
     <ThemeWrapper>
       <TrainContext>

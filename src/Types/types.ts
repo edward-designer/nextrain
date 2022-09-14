@@ -70,3 +70,5 @@ export enum TrainStatus {
   "delayed" = "Delayed",
   "cancelled" = "Cancelled",
 }
+
+export type TFavs = TFromToArr[];

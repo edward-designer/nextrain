@@ -18,7 +18,7 @@ describe("App", () => {
     render(<App />);
 
     const instruction = screen.getByText(
-      "Please begin by entering the departure station in the 'from' field above."
+      "Please begin by entering the departure station in the 'from' field."
     );
     expect(instruction).toBeInTheDocument();
   });

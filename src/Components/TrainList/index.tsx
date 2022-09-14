@@ -11,7 +11,7 @@ import TrainListContainer from "./TrainListContainer";
 import Notice from "../Notice";
 import Loading from "../Common/Loading";
 import Alert from "../Common/Alert";
-import Button from "../Button";
+import Button from "../Common/Button";
 
 import { TFromTo } from "../../Types/types";
 

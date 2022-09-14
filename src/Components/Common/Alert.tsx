@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import Button from "../Button";
+import Button from "./Button";
 
 type PropsType = {
   message: string;

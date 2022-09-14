@@ -23,12 +23,16 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error: ", error, errorInfo);
+    console.error("NOTE: uncaught error ", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      return <p className="font-xs">{this.state.errorMessage}</p>;
+      return (
+        <p className="text-xs p-4 border-b border-b-slate-400">
+          Sorry! The app is experiencing some errors. Please reload to try.
+        </p>
+      );
     }
 
     return this.props.children;
