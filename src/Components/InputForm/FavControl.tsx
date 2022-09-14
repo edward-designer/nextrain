@@ -17,7 +17,7 @@ type TFavControl = {
   setFromToArr: React.Dispatch<React.SetStateAction<TFromToArr>>;
 };
 const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
-  const { favs, addFav, removeFav, isFav } = useFavourite();
+  const { favs, setFavs, addFav, removeFav, isFav } = useFavourite();
   const [showFav, setShowFav] = useState(false);
   const isEmptyFromToArr = fromToArr.filter(Boolean).length === 0;
   useEffect(() => {
@@ -77,6 +77,7 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
           setFromToArr={setFromToArr}
           removeFav={removeFav}
           setShowFav={setShowFav}
+          setFavs={setFavs}
         />
       )}
     </>

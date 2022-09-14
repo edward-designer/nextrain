@@ -1,6 +1,6 @@
 # Nextrains - Real-time UK Trains Enquiries App
 
-![Nextrains App](https://drive.google.com/file/d/1_UugSe95w08U0UvLFMtlEg6YtDTK4c1V/view?usp=sharing)
+![Nextrains App](nextrains.jpg)
 
 ## Why Another UK Train App?
 
@@ -17,8 +17,10 @@ I find that catching and changing trains in UK is quite a daunting task as train
   - direct trains between the from station to the final destination is highlighted with a tag
 - **URL Shortcuts**
   - by entering the URL in the format of _/[from]/[change (optional)]/[destination]_, the corresponding train info will be shown
+- **Save Train Routes**
+  - train routes can be saved for fast retrieval
 - Real-time notices for delay/cancellation are shown whenever available
-- Localstorage to store selected stations
+- Localstorage to store saved routes
 - A reverse button for fast retrieving return information
 - Light/Dark theme
 

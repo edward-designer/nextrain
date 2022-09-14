@@ -31,17 +31,18 @@ const CellDestination = ({
           status === TrainStatus.cancelled
             ? ""
             : subsequentCallingPoints.map((station, index) => (
-                <li
-                  key={station.crs}
-                  className={`inline-block mr-1 ${
-                    station.crs === fromTo.to ? "font-bold" : ""
-                  } ${
-                    station.crs === finalDestination
-                      ? "font-bold text-train-direct"
-                      : ""
-                  }`}
-                >
-                  {`${station.locationName} 
+                <span key={station.crs}>
+                  <span className="text-text-notice-icon">{"> "}</span>
+                  <li
+                    className={`inline-block mr-1 ${
+                      station.crs === fromTo.to ? "font-bold" : ""
+                    } ${
+                      station.crs === finalDestination
+                        ? "font-bold text-train-direct"
+                        : ""
+                    }`}
+                  >
+                    {`${station.locationName} 
                     ${
                       station.crs === fromTo.to ||
                       station.crs === finalDestination
@@ -50,9 +51,9 @@ const CellDestination = ({
                           : `(${station.st})`
                         : ""
                     } 
-                    ${index === subsequentCallingPoints.length - 1 ? "" : ">"}
                 `}
-                </li>
+                  </li>
+                </span>
               ))}
         </span>
       )}

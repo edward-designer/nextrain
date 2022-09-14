@@ -24,5 +24,5 @@ export default function useFavourite() {
     [favs]
   );
 
-  return { favs, addFav, removeFav, isFav };
+  return { favs, setFavs, addFav, removeFav, isFav };
 }

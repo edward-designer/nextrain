@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
@@ -60,6 +60,8 @@ const InputFormWrapper = ({
       return newFromToArr;
     });
   };
+
+  useEffect(() => setAddStation(!!interchange[1]), [interchange[1]]);
 
   return (
     <div className="flex flex-row flex-wrap bg-background-form pr-0 shadow-md">

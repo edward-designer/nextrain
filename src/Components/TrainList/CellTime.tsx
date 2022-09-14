@@ -56,7 +56,7 @@ const CellTime = ({
               </span>
               {arrivalTimeFinalDestination && (
                 <span
-                  className={`text-[10px] block text-right leading-3 text-text-tertiary font-bold`}
+                  className={`text-[10px] block text-right leading-3 text-text-primary font-bold`}
                 >
                   → {arrivalTimeFinalDestination}
                 </span>
