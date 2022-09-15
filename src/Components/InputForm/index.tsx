@@ -61,6 +61,7 @@ const InputFormWrapper = ({
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => setAddStation(!!interchange[1]), [interchange[1]]);
 
   return (
@@ -74,7 +75,7 @@ const InputFormWrapper = ({
           />
         </div>
         <div
-          className={` md:flex-1 transition-all z-50 mt-2 ${
+          className={` md:flex-1 transition-all z-50 mt-1 ${
             addStation ? "h-20" : "h-0"
           } `}
         >
@@ -92,7 +93,7 @@ const InputFormWrapper = ({
                   !canAdd ? "bg-text-inactive cursor-default" : ""
                 }`}
                 clickHandler={closeAddStationField}
-                ariaLabel="Add a Change Station"
+                ariaLabel="Clear interchange station"
               >
                 <CloseOutlinedIcon />
               </Button>

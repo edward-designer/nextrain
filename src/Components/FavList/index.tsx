@@ -36,26 +36,24 @@ const FavList = ({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="basis-[100%] bg-background-main">
-        <Droppable droppableId="favList">
-          {(provided, snapshot) => (
-            <ul ref={provided.innerRef} {...provided.droppableProps}>
-              {favs?.map((fav, ind) => (
-                <FavListItem
-                  key={fav.filter(Boolean).join("")}
-                  id={fav.filter(Boolean).join("")}
-                  fav={fav}
-                  ind={ind}
-                  removeFav={removeFav}
-                  setFromToArr={setFromToArr}
-                  setShowFav={setShowFav}
-                />
-              ))}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </div>
+      <Droppable droppableId="favList">
+        {(provided, snapshot) => (
+          <ul ref={provided.innerRef} {...provided.droppableProps}>
+            {favs?.map((fav, ind) => (
+              <FavListItem
+                key={fav.filter(Boolean).join("")}
+                id={fav.filter(Boolean).join("")}
+                fav={fav}
+                ind={ind}
+                removeFav={removeFav}
+                setFromToArr={setFromToArr}
+                setShowFav={setShowFav}
+              />
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
     </DragDropContext>
   );
 };

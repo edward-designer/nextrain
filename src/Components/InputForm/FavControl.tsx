@@ -36,6 +36,7 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
             } bg-background-form`}
             clickHandler={() => setFromToArr(["", "", ""])}
             ariaLabel="clear all inputs"
+            label="Clear"
           >
             <ClearIcon />
           </Button>
@@ -51,6 +52,7 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
               if (!isEmptyFromToArr) addFav(fromToArr);
             }}
             ariaLabel="add to saved routes"
+            label={isFav(fromToArr) ? "Added" : "Add to Saved"}
           >
             {isFav(fromToArr) ? <BookmarkAddedIcon /> : <BookmarkAddIcon />}
           </Button>
@@ -66,20 +68,28 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
             } bg-background-main`}
             clickHandler={() => setShowFav(!showFav)}
             ariaLabel="saved routes"
+            label="Saved Routes"
           >
             <BookmarksIcon />
           </Button>
         </div>
       </div>
-      {showFav && (
-        <FavList
-          favs={favs}
-          setFromToArr={setFromToArr}
-          removeFav={removeFav}
-          setShowFav={setShowFav}
-          setFavs={setFavs}
-        />
-      )}
+
+      <div
+        className={`${
+          showFav ? "max-h-[2000px]" : "max-h-0"
+        } basis-full transition-all duration-1000 ease-in-out overflow-hidden`}
+      >
+        {showFav && (
+          <FavList
+            favs={favs}
+            setFromToArr={setFromToArr}
+            removeFav={removeFav}
+            setShowFav={setShowFav}
+            setFavs={setFavs}
+          />
+        )}
+      </div>
     </>
   );
 };

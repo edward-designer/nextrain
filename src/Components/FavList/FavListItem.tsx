@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -49,6 +49,7 @@ const FavListItem = ({
             customStyle="text-text-inactive hover:text-button-color bg-background-main"
             clickHandler={() => removeFav(ind)}
             ariaLabel="delete saved route"
+            label="delete"
           >
             <DeleteOutlineIcon />
           </Button>

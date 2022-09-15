@@ -90,6 +90,25 @@ const useTrainInfo = (
     fetchTrainInfo();
   }, [fetchTrainInfo, from, to]);
 
+  useEffect(() => {
+    const document = window.document;
+    const reloadWhenActive = () => {
+      if (!document.hidden) {
+        refetch();
+      }
+    };
+    document.addEventListener("visibilitychange", reloadWhenActive);
+    return () =>
+      document.removeEventListener("visibilitychange", reloadWhenActive);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => refetch(), 60000);
+    return () => window.clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return { response, error, notice, loading, refetch };
 };
 

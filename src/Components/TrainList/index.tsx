@@ -101,7 +101,11 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
       <Notice fromStation={fromTo.from} />
       <div className="flex flex-col relative">
         {loading && <Loading />}
-        <TrainListContainer fromTo={fromTo} response={response} finalDestination={destination} />
+        <TrainListContainer
+          fromTo={fromTo}
+          response={response}
+          finalDestination={destination}
+        />
       </div>
     </div>
   );

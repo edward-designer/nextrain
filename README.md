@@ -12,6 +12,7 @@ I find that catching and changing trains in UK is quite a daunting task as train
   - departure platform is highlighted
   - with count-down timer to departure
   - a tag to indicate the fastest train to arrival at destination
+  - auto refresh the train info every 60 seconds and when the tab (inactive) becomes active again
 - **Optionally add an exchange station**
   - by selecting a train in the first leg, the connecting trains will be shown with the available time for changing trains
   - direct trains between the from station to the final destination is highlighted with a tag
@@ -19,6 +20,7 @@ I find that catching and changing trains in UK is quite a daunting task as train
   - by entering the URL in the format of _/[from]/[change (optional)]/[destination]_, the corresponding train info will be shown
 - **Save Train Routes**
   - train routes can be saved for fast retrieval
+  - drag and drop to reorder the saved list (new routes will be added to the top by default)
 - Real-time notices for delay/cancellation are shown whenever available
 - Localstorage to store saved routes
 - A reverse button for fast retrieving return information
