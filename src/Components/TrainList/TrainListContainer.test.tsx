@@ -336,6 +336,7 @@ const response = [
 ];
 const fromTo = { from: "THA", to: "PAD" };
 const finalDestination = "PAD";
+const refetch = jest.fn();
 
 describe("TrainListContainer", () => {
   it("should render a list of trains", () => {
@@ -344,6 +345,8 @@ describe("TrainListContainer", () => {
         fromTo={fromTo}
         response={response}
         finalDestination={finalDestination}
+        refetch={refetch}
+        timeOffset={0}
       />
     );
     expect(screen.getAllByText("Delayed")[0]).toBeInTheDocument();
@@ -361,6 +364,8 @@ describe("TrainListContainer", () => {
         fromTo={fromTo}
         response={[]}
         finalDestination={finalDestination}
+        refetch={refetch}
+        timeOffset={0}
       />
     );
     expect(
@@ -375,6 +380,8 @@ describe("TrainListContainer", () => {
         fromTo={{ from: "", to: "" }}
         response={[]}
         finalDestination={finalDestination}
+        refetch={refetch}
+        timeOffset={0}
       />
     );
     expect(

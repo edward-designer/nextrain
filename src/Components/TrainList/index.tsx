@@ -47,13 +47,14 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
     if (isTime1LaterThanTime2(currentTime(), fromTime)) {
       reset();
     }
-    refetch();
+    refetch(getEarliestTimeForConnectingTrain);
   };
 
   useEffect(
     () => refetch(getEarliestTimeForConnectingTrain),
     [getEarliestTimeForConnectingTrain, refetch]
   );
+
   return (
     <div className="shadow-md md:flex-1">
       {fromTo.from && (
@@ -105,6 +106,8 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
           fromTo={fromTo}
           response={response}
           finalDestination={destination}
+          refetch={refetch}
+          timeOffset={getEarliestTimeForConnectingTrain}
         />
       </div>
     </div>

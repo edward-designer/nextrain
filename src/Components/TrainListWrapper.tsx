@@ -11,6 +11,7 @@ type TTrainListWrapper = {
 
 const TrainListWrapper = ({ fromToArr }: TTrainListWrapper) => {
   const { returnArr, destination } = convertArrToFromToObject(fromToArr);
+  
   return (
     <div className="mt-1 md:flex md:items-start md:gap-3 ">
       {returnArr.map((item, inx) => (
