@@ -38,7 +38,7 @@ const CellDestination = ({
         <span className="font-bold">→</span> {destination}
       </span>
       {isSelected && subsequentCallingPoints !== null && (
-        <ul className="text-[7px] leading-4 ml-8 text-text-primary">
+        <ul className="text-[7px] leading-4 ml-8 text-text-secondary">
           {subsequentCallingPoints.length === 0 ||
           status === TrainStatus.cancelled
             ? ""
