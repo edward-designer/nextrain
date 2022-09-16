@@ -37,7 +37,12 @@ const useTrainInfo = (
             let trainServices = response.data.trainServices;
 
             trainServices = trainServices?.map((train: TTrainInfo) => {
-              const formattedTrainInfo = parseTrainInfo(train, to, destination);
+              const formattedTrainInfo = parseTrainInfo(
+                train,
+                to,
+                response.data.locationName,
+                destination
+              );
               return { ...formattedTrainInfo };
             });
             if (trainServices?.length > 1) {

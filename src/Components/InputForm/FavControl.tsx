@@ -34,7 +34,7 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
             customStyle={`${
               isEmptyFromToArr
                 ? "text-text-inactive  cursor-default"
-                : " text-button-color"
+                : " text-hover-color"
             } bg-background-form`}
             clickHandler={() => setFromToArr(["", "", ""])}
             ariaLabel="clear all inputs"
@@ -48,7 +48,7 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
             customStyle={`${
               isFav(fromToArr) || isEmptyFromToArr
                 ? "text-text-inactive cursor-default"
-                : "text-button-color"
+                : "text-hover-color"
             }  bg-background-form`}
             clickHandler={() => {
               if (!isEmptyFromToArr) addFav(fromToArr);
@@ -65,7 +65,7 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
               favs.length > 0
                 ? showFav
                   ? "text-text-inactive"
-                  : "text-button-color"
+                  : "text-hover-color"
                 : "text-background-main cursor-default"
             } bg-background-main`}
             clickHandler={() => setShowFav(!showFav)}

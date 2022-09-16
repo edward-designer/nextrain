@@ -7,14 +7,19 @@ type TCellPlatform = {
   platform?: string | null;
   status: TrainStatus;
   toPlatform?: string | null;
+  isConnecting?: boolean;
 };
 const CellPlatform = ({
   platform = "",
   status,
   toPlatform = null,
+  isConnecting = false,
 }: TCellPlatform) => {
   if (status === TrainStatus.cancelled || status === TrainStatus.delayed)
     return null;
+
+  if (toPlatform === null && !platform && isConnecting) platform = "TBC";
+
   return (
     <div
       className={`basis-1/4 flex flex-col items-center p-2 ${
@@ -22,11 +27,13 @@ const CellPlatform = ({
           ? status === TrainStatus.departed
             ? "bg-background-inactive text-text-inactive"
             : platform
-            ? "bg-accent-color text-reverse-color"
-            : "bg-text-notice-icon text-reverse-color scale-50 -translate-x-2 -translate-y-3"
+            ? isConnecting
+              ? "bg-accent-color text-reverse-color z-10"
+              : "bg-accent-color text-reverse-color"
+            : "bg-hover-color text-reverse-color -translate-x-[3px] translate-y-1 opacity-70 scale-50"
           : toPlatform !== null
           ? "bg-transparent text-text-inactive scale-75 -translate-x-3 -translate-y-2"
-          : "bg-transparent text-text-inactive"
+          : "bg-transparent text-text-inactive scale-x-80"
       }`}
     >
       {toPlatform || platform ? (

@@ -31,6 +31,7 @@ export const findToilets = (formation: TTrainInfo["formation"]): boolean => {
 const parseTrainInfo = (
   train: TTrainInfo,
   to: string | null,
+  from: string | null,
   destinationStation?: string
 ): TParsedTrainInfo => {
   const {
@@ -58,6 +59,12 @@ const parseTrainInfo = (
   ];
   const isRunning = runningStatus.includes(status);
   const callingPoint = subsequentCallingPoints[0].callingPoint;
+  callingPoint.unshift({
+    locationName: from || "",
+    crs: "FROM",
+    st: std,
+    et: etd,
+  });
   const destinationStationInfo = callingPoint.filter(
     (station) => station.crs === to
   )[0];

@@ -16,7 +16,7 @@ const Alert = ({ message, setShowAlert, type = "Error" }: PropsType) => {
       timeOutId = setTimeout(() => setShowAlert(false), 10000);
       return () => clearTimeout(timeOutId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -42,7 +42,7 @@ const Alert = ({ message, setShowAlert, type = "Error" }: PropsType) => {
       </div>
       <Button
         customStyle={`${
-          type === "Error" ? "bg-background-cancelled" : "bg-background-notice"
+          type === "Error" ? "bg-background-cancelled" : "bg-transparent"
         }`}
         ariaLabel="close the error message"
         clickHandler={() => setShowAlert(false)}

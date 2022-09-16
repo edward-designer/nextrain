@@ -7,13 +7,13 @@ type TCellChangeTimer = {
 
 const CellChangeTimer = ({ changeTime }: TCellChangeTimer) => {
   return (
-    <div className="flex relative items-center justify-center -translate-x-8 translate-y-2 -mr-5">
+    <div className="scale-110 flex relative items-center justify-center -translate-x-5 translate-y-6 -mr-5 z-20">
       {changeTime && (
         <div
-          className="absolute w-9 h-4 bg-hover-color opacity-80 text-[9px] text-center leading-4 text-reverse-color
+          className="absolute w-10 h-4 bg-hover-color text-[9px] text-center leading-4 text-reverse-color
          after:border-l-hover-color after:absolute after:left-[100%] after:top-0 after:w-0 after:h-0 after:border-t-8 after:border-l-6 after:border-b-8 after:border-t-transparent after:border-b-transparent"
         >
-          <AlarmIcon sx={{ fontSize: "10px" }} />
+          <AlarmIcon sx={{ fontSize: "10px", marginRight: "2px" }} />
           {changeTime}
         </div>
       )}

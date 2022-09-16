@@ -66,7 +66,7 @@ const CellDestination = ({
                     } 
                     absolute border-2 bg-background-main rounded-full`}
                   ></span>
-                  <span className="block">
+                  <span className={`block ${index === 0 ? "font-bold" : ""}`}>
                     {`${station.locationName}
                     ${
                       station?.et !== "On time"

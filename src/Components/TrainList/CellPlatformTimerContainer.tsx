@@ -38,7 +38,7 @@ const CellPlatformTimerContainer = ({
           <>
             <CellPlatform status={status} toPlatform={toPlatform} />
             <CellChangeTimer changeTime={changeTime} />
-            <CellPlatform status={status} platform={platform} />
+            <CellPlatform status={status} platform={platform} isConnecting={isConnecting}/>
           </>
         )
       ) : (

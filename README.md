@@ -11,7 +11,7 @@ I find that catching and changing trains in UK is quite a daunting task as train
 - **Get the real-time train info fast between two train stations (for up to two hours from now)**
   - departure platform is highlighted
   - with count-down timer to departure
-  - _[new]_ accurate destination platform info is added
+  - _[new]_ destination arrival platform number is added
   - a tag to indicate the fastest train to arrival at destination
   - auto refresh the train info every 60 seconds and when the tab (inactive) becomes active again
 - **Optionally add an exchange station**
@@ -29,8 +29,9 @@ I find that catching and changing trains in UK is quite a daunting task as train
 
 ## Todo
 
-- Add routes to favourites for fast retrival
-- Optimize layout design for small screens
+- ~~Add routes to favourites for fast retrival~~
+- ~~Optimize layout design for small screens~~
+- ~~Add destination arrival platform info~~
 
 ## Tech Stacks
 
