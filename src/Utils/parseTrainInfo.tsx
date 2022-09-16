@@ -43,6 +43,7 @@ const parseTrainInfo = (
     delayReason,
     cancelReason,
     formation,
+    destinationPlatform,
   } = train;
   const arrivalTime =
     etd === "Cancelled" || etd === "Delayed"
@@ -100,6 +101,7 @@ const parseTrainInfo = (
     hasToilet,
     fastest,
     isDirect,
+    destinationPlatform,
   };
   return formattedTrainInfo;
 };

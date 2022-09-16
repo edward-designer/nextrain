@@ -13,6 +13,8 @@ type TInitialTrainContextValue = {
   setToStation: React.Dispatch<React.SetStateAction<string>>;
   trainId: string;
   setTrainId: React.Dispatch<React.SetStateAction<string>>;
+  toPlatform: string;
+  setToPlatform: React.Dispatch<React.SetStateAction<string>>;
   reset: () => void;
 };
 
@@ -25,6 +27,8 @@ const initialTrainContextValue = {
   setToStation: () => {},
   trainId: "",
   setTrainId: () => {},
+  toPlatform: "",
+  setToPlatform: () => {},
   reset: () => {},
 };
 export const SelectedTrainContext = createContext<TInitialTrainContextValue>(
@@ -36,12 +40,14 @@ const TrainContext = ({ children }: TTrainContext) => {
   const [toTime, setToTime] = useState("");
   const [toStation, setToStation] = useState("");
   const [trainId, setTrainId] = useState("");
+  const [toPlatform, setToPlatform] = useState("");
 
   const reset = () => {
     setFromTime("");
     setToTime("");
     setToStation("");
     setTrainId("");
+    setToPlatform("");
   };
 
   const contextValues = {
@@ -53,6 +59,8 @@ const TrainContext = ({ children }: TTrainContext) => {
     setToStation,
     trainId,
     setTrainId,
+    toPlatform,
+    setToPlatform,
     reset,
   };
 

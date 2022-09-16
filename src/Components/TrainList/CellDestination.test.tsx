@@ -45,7 +45,7 @@ const subsequentCallingPoints = [
 ];
 const fromTo = { from: "THA", to: "PAD" };
 const finalDestination = "PAD";
-
+const destinationPlatform = "1";
 describe("CellDestination", () => {
   it("should display the destination as well as all stations for non-cancelled trains", () => {
     const status = TrainStatus.ontime;
@@ -56,9 +56,12 @@ describe("CellDestination", () => {
         fromTo={fromTo}
         status={status}
         finalDestination={finalDestination}
+        destinationPlatform={destinationPlatform}
+        isSelected={true}
+        isDirect={false}
       />
     );
-    const displayDestination = screen.getByText("→ London Paddington");
+    const displayDestination = screen.getByText("London Paddington");
     expect(displayDestination).toBeInTheDocument();
 
     const displayDestinationWithTime = screen.getByText(
@@ -76,9 +79,12 @@ describe("CellDestination", () => {
         fromTo={fromTo}
         status={status}
         finalDestination={finalDestination}
+        destinationPlatform={destinationPlatform}
+        isSelected={true}
+        isDirect={false}
       />
     );
-    const displayDestination = screen.getByText("→ London Paddington");
+    const displayDestination = screen.getByText("London Paddington");
     expect(displayDestination).toBeInTheDocument();
 
     const displayDestinationWithTime = screen.queryByText(

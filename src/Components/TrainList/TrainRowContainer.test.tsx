@@ -79,6 +79,7 @@ const trainDetails = {
   hasToilet: true,
   fastest: false,
   isDirect: false,
+  destinationPlatform: "10",
 };
 const rowSelected = false;
 const setRowSelected = jest.fn();
@@ -95,8 +96,7 @@ describe("TrainRowContainer", () => {
         finalDestination={finalDestination}
       />
     );
-    expect(screen.getByText("→ London Paddington")).toBeInTheDocument();
-    expect(screen.getByText("London Paddington (13:56)")).toBeInTheDocument();
+    expect(screen.getByText("London Paddington")).toBeInTheDocument();
     expect(screen.getByText("13:05")).toBeInTheDocument();
     expect(screen.getByText("→ 13:56")).toBeInTheDocument();
     expect(screen.getByText("Platform")).toBeInTheDocument();
