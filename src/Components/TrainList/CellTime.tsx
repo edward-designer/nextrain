@@ -34,15 +34,14 @@ const CellTime = ({
         `}
     >
       <div className="flex flex-col flex-1">
-        {arrivalTime !== std && (
-          <span className="line-through text-[10px]">
-            <span>{std}</span>
-          </span>
-        )}
-
-        <span className="mt-1">
+        <div className="mt-1">
+          {arrivalTime !== std && (
+            <div className="line-through text-[10px]">
+              <span>{std}</span>
+            </div>
+          )}
           <span>{arrivalTime}</span>
-        </span>
+        </div>
 
         {arrivalTimeDestination &&
           !(
@@ -50,7 +49,7 @@ const CellTime = ({
           ) && (
             <>
               <span
-                className={`text-[10px] block text-right leading-3 text-text-tertiary`}
+                className={`text-[10px] block text-right leading-tight text-text-tertiary`}
               >
                 {`→ ${arrivalTimeDestination}`}
               </span>

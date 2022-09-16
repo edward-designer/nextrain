@@ -36,6 +36,7 @@ export type TTrainInfo = {
   formation: {
     coaches: { toilet: { status: number; value: string } }[];
   } | null;
+  destinationPlatform: string;
 };
 
 export type TParsedTrainInfo = {
@@ -59,6 +60,7 @@ export type TParsedTrainInfo = {
   hasToilet: boolean;
   fastest: boolean;
   isDirect: boolean;
+  destinationPlatform: string;
 };
 
 export type Theme = "light" | "dark";

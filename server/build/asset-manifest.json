@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.c7e5a52f.css",
-    "main.js": "/static/js/main.2c70a4ca.js",
+    "main.css": "/static/css/main.4934beb5.css",
+    "main.js": "/static/js/main.0aca5d62.js",
     "static/media/NRE_Powered_logo.png": "/static/media/NRE_Powered_logo.fa34bdf44b0b25daa256.png",
     "static/media/nextrains.svg": "/static/media/nextrains.d38d6873a7e1ac891f40522eee8d89ad.svg",
     "index.html": "/index.html",
     "static/media/index.cjs": "/static/media/index.beb05f5c907213a4ed8b.cjs",
-    "main.c7e5a52f.css.map": "/static/css/main.c7e5a52f.css.map",
-    "main.2c70a4ca.js.map": "/static/js/main.2c70a4ca.js.map"
+    "main.4934beb5.css.map": "/static/css/main.4934beb5.css.map",
+    "main.0aca5d62.js.map": "/static/js/main.0aca5d62.js.map"
   },
   "entrypoints": [
-    "static/css/main.c7e5a52f.css",
-    "static/js/main.2c70a4ca.js"
+    "static/css/main.4934beb5.css",
+    "static/js/main.0aca5d62.js"
   ]
 }

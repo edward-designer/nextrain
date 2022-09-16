@@ -4,16 +4,14 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 import { SelectedTrainContext } from "../../Context/TrainContext";
 
-import CellPlatform from "./CellPlatform";
 import CellTime from "./CellTime";
 import CellDestination from "./CellDestination";
-import CellCountDown from "./CellCountDown";
-import CellChangeTimer from "./CellChangeTimer";
 import RowTag from "./RowTag";
 
 import { minutesDifference, isNextDay } from "../../Utils/helpers";
 
 import { TFromTo, TParsedTrainInfo, TrainStatus } from "../../Types/types";
+import CellPlatformTimerContainer from "./CellPlatformTimerContainer";
 
 type TTrainRowContainer = {
   fromTo: TFromTo;
@@ -38,6 +36,8 @@ const TrainRowContainer = ({
     toStation,
     setToStation,
     setTrainId,
+    toPlatform,
+    setToPlatform,
     reset,
   } = useContext(SelectedTrainContext);
 
@@ -55,6 +55,7 @@ const TrainRowContainer = ({
     reason,
     fastest,
     isDirect,
+    destinationPlatform,
   } = trainDetails;
 
   /* if the first leg train is not selected, the second leg will show all trains */
@@ -68,9 +69,9 @@ const TrainRowContainer = ({
   if (rowSelected && !isSelected) return null;
 
   /* if a train is selected, the connecting trains will show the time for changing platforms */
-  const showChangeTimer = toStation === fromTo.from && isRunning;
+  const isConnecting = toStation === fromTo.from && isRunning;
   let changeTime = null;
-  if (arrivalTime && showChangeTimer) {
+  if (arrivalTime && isConnecting) {
     changeTime = minutesDifference(toTime, arrivalTime);
   }
 
@@ -105,6 +106,7 @@ const TrainRowContainer = ({
         setToTime(arrivalDestinationTime);
         setToStation(fromTo.to);
         setTrainId(serviceIdUrlSafe);
+        setToPlatform(destinationPlatform);
       }
     }
     setIsSelected((isSelected) => {
@@ -175,29 +177,28 @@ const TrainRowContainer = ({
         <CellTime
           status={status}
           arrivalTime={arrivalTime}
-          arrivalTimeDestination={
-            arrivalTimeDestination
-          }
-          arrivalTimeFinalDestination={
-            arrivalTimeFinalDestination
-          }
+          arrivalTimeDestination={arrivalTimeDestination}
+          arrivalTimeFinalDestination={arrivalTimeFinalDestination}
           std={std}
         />
-        <CellPlatform status={status} platform={platform} />
-        {showChangeTimer ? (
-          <CellChangeTimer changeTime={changeTime} />
-        ) : (
-          <CellCountDown
-            departureDateObj={departureDateObj}
-            isRunning={isRunning}
-          />
-        )}
+        <CellPlatformTimerContainer
+          status={status}
+          platform={platform}
+          toPlatform={isConnecting ? toPlatform : ""}
+          changeTime={changeTime}
+          departureDateObj={departureDateObj}
+          isRunning={isRunning}
+          isConnecting={isConnecting}
+        />
         <CellDestination
           destination={endStation}
           subsequentCallingPoints={callingPoint}
           fromTo={fromTo}
           status={status}
           finalDestination={finalDestination}
+          destinationPlatform={destinationPlatform}
+          isSelected={isSelected}
+          isDirect={isDirect}
         />
       </div>
       {reason && (

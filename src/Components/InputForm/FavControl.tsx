@@ -32,7 +32,9 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
         <div className="bg-background-form">
           <Button
             customStyle={`${
-              isEmptyFromToArr ? "text-background-main" : " text-text-inactive"
+              isEmptyFromToArr
+                ? "text-text-inactive  cursor-default"
+                : " text-button-color"
             } bg-background-form`}
             clickHandler={() => setFromToArr(["", "", ""])}
             ariaLabel="clear all inputs"
@@ -44,10 +46,10 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
         <div className="bg-background-form">
           <Button
             customStyle={`${
-              isFav(fromToArr)
-                ? "text-button-color  cursor-default"
-                : "text-text-inactive"
-            }  ${isEmptyFromToArr ? "cursor-default" : ""} bg-background-form`}
+              isFav(fromToArr) || isEmptyFromToArr
+                ? "text-text-inactive cursor-default"
+                : "text-button-color"
+            }  bg-background-form`}
             clickHandler={() => {
               if (!isEmptyFromToArr) addFav(fromToArr);
             }}
@@ -62,8 +64,8 @@ const FavControl = ({ fromToArr, setFromToArr }: TFavControl) => {
             customStyle={`${
               favs.length > 0
                 ? showFav
-                  ? "text-button-color"
-                  : "text-text-inactive"
+                  ? "text-text-inactive"
+                  : "text-button-color"
                 : "text-background-main cursor-default"
             } bg-background-main`}
             clickHandler={() => setShowFav(!showFav)}

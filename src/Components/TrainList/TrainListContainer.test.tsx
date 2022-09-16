@@ -79,6 +79,7 @@ const response = [
     hasToilet: false,
     fastest: false,
     isDirect: false,
+    destinationPlatform: "10B",
   },
   {
     serviceIdUrlSafe: "72stsRmf7zyY8XO0Whv1wA",
@@ -157,6 +158,7 @@ const response = [
     hasToilet: false,
     fastest: false,
     isDirect: false,
+    destinationPlatform: "10B",
   },
   {
     serviceIdUrlSafe: "u6zHFRqGor7ZHwEt8KyQNA",
@@ -199,6 +201,7 @@ const response = [
     hasToilet: false,
     fastest: false,
     isDirect: false,
+    destinationPlatform: "10B",
   },
   {
     serviceIdUrlSafe: "jYoGmVdcCE3WiszhG61Svg",
@@ -254,6 +257,7 @@ const response = [
     hasToilet: true,
     fastest: false,
     isDirect: false,
+    destinationPlatform: "10B",
   },
   {
     serviceIdUrlSafe: "abk_MHVSgdYNfr6usBrCvw",
@@ -332,6 +336,7 @@ const response = [
     hasToilet: false,
     fastest: false,
     isDirect: false,
+    destinationPlatform: "10B",
   },
 ];
 const fromTo = { from: "THA", to: "PAD" };
@@ -350,7 +355,7 @@ describe("TrainListContainer", () => {
       />
     );
     expect(screen.getAllByText("Delayed")[0]).toBeInTheDocument();
-    expect(screen.getAllByText("→ Reading")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("Reading")[0]).toBeInTheDocument();
     expect(screen.getByText("17:12")).toBeInTheDocument();
     expect(
       screen.getAllByText(
