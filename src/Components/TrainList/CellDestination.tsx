@@ -38,7 +38,7 @@ const CellDestination = ({
         <span className="font-bold">→</span> {destination}
       </span>
       {isSelected && subsequentCallingPoints !== null && (
-        <ul className="text-[7px] leading-4 ml-8 text-text-secondary">
+        <ul className="text-[7px] leading-4 ml-8 text-text-primary">
           {subsequentCallingPoints.length === 0 ||
           status === TrainStatus.cancelled
             ? ""
@@ -59,7 +59,7 @@ const CellDestination = ({
                   <span
                     className={`${
                       station.crs === fromTo.to
-                        ? "w-3 h-3 border-accent-color bg-accent-color text-accent-color -ml-[17px]  top-[3px]"
+                        ? "w-3 h-3 border-text-notice-icon bg-text-notice-icon text-text-notice-icon -ml-[17px]  top-[3px]"
                         : station.crs === finalDestination
                         ? "w-3 h-3 border-train-direct bg-train-direct -ml-[17px] top-[3px]"
                         : "w-2 h-2 border-text-notice-icon bg-background-main -ml-[15px]  top-[30%]"
@@ -75,7 +75,7 @@ const CellDestination = ({
                     }
                     `}
                   </span>
-                  <span className="block text-[10px] font-normal relative text-text-notice-icon">
+                  <span className="block text-[10px] font-normal relative text-text-text-countdown -top-[2px]">
                     {station.crs === fromTo.to
                       ? destinationPlatform
                         ? ` @ Platform ${destinationPlatform}`
