@@ -72,8 +72,7 @@ export const minutesDifference = (
 export const minutesDifferenceNumber = (
   timeArrival: string,
   timeDeparture: string
-): number | null => {
-  if (!(isTimeFormat(timeArrival) && isTimeFormat(timeDeparture))) return null;
+): number => {
   const date1 = new Date();
   const [hour1, minute1] = timeArrival.split(":");
   date1.setHours(parseInt(hour1));
@@ -90,9 +89,10 @@ export const minutesDifferenceNumber = (
   date2.setMinutes(parseInt(minute2));
   date2.setSeconds(0);
   const changeTime = Math.floor(
-    Math.abs(date2.valueOf() - date1.valueOf()) / (1000 * 60)
+    (date2.valueOf() - date1.valueOf()) / (1000 * 60)
   );
-  return changeTime;
+  const returnedChangeTime = changeTime >= 0 ? changeTime : 0;
+  return returnedChangeTime;
 };
 
 export const minutesFromNow = (time: string): number => {

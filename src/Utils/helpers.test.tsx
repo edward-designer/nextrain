@@ -83,7 +83,7 @@ describe("helpers - minutesDifference", () => {
     const diff4 = minutesDifference("23:59", "23:59");
     expect(diff4).toBe("0m");
 
-    const diff5 = minutesDifference("23:59", "23:58");
+    const diff5 = minutesDifference("23:58", "23:59");
     expect(diff5).toBe("1m");
   });
 });

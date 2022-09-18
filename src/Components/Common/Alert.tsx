@@ -41,10 +41,8 @@ const Alert = ({ message, setShowAlert, type = "Error" }: PropsType) => {
         )}
       </div>
       <Button
-        customStyle={`${
-          type === "Error" ? "bg-background-cancelled" : "bg-transparent"
-        }`}
-        ariaLabel="close the error message"
+        customStyle="bg-transparent"
+        ariaLabel="close the message"
         clickHandler={() => setShowAlert(false)}
       >
         <ClearIcon />

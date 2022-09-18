@@ -12,8 +12,8 @@ type TTrainListContainer = {
   response: TParsedTrainInfo[] | null;
   fromTo: TFromTo;
   finalDestination: string;
-  refetch: (offset: number) => void;
-  timeOffset: number;
+  refetch: (offset: string | null) => void;
+  timeOffset: string | null;
 };
 
 const TrainListContainer = ({
@@ -24,7 +24,7 @@ const TrainListContainer = ({
   timeOffset,
 }: TTrainListContainer) => {
   const [rowSelected, setRowSelected] = useState(false);
-  const { fromTime } = useContext(SelectedTrainContext);
+  const { fromTime, toStation } = useContext(SelectedTrainContext);
 
   useEffect(() => {
     const document = window.document;
@@ -42,7 +42,10 @@ const TrainListContainer = ({
   useEffect(() => {
     const timer = window.setInterval(
       () =>
-        (!rowSelected || isTime1LaterThanTime2(fromTime, currentTime())) &&
+        (!rowSelected ||
+          (fromTo.to === toStation &&
+            isTime1LaterThanTime2(fromTime, currentTime())) ||
+          fromTo.to !== toStation) &&
         refetch(timeOffset),
       60000
     );

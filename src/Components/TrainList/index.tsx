@@ -15,11 +15,7 @@ import Button from "../Common/Button";
 
 import { TFromTo } from "../../Types/types";
 
-import {
-  minutesFromNow,
-  currentTime,
-  isTime1LaterThanTime2,
-} from "../../Utils/helpers";
+import { currentTime, isTime1LaterThanTime2 } from "../../Utils/helpers";
 
 type TTrainList = {
   fromTo: TFromTo;
@@ -31,7 +27,7 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
     useContext(SelectedTrainContext);
 
   const getEarliestTimeForConnectingTrain =
-    toTime && fromTo.from === toStation ? minutesFromNow(toTime) : 0;
+    toTime && fromTo.from === toStation ? toTime : null;
   const { response, error, notice, loading, refetch } = useTrainInfo(
     fromTo,
     getEarliestTimeForConnectingTrain,
@@ -44,7 +40,10 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
   };
 
   const refetchHandler = () => {
-    if (isTime1LaterThanTime2(currentTime(), fromTime)) {
+    if (
+      isTime1LaterThanTime2(currentTime(), fromTime) &&
+      fromTo.to === toStation
+    ) {
       reset();
     }
     refetch(getEarliestTimeForConnectingTrain);
@@ -61,7 +60,7 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
         <div
           className={`${
             toStation && toStation === fromTo.to ? "" : `sticky top-0 z-50`
-          } flex items-center text-text-secondary bg-background-title border-b border-background-main`}
+          } h-10 flex items-center text-text-secondary bg-background-title border-b border-background-main`}
         >
           <h2 className="flex-1 text-lg pl-2">
             <TrainIcon />
@@ -76,13 +75,15 @@ const TrainList = ({ fromTo, destination }: TTrainList) => {
               <ReportProblemIcon />
             </Button>
           )}
-          <Button
-            clickHandler={refetchHandler}
-            customStyle="bg-background-title"
-            ariaLabel="update train data"
-          >
-            <SyncIcon />
-          </Button>
+          {fromTo.to !== toStation && (
+            <Button
+              clickHandler={refetchHandler}
+              customStyle="bg-background-title"
+              ariaLabel="update train data"
+            >
+              <SyncIcon />
+            </Button>
+          )}
         </div>
       )}
 

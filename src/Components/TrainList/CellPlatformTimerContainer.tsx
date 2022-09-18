@@ -33,12 +33,19 @@ const CellPlatformTimerContainer = ({
     >
       {isConnecting ? (
         isDirect ? (
-          <CellPlatform status={status} platform={platform} />
+          <div className="flex flex-col">
+            <CellPlatform status={status} platform={platform} />
+            <CellChangeTimer changeTime={changeTime} samePlatform={true} />
+          </div>
         ) : (
           <>
             <CellPlatform status={status} toPlatform={toPlatform} />
             <CellChangeTimer changeTime={changeTime} />
-            <CellPlatform status={status} platform={platform} isConnecting={isConnecting}/>
+            <CellPlatform
+              status={status}
+              platform={platform}
+              isConnecting={isConnecting}
+            />
           </>
         )
       ) : (

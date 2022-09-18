@@ -351,7 +351,7 @@ describe("TrainListContainer", () => {
         response={response}
         finalDestination={finalDestination}
         refetch={refetch}
-        timeOffset={0}
+        timeOffset={null}
       />
     );
     expect(screen.getAllByText("Delayed")[0]).toBeInTheDocument();
@@ -370,7 +370,7 @@ describe("TrainListContainer", () => {
         response={[]}
         finalDestination={finalDestination}
         refetch={refetch}
-        timeOffset={0}
+        timeOffset={null}
       />
     );
     expect(
@@ -386,7 +386,7 @@ describe("TrainListContainer", () => {
         response={[]}
         finalDestination={finalDestination}
         refetch={refetch}
-        timeOffset={0}
+        timeOffset={null}
       />
     );
     expect(

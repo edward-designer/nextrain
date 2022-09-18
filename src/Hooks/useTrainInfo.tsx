@@ -3,13 +3,17 @@ import axios from "axios";
 
 import { TFromTo, TTrainInfo, TParsedTrainInfo } from "../Types/types";
 
-import { isTime1LaterThanTime2 } from "../Utils/helpers";
+import {
+  isTime1LaterThanTime2,
+  minutesDifferenceNumber,
+  currentTime,
+} from "../Utils/helpers";
 
 import parseTrainInfo from "../Utils/parseTrainInfo";
 
 const useTrainInfo = (
   { from, to }: TFromTo,
-  timeFrom: number = 0,
+  timeFrom: string | null,
   destination?: string
 ) => {
   const [response, setResponse] = useState<TParsedTrainInfo[] | null>(null);
@@ -22,7 +26,7 @@ const useTrainInfo = (
       if (from !== "") {
         setLoading(true);
         const apiTo = to ? `${to}` : "NIL";
-        const timeOffset = time;
+        const timeOffset = time + 1;
         const http =
           process.env.NODE_ENV === "development"
             ? "http://localhost:3001"
@@ -85,8 +89,12 @@ const useTrainInfo = (
   );
 
   const refetch = useCallback(
-    (time: number = 0) => {
-      fetchTrainInfo(time);
+    (time: string | null) => {
+      const timeDifference =
+        time === null
+          ? 0
+          : minutesDifferenceNumber(currentTime(), String(time));
+      fetchTrainInfo(timeDifference);
     },
     [fetchTrainInfo]
   );

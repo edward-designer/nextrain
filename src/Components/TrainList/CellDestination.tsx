@@ -29,16 +29,16 @@ const CellDestination = ({
   isDirect,
 }: TCellDestination) => {
   return (
-    <div className="basis-7/12 flex flex-col text-sm">
+    <div className="basis-7/12 flex flex-col text-sm pt-2">
       <span
         className={`text-text-tertiary  ${
-          isSelected ? "text-lg leading-8" : "text:md"
+          isSelected ? "text-lg leading-4 mb-2" : "text:md"
         }`}
       >
         <span className="font-bold">→</span> {destination}
       </span>
       {isSelected && subsequentCallingPoints !== null && (
-        <ul className="text-[7px] leading-4 ml-8 text-text-primary">
+        <ul className="text-[8px] leading-4 ml-8 text-text-primary">
           {subsequentCallingPoints.length === 0 ||
           status === TrainStatus.cancelled
             ? ""
