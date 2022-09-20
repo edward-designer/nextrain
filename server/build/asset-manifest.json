@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.33a433cf.css",
-    "main.js": "/static/js/main.0b2f0abc.js",
+    "main.js": "/static/js/main.986f4c1a.js",
     "static/media/NRE_Powered_logo.png": "/static/media/NRE_Powered_logo.fa34bdf44b0b25daa256.png",
     "static/media/nextrains.svg": "/static/media/nextrains.d38d6873a7e1ac891f40522eee8d89ad.svg",
     "index.html": "/index.html",
     "static/media/index.cjs": "/static/media/index.beb05f5c907213a4ed8b.cjs",
     "main.33a433cf.css.map": "/static/css/main.33a433cf.css.map",
-    "main.0b2f0abc.js.map": "/static/js/main.0b2f0abc.js.map"
+    "main.986f4c1a.js.map": "/static/js/main.986f4c1a.js.map"
   },
   "entrypoints": [
     "static/css/main.33a433cf.css",
-    "static/js/main.0b2f0abc.js"
+    "static/js/main.986f4c1a.js"
   ]
 }
