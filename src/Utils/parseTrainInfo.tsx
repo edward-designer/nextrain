@@ -11,10 +11,10 @@ export const getTrainStatus = (
     status = isTimeFormat(train.etd)
       ? TrainStatus.delayedWithNewArrivalTime
       : TrainStatus.delayed;
-  if (train.isCancelled || train.cancelReason) status = TrainStatus.cancelled;
   arrivalTime &&
     isTime1LaterThanTime2(currentTime(), arrivalTime) &&
     (status = TrainStatus.departed);
+  if (train.isCancelled || train.cancelReason) status = TrainStatus.cancelled;
   return status;
 };
 
@@ -58,13 +58,17 @@ const parseTrainInfo = (
     TrainStatus.delayedWithNewArrivalTime,
   ];
   const isRunning = runningStatus.includes(status);
-  const callingPoint = subsequentCallingPoints[0].callingPoint;
-  callingPoint.unshift({
-    locationName: from || "",
-    crs: "FROM",
-    st: std,
-    et: etd,
-  });
+  const callingPoint = Array.isArray(subsequentCallingPoints)
+    ? subsequentCallingPoints[0].callingPoint
+    : [];
+  if (callingPoint.length !== 0) {
+    callingPoint.unshift({
+      locationName: from || "",
+      crs: "FROM",
+      st: std,
+      et: etd,
+    });
+  }
   const destinationStationInfo = callingPoint.filter(
     (station) => station.crs === to
   )[0];
